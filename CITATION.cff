@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+title: >-
+  Delegation Cascades in an Evolutionary AI Race
+message: >-
+  If you use this software, please cite it using the metadata from this file.
+type: software
+license: MIT
+repository-code: "https://github.com/trungkiet2005/delegation-cascade"
+abstract: >-
+  Reproduction code for a study of what happens to a safety instruction when it
+  is passed down a chain of delegated agents before anything is done with it.
+  Delegation depth is made a strategic variable in the reduced AI-race game:
+  each hand-off erodes the specification geometrically and each layer attenuates
+  the harm attributed to the principal geometrically. Provides exact evaluation
+  of the interaction layer, closed-form deniability and invasion thresholds,
+  replicator and finite-population dynamics, and a comparison of four governance
+  instruments.
+keywords:
+  - evolutionary game theory
+  - replicator dynamics
+  - delegation
+  - principal-agent chains
+  - liability
+  - AI governance
+  - multi-agent systems
+references:
+  - type: article
+    title: "EGTtools: Evolutionary game dynamics in Python"
+    authors:
+      - family-names: "Fernández Domingos"
+        given-names: "Elias"
+      - family-names: "Santos"
+        given-names: "Francisco C."
+      - family-names: "Lenaerts"
+        given-names: "Tom"
+    journal: "iScience"
+    volume: 26
+    issue: 4
+    start: 106419
+    year: 2023
+    doi: "10.1016/j.isci.2023.106419"
+  - type: article
+    title: >-
+      Falling Behind Drives Unsafe Development in an Idealised AI Race
+      Experiment
+    authors:
+      - family-names: "Fernández Domingos"
+        given-names: "Elias"
+      - family-names: "Han"
+        given-names: "The Anh"
+    year: 2026
+    notes: "arXiv:2607.26034"

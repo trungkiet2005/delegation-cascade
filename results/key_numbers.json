@@ -1,0 +1,185 @@
+{
+  "expected_horizon": 9.000000000000004,
+  "erosion_order_is_harm_order": true,
+  "erosion_order_is_frequency_order": true,
+  "invasion_cas_into_as": 42.76531580048176,
+  "invasion_cas_into_cs": 0.5505918167206086,
+  "critical_liability_depth_zero": 6.516437558693085,
+  "effective_liability": 20.0,
+  "liability_margin_over_critical": 3.069161611672242,
+  "attribution_failure_depth": 3.8980685312968704,
+  "specification_half_life": 3.10628371950539,
+  "second_eigenvalue": 0.8,
+  "fidelity_at_ceiling": 0.26214400000000015,
+  "fidelity_is_geometric_max_error": 1.1102230246251565e-16,
+  "intent_separation_at_ceiling": 0.3495253333333334,
+  "separation_geometric_max_error": 0.08738133333333331,
+  "clause_value_peak_depth": 9,
+  "shelter_onset_depth": 6,
+  "phi_star_limit": 0.9999298015266695,
+  "harm_at_ceiling_AS": 2.8974135091200046,
+  "attributed_at_ceiling_AS": 0.5156773555050008,
+  "shelter_factor_AS": 5.618655692729766,
+  "socially_optimal_depth_AS": 1,
+  "decomposition_sml": {
+    "baseline": 0.0,
+    "drift_only": 0.01755309563656835,
+    "deniability_only": 0.011516222720488188,
+    "both": 0.3224699268821224,
+    "drift_effect": 0.01755309563656835,
+    "deniability_effect": 0.011516222720488188,
+    "total_effect": 0.3224699268821224,
+    "interaction": 0.29340060852506583,
+    "interaction_share": 0.9098541726413988,
+    "depth_baseline": 5.999403483503524,
+    "depth_drift_only": 1.9900479656208274,
+    "depth_deniability_only": 5.952677117291493,
+    "depth_both": 5.99999923322388,
+    "gap_both": 0.7378559497483709,
+    "social_baseline": 67.99910522525529,
+    "social_both": -0.8487731793177296
+  },
+  "decomposition_replicator": {
+    "baseline": 0.026204658470494656,
+    "drift_only": 0.017780800715116164,
+    "deniability_only": 1.9725423916616694e-26,
+    "both": 0.3224700029100131,
+    "drift_effect": -0.008423857755378492,
+    "deniability_effect": -0.026204658470494656,
+    "total_effect": 0.29626534443951846,
+    "interaction": 0.33089386066539156,
+    "interaction_share": 1.1168834522018904,
+    "depth_baseline": 6.000000000000004,
+    "depth_drift_only": 2.0,
+    "depth_deniability_only": 6.0000000000000036,
+    "depth_both": 6.0,
+    "gap_both": 0.7378560000000002,
+    "social_baseline": 62.498850695132454,
+    "social_both": -0.8487882013527326
+  },
+  "frozen_composition": {
+    "unsafe_passthrough": 0.01755309563656835,
+    "unsafe_per_layer": 0.3224699268821224,
+    "unsafe_frozen_composition": 0.01755309563656835,
+    "composition_channel": 0.304916831245554,
+    "mean_depth_passthrough": 1.9900479656208274,
+    "mean_depth_per_layer": 5.99999923322388
+  },
+  "baseline_equilibrium": {
+    "unsafe_frequency": 0.3224699268821224,
+    "mean_depth": 5.99999923322388,
+    "declaration_gap": 0.7378559497483709,
+    "social_payoff": -0.8487731793177296,
+    "intent": {
+      "AS": 0.9999999999999388,
+      "CS": 5.598010427718052e-14,
+      "CAS": 1.6990258372205607e-16,
+      "AU": 5.104061517751265e-15
+    },
+    "executed": {
+      "AS": 0.2621440502515682,
+      "CS": 0.39321601256270644,
+      "CAS": 0.24575996859276722,
+      "AU": 0.09887996859295879
+    },
+    "dominant_design": "AS@6",
+    "dominant_share": 0.9999992332326172
+  },
+  "depth_cap": {
+    "0": {
+      "unsafe_frequency": 0.0,
+      "social_payoff": 59.00000000000002,
+      "mean_depth": 0.0
+    },
+    "1": {
+      "unsafe_frequency": 3.180061644930761e-17,
+      "social_payoff": 60.49821364727718,
+      "mean_depth": 0.9988090981847713
+    },
+    "2": {
+      "unsafe_frequency": 0.017778077536299945,
+      "social_payoff": 58.269589007785974,
+      "mean_depth": 1.9998830208746257
+    },
+    "3": {
+      "unsafe_frequency": 0.0639778427827445,
+      "social_payoff": 49.914897942304364,
+      "mean_depth": 2.9994781388376377
+    },
+    "4": {
+      "unsafe_frequency": 0.1358500127876497,
+      "social_payoff": 36.03782115135277,
+      "mean_depth": 3.999820681715083
+    },
+    "5": {
+      "unsafe_frequency": 0.22506357184413844,
+      "social_payoff": 18.455475246888525,
+      "mean_depth": 4.999988079021082
+    },
+    "6": {
+      "unsafe_frequency": 0.3224699268821224,
+      "social_payoff": -0.8487731793177296,
+      "mean_depth": 5.99999923322388
+    }
+  },
+  "welfare_optimal_cap": {
+    "cap": 1,
+    "unsafe_frequency": 3.180061644930761e-17,
+    "social_payoff": 60.49821364727718,
+    "social_gain_over_uncapped": 61.346986826594915,
+    "unsafe_reduction_over_uncapped": 0.32246992688212234
+  },
+  "pass_through_halving_phi": 0.86,
+  "pass_through_critical_phi": 0.86,
+  "pass_through_critical_phi_predicted": 0.8295260719358243,
+  "pass_through_at_099": 0.017597910193088897,
+  "attestation_non_monotone": true,
+  "attestation_perverse": {
+    "no_attestation_unsafe": 0.3224699268821224,
+    "full_attestation_unsafe": 0.011516222720488188,
+    "best_before_reversal": 0.03248104796351066,
+    "setting_before_reversal": 0.35,
+    "worst_after_reversal": 0.23921370426503022,
+    "setting_after_reversal": 0.19999999999999996
+  },
+  "audit_placement": {
+    "0": 0.3224699268821224,
+    "1": 0.22506381149464239,
+    "2": 0.13586255501588784,
+    "3": 0.06400554554700856,
+    "4": 0.05019462302874173,
+    "5": 0.15975642961286463,
+    "6": 0.01787389913336377
+  },
+  "audit_late_vs_early": 18.041386743656492,
+  "matched_effort": {
+    "pass_through": {
+      "reaches_target": 1.0,
+      "best_unsafe": 0.044174516792056494,
+      "setting": 0.875,
+      "social_payoff": 53.526287970864765,
+      "mean_depth": 2.600823243127685
+    },
+    "depth_cap": {
+      "reaches_target": 1.0,
+      "best_unsafe": 0.017778077536299945,
+      "setting": 2.0,
+      "social_payoff": 58.269589007785974,
+      "mean_depth": 1.9998830208746257
+    },
+    "attestation": {
+      "reaches_target": 1.0,
+      "best_unsafe": 0.04347337664110672,
+      "setting": 0.3999999999999999,
+      "social_payoff": 58.68960217239684,
+      "mean_depth": 5.999981435708006
+    },
+    "liability": {
+      "reaches_target": 1.0,
+      "best_unsafe": 0.02378695915300094,
+      "setting": 58.0,
+      "social_payoff": 56.247091593763415,
+      "mean_depth": 1.625100550097012
+    }
+  }
+}
