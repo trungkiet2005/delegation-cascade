@@ -101,7 +101,7 @@ def figure_transmission(race, chain, outdir: Path) -> None:
     ax.axhline(0.5, color=PALETTE["neutral"], lw=0.7, ls=":")
     # the label sits just under the guide line, at the left end where every curve
     # is still close to one
-    ax.text(0.10, 0.47, "half-life", ha="left", va="top",
+    ax.text(0.38, 0.47, "half-life", ha="left", va="top",
             fontsize=FS["annot"], color=PALETTE["neutral"])
     ax.set_xlabel("delegation depth $d$")
     ax.set_ylabel(r"$\Pr[\text{intact}] = (1-\varepsilon)^d$")
@@ -124,7 +124,7 @@ def figure_transmission(race, chain, outdir: Path) -> None:
     # the right of the data and points back into it
     midpoint = 0.5 * (prof.harm[-1] + prof.attributed[-1])
     ax.annotate(
-        "what the principal\nis not charged for",
+        "unattributed\nharm",
         xy=(chain.max_depth - 0.05, midpoint),
         xytext=(chain.max_depth + 0.35, midpoint), ha="left", va="center",
         fontsize=FS["annot"], color=PALETTE["neutral"],
@@ -133,7 +133,7 @@ def figure_transmission(race, chain, outdir: Path) -> None:
     ax.set_xlabel("delegation depth $d$")
     ax.set_ylabel("expected Unsafe actions")
     ax.set_xticks(prof.depths)
-    ax.set_xlim(-0.35, chain.max_depth + 2.65)
+    ax.set_xlim(-0.35, chain.max_depth + 3.05)
     ax.set_ylim(-0.12, prof.harm[-1] * 1.24)
     fitted_legend(ax, loc="upper left", handlelength=1.6)
     panel_title(ax, "D", rf"$\phi={chain.phi:g}$: the two harms diverge")
@@ -222,25 +222,26 @@ def figure_shelter(race, chain, outdir: Path, probe: int = 30) -> None:
     outcome = round(th.equilibrium(fun, method="sml", **SML).mean_depth)
     top = float(max(prof.private.max(), prof.social.max()))
     bottom = float(min(prof.private.min(), prof.social.min()))
-    ax.set_ylim(bottom - 0.34 * (top - bottom), top + 0.20 * (top - bottom))
+    span = top - bottom
+    ax.set_ylim(bottom - 0.40 * span, top + 0.34 * span)
 
-    # markers that land on the same depth share one label, so that coincident
-    # optima never print two strings on top of each other
-    marks: dict[int, list[tuple[str, str]]] = {}
-    for x, colour, label in (
-        (private_best, PALETTE["attributed"], "best for principals"),
-        (social_best, PALETTE["realised"], "best for society"),
-        (int(outcome), PALETTE["neutral"], "selected"),
+    # markers that land on the same depth share one entry, so that coincident
+    # optima never print two strings on top of each other; the key is written as
+    # one block in the empty lower-left corner rather than beside each line
+    marks: dict[int, list[str]] = {}
+    for x, label in (
+        (private_best, "best for principals"),
+        (social_best, "best for society"),
+        (int(outcome), "where selection ends up"),
     ):
-        marks.setdefault(int(x), []).append((colour, label))
-    for x, entries in marks.items():
-        colour = entries[0][0] if len(entries) == 1 else PALETTE["neutral"]
-        ax.axvline(x, color=colour, lw=0.9, ls="--")
-        combined = " and ".join(label for _, label in entries)
-        at_edge = x >= chain.max_depth - 0.25
-        ax.text(x - (0.12 if at_edge else 0.0), ax.get_ylim()[0] + 0.6, combined,
-                ha="right" if at_edge else "center", va="bottom",
-                fontsize=FS["annot"], color=colour)
+        marks.setdefault(int(x), []).append(label)
+    for x in marks:
+        ax.axvline(x, color=PALETTE["neutral"], lw=0.9, ls="--")
+    key = "\n".join(
+        rf"$d\!=\!{x}$: " + " and ".join(labels) for x, labels in sorted(marks.items())
+    )
+    ax.text(-0.18, bottom - 0.34 * span, key, ha="left", va="bottom",
+            fontsize=FS["annot"], color=PALETTE["neutral"], linespacing=1.35)
     ax.set_xlabel("delegation depth $d$")
     ax.set_ylabel("payoff of a monomorphic population")
     ax.set_xticks(prof.depths)
@@ -524,8 +525,12 @@ def figure_frontier(race, chain, outdir: Path, quick: bool = False) -> None:
     baseline = sweeps["depth ceiling"][0][0]
     ax.plot([baseline.unsafe_frequency], [baseline.social_payoff], marker="*", ms=9,
             color="white", markeredgecolor="black", markeredgewidth=0.6, zorder=6)
+    # every frontier converges on the untreated point, so the only empty direction
+    # from it is straight down; the axis is extended to make room there
+    low, high = ax.get_ylim()
+    ax.set_ylim(low - 0.16 * (high - low), high)
     ax.annotate("no intervention", xy=(baseline.unsafe_frequency, baseline.social_payoff),
-                xytext=(-6, 8), textcoords="offset points", ha="right",
+                xytext=(0, -13), textcoords="offset points", ha="center", va="top",
                 fontsize=FS["annot"], color=PALETTE["neutral"])
     ax.set_xlabel("long-run Unsafe frequency $U$")
     ax.set_ylabel(r"social payoff $\pi_S$")
@@ -545,11 +550,13 @@ def figure_frontier(race, chain, outdir: Path, quick: bool = False) -> None:
         ax.text(k, values[k] + 1.0, f"{values[k]:.1f}", ha="center", va="bottom",
                 fontsize=FS["annot"])
     ax.axhline(baseline.social_payoff, color=PALETTE["neutral"], lw=0.9, ls="--")
-    ax.text(len(names) - 0.55, baseline.social_payoff + 1.2, "no intervention",
-            ha="right", va="bottom", fontsize=FS["annot"], color=PALETTE["neutral"])
+    # the bars start at zero, so the band under the reference line is the only
+    # place the label does not sit on one
+    ax.text(-0.42, baseline.social_payoff - 1.6, "no intervention",
+            ha="left", va="top", fontsize=FS["annot"], color=PALETTE["neutral"])
     ax.set_xticks(range(len(names)), pretty)
     ax.set_ylabel(r"social payoff $\pi_S$ at $U \leq 0.05$")
-    ax.set_ylim(min(0.0, baseline.social_payoff) - 4, max(values) * 1.18)
+    ax.set_ylim(min(0.0, baseline.social_payoff) - 9, max(values) * 1.15)
     panel_title(ax, "B", "cheapest route to the target")
 
     save(fig, outdir / "fig07_frontier")
@@ -636,7 +643,11 @@ def figure_robustness(race, chain, outdir: Path, quick: bool = False) -> None:
                label="small-mutation limit")
     ax.set_xlabel(r"mutation rate $\mu$")
     ax.set_ylabel("Unsafe frequency $U$")
-    fitted_legend(ax, loc="lower right", handlelength=1.8)
+    # the curve descends across the whole panel, so the legend goes in a band
+    # opened below the data rather than in a corner the curve passes through
+    low, high = ax.get_ylim()
+    ax.set_ylim(low - 0.42 * (high - low), high)
+    fitted_legend(ax, loc="lower left", handlelength=1.8)
     panel_title(ax, "C", "the small-mutation reduction")
 
     ax = axes[1, 1]
