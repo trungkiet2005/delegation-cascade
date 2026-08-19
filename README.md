@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![EGTtools](https://img.shields.io/badge/built%20with-EGTtools-brightgreen.svg)](https://github.com/Socrats/EGTTools)
-[![tests](https://img.shields.io/badge/tests-177%20passing-success.svg)](tests/)
+[![tests](https://img.shields.io/badge/tests-185%20passing-success.svg)](tests/)
 
 Reproduction code for a study of what happens to a safety instruction when it is
 passed down a chain of delegated agents before anything is done with it.
@@ -43,7 +43,7 @@ higher under per-layer attribution than under pass-through in **every** cell.
 ## Installation
 
 ```bash
-git clone https://github.com/<user>/delegation-cascade.git
+git clone https://github.com/trungkiet2005/delegation-cascade.git
 cd delegation-cascade
 pip install -e ".[dev]"
 ```
@@ -58,7 +58,7 @@ python scripts/run_analysis.py     # tables + every number quoted in the text
 python scripts/run_robustness.py   # 43-cell sweep, kernels, the (phi, eps) plane
 python scripts/make_figures.py     # Figures 2-8
 python scripts/build_paper.py      # stage figures, run pdflatex/bibtex
-pytest                             # 177 checks of the analytics
+pytest                             # 185 checks of the analytics
 ```
 
 `scripts/make_figures.py --quick` runs a coarser grid in about a minute, and
