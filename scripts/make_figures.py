@@ -105,8 +105,8 @@ def figure_transmission(race, chain, outdir: Path) -> None:
             fontsize=FS["annot"], color=PALETTE["neutral"])
     ax.set_xlabel("delegation depth $d$")
     ax.set_ylabel(r"$\Pr[\text{intact}] = (1-\varepsilon)^d$")
-    # headroom above the data so the legend cannot sit on a curve
-    ax.set_ylim(0, 1.30)
+    # a small margin above the data so the legend cannot sit on a curve
+    ax.set_ylim(0, 1.18)
     ax.set_yticks([0.0, 0.25, 0.5, 0.75, 1.0])
     fitted_legend(ax, ncol=2, loc="upper right", handlelength=1.4, columnspacing=0.9)
     panel_title(ax, "C", "the specification is forgotten geometrically")
@@ -120,21 +120,13 @@ def figure_transmission(race, chain, outdir: Path) -> None:
             label=rf"harm attributed, $\phi^d m(d)$")
     ax.fill_between(prof.depths, prof.attributed, prof.harm, color=PALETTE["realised"],
                     alpha=0.12, lw=0)
-    # the wedge is a narrow curved triangle, so the label goes in the margin to
-    # the right of the data and points back into it
-    midpoint = 0.5 * (prof.harm[-1] + prof.attributed[-1])
-    ax.annotate(
-        "unattributed\nharm",
-        xy=(chain.max_depth - 0.05, midpoint),
-        xytext=(chain.max_depth + 0.35, midpoint), ha="left", va="center",
-        fontsize=FS["annot"], color=PALETTE["neutral"],
-        arrowprops=dict(arrowstyle="->", lw=0.7, color=PALETTE["neutral"]),
-    )
+    # the wedge is a narrow curved triangle with no room for a label inside it;
+    # the two curves are named in the legend and the caption says what the shading
+    # means, so nothing is annotated here
     ax.set_xlabel("delegation depth $d$")
     ax.set_ylabel("expected Unsafe actions")
     ax.set_xticks(prof.depths)
-    ax.set_xlim(-0.35, chain.max_depth + 3.05)
-    ax.set_ylim(-0.12, prof.harm[-1] * 1.24)
+    ax.set_ylim(-0.10, prof.harm[-1] * 1.12)
     fitted_legend(ax, loc="upper left", handlelength=1.6)
     panel_title(ax, "D", rf"$\phi={chain.phi:g}$: the two harms diverge")
 
@@ -202,28 +194,35 @@ def figure_shelter(race, chain, outdir: Path, probe: int = 30) -> None:
     ax.axhspan(lower, 0.0, color=PALETTE["realised"], alpha=0.07, lw=0)
     ax.text(chain.max_depth - 1.05, 0.55 * lower, "liability rewards\none more hand-off",
             ha="right", va="center", fontsize=FS["annot"], color=PALETTE["neutral"])
-    upper = ax.get_ylim()[1]
-    ax.set_ylim(lower, upper + 0.46 * (upper - lower))  # headroom for the legend
+    ax.set_ylim(lower, ax.get_ylim()[1])
     ax.set_xlabel("resident depth $d$")
     ax.set_ylabel(r"change in attributed harm")
     ax.set_xticks(depths)
-    fitted_legend(ax, loc="upper center", ncol=3, handlelength=1.1,
-                  columnspacing=0.8, handletextpad=0.4)
+    # only the first point of the CS curve rises above 0.2, so a single row of
+    # entries fits in the strip along the top without touching any of them
+    fitted_legend(ax, loc="upper right", ncol=3, handlelength=1.0,
+                  columnspacing=0.7, handletextpad=0.35)
     panel_title(ax, "C", "the bill for one more hand-off")
 
     ax = axes[1, 1]
     prof = th.self_profile(fun, "AS")
-    ax.plot(prof.depths, prof.private, "-o", ms=3.4, color=PALETTE["attributed"],
-            label=r"private $\pi_P$")
-    ax.plot(prof.depths, prof.social, "-s", ms=3.4, color=PALETTE["realised"],
-            label=r"social $\pi_S$")
+    ax.plot(prof.depths, prof.private, "-o", ms=3.4, color=PALETTE["attributed"])
+    ax.plot(prof.depths, prof.social, "-s", ms=3.4, color=PALETTE["realised"])
     private_best = int(prof.depths[int(np.argmax(prof.private))])
     social_best = int(prof.depths[int(np.argmax(prof.social))])
     outcome = round(th.equilibrium(fun, method="sml", **SML).mean_depth)
     top = float(max(prof.private.max(), prof.social.max()))
     bottom = float(min(prof.private.min(), prof.social.min()))
     span = top - bottom
-    ax.set_ylim(bottom - 0.40 * span, top + 0.34 * span)
+
+    # the two curves separate widely on the right, so they are named where they
+    # run rather than in a box that would have to sit on one of them
+    ax.text(0.76 * chain.max_depth, prof.private.max() - 0.06 * span,
+            r"private $\pi_P$", ha="left", va="bottom",
+            fontsize=FS["annot"], color=PALETTE["attributed"])
+    ax.text(0.82 * chain.max_depth, prof.social[social_best] * 0.55,
+            r"social $\pi_S$", ha="left", va="bottom",
+            fontsize=FS["annot"], color=PALETTE["realised"])
 
     # markers that land on the same depth share one entry, so that coincident
     # optima never print two strings on top of each other; the key is written as
@@ -231,7 +230,7 @@ def figure_shelter(race, chain, outdir: Path, probe: int = 30) -> None:
     marks: dict[int, list[str]] = {}
     for x, label in (
         (private_best, "best for principals"),
-        (social_best, "best for society"),
+        (social_best, "society"),
         (int(outcome), "where selection ends up"),
     ):
         marks.setdefault(int(x), []).append(label)
@@ -240,12 +239,11 @@ def figure_shelter(race, chain, outdir: Path, probe: int = 30) -> None:
     key = "\n".join(
         rf"$d\!=\!{x}$: " + " and ".join(labels) for x, labels in sorted(marks.items())
     )
-    ax.text(-0.18, bottom - 0.34 * span, key, ha="left", va="bottom",
+    ax.text(min(marks) + 0.12, bottom - 0.02 * span, key, ha="left", va="bottom",
             fontsize=FS["annot"], color=PALETTE["neutral"], linespacing=1.35)
     ax.set_xlabel("delegation depth $d$")
     ax.set_ylabel("payoff of a monomorphic population")
     ax.set_xticks(prof.depths)
-    fitted_legend(ax, loc="upper right", handlelength=1.6)
     panel_title(ax, "D", "the selected depth suits nobody")
 
     save(fig, outdir / "fig03_shelter")
@@ -525,13 +523,8 @@ def figure_frontier(race, chain, outdir: Path, quick: bool = False) -> None:
     baseline = sweeps["depth ceiling"][0][0]
     ax.plot([baseline.unsafe_frequency], [baseline.social_payoff], marker="*", ms=9,
             color="white", markeredgecolor="black", markeredgewidth=0.6, zorder=6)
-    # every frontier converges on the untreated point, so the only empty direction
-    # from it is straight down; the axis is extended to make room there
-    low, high = ax.get_ylim()
-    ax.set_ylim(low - 0.16 * (high - low), high)
-    ax.annotate("no intervention", xy=(baseline.unsafe_frequency, baseline.social_payoff),
-                xytext=(0, -13), textcoords="offset points", ha="center", va="top",
-                fontsize=FS["annot"], color=PALETTE["neutral"])
+    # every frontier converges on the untreated point, so there is no room beside
+    # it for a label; the caption identifies the star instead
     ax.set_xlabel("long-run Unsafe frequency $U$")
     ax.set_ylabel(r"social payoff $\pi_S$")
     fitted_legend(ax, loc="lower left", handlelength=1.6, ncol=2, columnspacing=0.9)
@@ -552,11 +545,11 @@ def figure_frontier(race, chain, outdir: Path, quick: bool = False) -> None:
     ax.axhline(baseline.social_payoff, color=PALETTE["neutral"], lw=0.9, ls="--")
     # the bars start at zero, so the band under the reference line is the only
     # place the label does not sit on one
-    ax.text(-0.42, baseline.social_payoff - 1.6, "no intervention",
+    ax.text(-0.42, baseline.social_payoff - 1.0, "no intervention",
             ha="left", va="top", fontsize=FS["annot"], color=PALETTE["neutral"])
     ax.set_xticks(range(len(names)), pretty)
     ax.set_ylabel(r"social payoff $\pi_S$ at $U \leq 0.05$")
-    ax.set_ylim(min(0.0, baseline.social_payoff) - 9, max(values) * 1.15)
+    ax.set_ylim(min(0.0, baseline.social_payoff) - 5.0, max(values) * 1.15)
     panel_title(ax, "B", "cheapest route to the target")
 
     save(fig, outdir / "fig07_frontier")
@@ -643,10 +636,8 @@ def figure_robustness(race, chain, outdir: Path, quick: bool = False) -> None:
                label="small-mutation limit")
     ax.set_xlabel(r"mutation rate $\mu$")
     ax.set_ylabel("Unsafe frequency $U$")
-    # the curve descends across the whole panel, so the legend goes in a band
-    # opened below the data rather than in a corner the curve passes through
-    low, high = ax.get_ylim()
-    ax.set_ylim(low - 0.42 * (high - low), high)
+    # the curve descends from left to right, so it leaves the lower-left corner
+    # free while the lower-right corner is where it ends
     fitted_legend(ax, loc="lower left", handlelength=1.8)
     panel_title(ax, "C", "the small-mutation reduction")
 

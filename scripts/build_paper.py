@@ -35,12 +35,17 @@ def stage() -> None:
             "missing figures: " + ", ".join(missing) + "\nrun scripts/make_figures.py first"
         )
 
-    emitted = {"tables.tex": "tables_generated.tex"}
+    emitted = {
+        "tables.tex": "tables_generated.tex",
+        "tables_regimes.tex": "regimes_generated.tex",
+        "robustness_tables.tex": "robustness_generated.tex",
+    }
     for name, target in emitted.items():
         src = ROOT / "results" / "tables" / name
         if not src.exists():
             raise SystemExit(
-                f"missing results/tables/{name}; run scripts/run_analysis.py first"
+                f"missing results/tables/{name}; run scripts/run_analysis.py "
+                "and scripts/run_robustness.py first"
             )
         shutil.copy2(src, ROOT / "paper" / target)
     print("staged", len(FIGURES), "figures and the generated tables")

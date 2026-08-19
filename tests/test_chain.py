@@ -11,6 +11,7 @@ from dcascade.chain import (
     ChainParams,
     design_labels,
     design_space,
+    drift_direction,
     drift_matrix,
     fidelity,
     handoff_kernel,
@@ -161,6 +162,83 @@ def test_invalid_parameters_are_rejected() -> None:
     with pytest.raises(ValueError):
         drift_matrix("nonsense")  # type: ignore[arg-type]
     with pytest.raises(ValueError):
-        ChainParams(phi=1.5)
+        ChainParams(phi=-0.1)
+    with pytest.raises(ValueError):
+        ChainParams(attribution_rule="nonsense")  # type: ignore[arg-type]
+    with pytest.raises(ValueError):
+        ChainParams(attribution_floor=1.5)
+    with pytest.raises(ValueError):
+        drift_matrix("mixed:1.5")
+    with pytest.raises(ValueError):
+        drift_matrix("nonsense:0.5")
     with pytest.raises(ValueError):
         AuditPlan(layer=-1)
+
+
+def test_attribution_rules_follow_their_definitions() -> None:
+    depths = range(7)
+    geo = ChainParams(max_depth=6, phi=0.75)
+    assert [geo.attribution(d) for d in depths] == [pytest.approx(0.75**d) for d in depths]
+
+    strict = ChainParams(max_depth=6, phi=0.75, attribution_rule="strict")
+    assert [strict.attribution(d) for d in depths] == [1.0] * 7
+
+    equal = ChainParams(max_depth=6, phi=0.75, attribution_rule="harmonic")
+    assert [equal.attribution(d) for d in depths] == [
+        pytest.approx(1.0 / (1 + d)) for d in depths
+    ]
+
+    floored = ChainParams(
+        max_depth=6, phi=0.75, attribution_rule="floored", attribution_floor=0.3
+    )
+    assert all(floored.attribution(d) >= 0.3 - 1e-12 for d in depths)
+    assert floored.attribution(0) == pytest.approx(1.0)
+    # a floor of zero is the geometric rule and a floor of one is strict liability
+    assert ChainParams(
+        phi=0.75, attribution_rule="floored", attribution_floor=0.0
+    ).attribution(4) == pytest.approx(0.75**4)
+    assert ChainParams(
+        phi=0.75, attribution_rule="floored", attribution_floor=1.0
+    ).attribution(4) == pytest.approx(1.0)
+
+
+def test_super_attribution_is_allowed_and_grows_with_depth() -> None:
+    """phi > 1 charges a principal more the deeper it delegates."""
+    chain = ChainParams(phi=1.2)
+    values = [chain.attribution(d) for d in range(5)]
+    assert all(b > a for a, b in zip(values, values[1:]))
+
+
+def test_the_floor_makes_attributed_harm_non_decreasing_in_depth() -> None:
+    """Proposition 8: above the depth where the floor binds, depth stops paying."""
+    from dcascade.functionals import build_functionals
+    from dcascade.race import RaceParams, build_race_tables
+    from dcascade.theory import self_profile
+
+    race = build_race_tables(RaceParams())
+    chain = ChainParams(
+        max_depth=6, eps=0.2, phi=0.75, attribution_rule="floored", attribution_floor=0.5
+    )
+    profile = self_profile(build_functionals(race, chain, 1.0, 20.0), "AS")
+    assert all(b >= a - 1e-12 for a, b in zip(profile.attributed, profile.attributed[1:]))
+
+
+def test_the_kernel_families_hold_the_spectral_gap_fixed() -> None:
+    """Both interpolations leave the rate of forgetting at 1 - eps."""
+    for eps in (0.05, 0.2, 0.4):
+        for family in ("mixed", "severity"):
+            for t in (0.0, 0.25, 0.5, 0.75, 1.0):
+                assert second_eigenvalue(eps, f"{family}:{t}") == pytest.approx(
+                    1.0 - eps, abs=1e-7
+                )
+
+
+def test_the_kernel_families_move_the_drift_direction() -> None:
+    assert drift_direction("mixed:0.0") == pytest.approx(drift_direction("ladder"))
+    assert drift_direction("mixed:1.0") == pytest.approx(0.0)
+    assert drift_direction("severity:1.0") == pytest.approx(drift_direction("collapse"))
+    # the direction falls along one family and rises along the other
+    mixed = [drift_direction(f"mixed:{t}") for t in (0.0, 0.5, 1.0)]
+    severity = [drift_direction(f"severity:{t}") for t in (0.0, 0.5, 1.0)]
+    assert mixed == sorted(mixed, reverse=True)
+    assert severity == sorted(severity)

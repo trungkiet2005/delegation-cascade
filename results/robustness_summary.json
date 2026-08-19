@@ -99,6 +99,64 @@
       "depth_per_layer": 5.999999998879559
     }
   },
+  "kernel_shape": {
+    "mixed": {
+      "n": 12,
+      "spectral_gap_range": [
+        0.8,
+        0.8000000067934601
+      ],
+      "direction_range": [
+        0.0,
+        0.75
+      ],
+      "U_both_range": [
+        0.3204091906409061,
+        0.5170410074055395
+      ],
+      "interaction_range": [
+        0.29340060852506583,
+        0.5055247846850321
+      ],
+      "depth_range": [
+        5.99999923322388,
+        5.999999999110777
+      ],
+      "weight_where_depth_collapses": null,
+      "harm_of_first_handoff_range": [
+        0.0,
+        0.5800000000000003
+      ]
+    },
+    "severity": {
+      "n": 12,
+      "spectral_gap_range": [
+        0.8,
+        0.8
+      ],
+      "direction_range": [
+        0.75,
+        1.5
+      ],
+      "U_both_range": [
+        3.2407795062097135e-05,
+        0.4601083357645222
+      ],
+      "interaction_range": [
+        -0.01148381492542609,
+        0.4485921129168423
+      ],
+      "depth_range": [
+        0.00017930134434532679,
+        5.999999971721918
+      ],
+      "weight_where_depth_collapses": 0.3,
+      "harm_of_first_handoff_range": [
+        0.0,
+        1.8000000000000007
+      ]
+    }
+  },
   "sml_versus_full_chain": {
     "sml_unsafe": 0.3224700026250174,
     "full_chain_unsafe_at_smallest_mu": 0.31058688436409604,

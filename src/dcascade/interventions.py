@@ -30,7 +30,7 @@ from dataclasses import dataclass, replace
 
 import numpy as np
 
-from .chain import AuditPlan, ChainParams
+from .chain import AttributionRule, AuditPlan, ChainParams
 from .functionals import build_functionals
 from .race import RaceTables
 from .theory import Equilibrium, equilibrium
@@ -188,6 +188,109 @@ def audit_placement_sweep(
         )
         for k in range(chain.max_depth + 1)
     ]
+
+
+def attribution_floor_sweep(
+    tables: RaceTables,
+    chain: ChainParams,
+    floors: np.ndarray,
+    lam: float = 1.0,
+    harm: float = 5.0,
+    method: str = "sml",
+    **kwargs,
+) -> list[InterventionOutcome]:
+    """Outcome as a statutory floor is placed under per-layer attribution.
+
+    The instrument leaves the per-hand-off retention ``phi`` untouched and only
+    forbids attribution from falling below ``a_min``.  It is the regime a
+    regulator can write without having to trace responsibility through every
+    intermediary: however long the chain, a fixed share of the harm comes back
+    to the principal.
+    """
+    return [
+        _score(
+            tables,
+            replace(chain, attribution_rule="floored", attribution_floor=float(a)),
+            "attribution_floor",
+            a,
+            lam,
+            harm,
+            method,
+            **kwargs,
+        )
+        for a in floors
+    ]
+
+
+def attribution_regime_comparison(
+    tables: RaceTables,
+    chain: ChainParams,
+    lam: float = 1.0,
+    harm: float = 5.0,
+    method: str = "sml",
+    floors: tuple[float, ...] = (0.25, 0.5),
+    supers: tuple[float, ...] = (1.1, 1.25),
+    **kwargs,
+) -> list[InterventionOutcome]:
+    """The baseline against the attribution regimes a reader might propose.
+
+    Geometric attenuation is the baseline.  ``strict`` is top-level strict
+    liability, which is also the joint-and-several regime.  ``harmonic`` splits
+    the blame equally between the principal and its agents, so attribution
+    still vanishes in the depth but only polynomially.  The floors are partial
+    restorations, and the super-attribution settings charge a principal *more*
+    the deeper it delegates.
+    """
+    out = [
+        _score(tables, chain, "geometric", chain.phi, lam, harm, method, **kwargs),
+        _score(
+            tables,
+            replace(chain, attribution_rule="strict"),
+            "strict",
+            1.0,
+            lam,
+            harm,
+            method,
+            **kwargs,
+        ),
+        _score(
+            tables,
+            replace(chain, attribution_rule="harmonic"),
+            "harmonic",
+            1.0,
+            lam,
+            harm,
+            method,
+            **kwargs,
+        ),
+    ]
+    out += [
+        _score(
+            tables,
+            replace(chain, attribution_rule="floored", attribution_floor=float(a)),
+            "floored",
+            a,
+            lam,
+            harm,
+            method,
+            **kwargs,
+        )
+        for a in floors
+    ]
+    out += [
+        _score(
+            tables,
+            replace(chain, phi=float(p)),
+            "super",
+            p,
+            lam,
+            harm,
+            method,
+            **kwargs,
+        )
+        for p in supers
+    ]
+    return out
 
 
 def instrument_frontier(

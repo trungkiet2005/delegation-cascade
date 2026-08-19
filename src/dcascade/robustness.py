@@ -159,6 +159,50 @@ def sweep_kernel(
     ]
 
 
+def sweep_kernel_shape(
+    tables,
+    chain: ChainParams,
+    lam: float = 1.0,
+    harm: float = 20.0,
+    method: str = "sml",
+    weights: tuple[float, ...] = (0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0),
+    **kwargs,
+) -> list[Cell]:
+    """The 2x2 along two kernel families that hold the spectral gap fixed.
+
+    The three named kernels differ in more than one respect at once, so they
+    cannot say whether the cascade is driven by how fast a specification is
+    forgotten, by which way it slips, or by how far it slips in one step.  Both
+    families below leave the second eigenvalue of the hand-off kernel at
+    ``1 - eps``, so the rate of forgetting is held fixed throughout, and each
+    varies one of the remaining two properties.
+
+    ``mixed``
+        ladder towards uniform: the drift loses its direction while the size of
+        an erosion event stays comparable.
+
+    ``severity``
+        ladder towards collapse: the drift keeps its direction and an erosion
+        event grows from one rung to the whole ladder.
+    """
+    out = []
+    for family in ("mixed", "severity"):
+        for t in weights:
+            out.append(
+                _cell(
+                    f"kernel_{family}",
+                    f"{family}:{t:.4f}",
+                    tables,
+                    replace(chain, kernel=f"{family}:{t:.4f}"),
+                    lam,
+                    harm,
+                    method,
+                    **kwargs,
+                )
+            )
+    return out
+
+
 def sweep_organisation(
     tables,
     chain: ChainParams,

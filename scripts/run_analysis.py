@@ -58,6 +58,7 @@ def main(outdir: Path) -> None:
     key["expected_horizon"] = cfg.RACE.expected_horizon
     key["erosion_order_is_harm_order"] = th.erosion_monotone(race)
     key["erosion_order_is_frequency_order"] = th.erosion_monotone_frequency(race)
+    key["erosion_order_is_pathwise_order"] = th.erosion_monotone_pathwise()
     key["invasion_cas_into_as"] = th.invasion_threshold_depth_zero(race, "CAS", "AS")
     key["invasion_cas_into_cs"] = th.invasion_threshold_depth_zero(race, "CAS", "CS")
     key["critical_liability_depth_zero"] = th.critical_liability(race, "sml", **sml)
@@ -341,7 +342,103 @@ def main(outdir: Path) -> None:
         race, chain, 0.05, cfg.LAM, cfg.HARM, "sml", **sml
     )
 
-    _write_latex_tables(tables_dir, race, fun, dec, sweeps, key)
+    # ------------------------------------------------------- attribution regimes
+    # Does the shelter depend on attribution being geometric, and can it be closed
+    # without restoring attribution hand-off by hand-off?
+    regimes = iv.attribution_regime_comparison(
+        race, chain, cfg.LAM, cfg.HARM, "sml", **sml
+    )
+    pd.DataFrame(
+        [
+            {
+                "regime": o.instrument,
+                "setting": o.setting,
+                "unsafe_frequency": o.unsafe_frequency,
+                "mean_depth": o.mean_depth,
+                "declaration_gap": o.declaration_gap,
+                "social_payoff": o.social_payoff,
+            }
+            for o in regimes
+        ]
+    ).to_csv(tables_dir / "attribution_regimes.csv", index=False)
+    key["attribution_regimes"] = {
+        f"{o.instrument}@{o.setting:g}": {
+            "unsafe_frequency": o.unsafe_frequency,
+            "mean_depth": o.mean_depth,
+            "social_payoff": o.social_payoff,
+        }
+        for o in regimes
+    }
+
+    floors = np.round(np.arange(0.0, 1.001, 0.01), 3)
+    floor_sweep = iv.attribution_floor_sweep(
+        race, chain, floors, cfg.LAM, cfg.HARM, "sml", **sml
+    )
+    pd.DataFrame(
+        [
+            {
+                "floor": o.setting,
+                "unsafe_frequency": o.unsafe_frequency,
+                "mean_depth": o.mean_depth,
+                "social_payoff": o.social_payoff,
+                "declaration_gap": o.declaration_gap,
+            }
+            for o in floor_sweep
+        ]
+    ).to_csv(tables_dir / "attribution_floor.csv", index=False)
+
+    binding = float(chain.phi**chain.max_depth)
+    onset = next(
+        (o.setting for o in floor_sweep if o.mean_depth < chain.max_depth - 0.01), None
+    )
+    key["attribution_floor"] = {
+        "attribution_at_ceiling": binding,
+        "onset_floor": onset,
+        "floor_for_half_the_harm": next(
+            (
+                o.setting
+                for o in floor_sweep
+                if o.unsafe_frequency <= 0.5 * floor_sweep[0].unsafe_frequency
+            ),
+            None,
+        ),
+        "welfare_recovered_at_half": None,
+    }
+    strict = next(o for o in regimes if o.instrument == "strict")
+    base = floor_sweep[0]
+    at_half = next(o for o in floor_sweep if abs(o.setting - 0.5) < 1e-9)
+    key["attribution_floor"]["welfare_recovered_at_half"] = (
+        at_half.social_payoff - base.social_payoff
+    ) / (strict.social_payoff - base.social_payoff)
+
+    # a floor and a hard depth cap trace the same frontier: for every cap, the floor
+    # that matches its social payoff also matches its Unsafe frequency
+    cap_match = []
+    for c in sweeps["depth_cap"]:
+        k = int(np.argmin([abs(o.social_payoff - c.social_payoff) for o in floor_sweep]))
+        o = floor_sweep[k]
+        cap_match.append(
+            {
+                "cap": int(c.setting),
+                "U_cap": c.unsafe_frequency,
+                "social_cap": c.social_payoff,
+                "matched_floor": o.setting,
+                "U_floor": o.unsafe_frequency,
+                "social_floor": o.social_payoff,
+                "abs_gap": abs(o.unsafe_frequency - c.unsafe_frequency),
+            }
+        )
+    pd.DataFrame(cap_match).to_csv(tables_dir / "floor_versus_cap.csv", index=False)
+    gaps = np.array([r["abs_gap"] for r in cap_match])
+    key["floor_versus_cap"] = {
+        "max_gap": float(gaps.max()),
+        "mean_gap": float(gaps.mean()),
+        "caps_matched_within_001": int((gaps < 0.01).sum()),
+        "n_caps": int(gaps.size),
+        "rows": cap_match,
+    }
+
+    _write_latex_tables(tables_dir, race, fun, dec, sweeps, key, regimes)
 
     with open(outdir / "key_numbers.json", "w", encoding="utf-8") as handle:
         json.dump(key, handle, indent=2, default=_default)
@@ -360,7 +457,7 @@ def _default(obj):
     raise TypeError(type(obj))
 
 
-def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key) -> None:
+def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key, regimes) -> None:
     """Emit the LaTeX tables that the manuscript includes verbatim."""
     lines: list[str] = []
 
@@ -450,8 +547,89 @@ def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key) -> None:
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
     lines.append(r"\end{table}")
+    lines.append("")
 
     (tables_dir / "tables.tex").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    # the attribution-regime tables are read much later in the manuscript, so they
+    # go to their own file and are input where they are discussed
+    lines = ["% generated by scripts/run_analysis.py -- do not edit"]
+    label = {
+        "geometric": r"geometric, $\phi^{d}$",
+        "strict": r"strict, $1$",
+        "harmonic": r"equal split, $1/(1+d)$",
+        "floored": r"floored, $\max(\phi^{d}, a_{\min})$",
+        "super": r"super-attribution, $\phi^{d}$",
+    }
+    lines.append(r"\begin{table}[t]")
+    lines.append(r"\centering")
+    lines.append(
+        r"\caption{Attribution regimes. Long-run Unsafe frequency, mean delegation "
+        r"depth and social payoff when the law mapping depth to the principal's share "
+        r"of the harm is changed, with everything else at the baseline. The shelter "
+        r"survives every rule whose attribution keeps falling in the depth, including "
+        r"the equal split, and closes under every rule that is bounded below.}"
+    )
+    lines.append(r"\label{tab:regimes}")
+    lines.append(r"\begin{tabular}{llrrrr}")
+    lines.append(r"\toprule")
+    lines.append(
+        r"rule & setting & $a(D)$ & $U$ & $\bar{d}$ & $\pi_S$ \\"
+    )
+    lines.append(r"\midrule")
+    for o in regimes:
+        if o.instrument == "geometric":
+            setting, terminal = rf"$\phi={o.setting:g}$", fun.chain.phi**fun.chain.max_depth
+        elif o.instrument == "floored":
+            setting, terminal = rf"$a_{{\min}}={o.setting:g}$", o.setting
+        elif o.instrument == "super":
+            setting, terminal = rf"$\phi={o.setting:g}$", o.setting**fun.chain.max_depth
+        else:
+            setting, terminal = "--", 1.0 if o.instrument == "strict" else 1.0 / (
+                1.0 + fun.chain.max_depth
+            )
+        lines.append(
+            f"{label[o.instrument]} & {setting} & {terminal:.3f} & "
+            f"{o.unsafe_frequency:.4f} & {o.mean_depth:.2f} & {o.social_payoff:.1f} "
+            + r"\\"
+        )
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    lines.append(r"\end{table}")
+    lines.append("")
+
+    match = key["floor_versus_cap"]
+    lines.append(r"\begin{table}[t]")
+    lines.append(r"\centering")
+    lines.append(
+        r"\caption{A floor under attribution reproduces a depth cap. For each "
+        r"ceiling $\bar{D}$, the attribution floor $a_{\min}$ delivering the same "
+        r"social payoff, and the Unsafe frequency each delivers. The two instruments "
+        rf"trace the same frontier: the mean gap is {match['mean_gap']:.3f} and the "
+        rf"largest is {match['max_gap']:.3f}, at the shallow end a floor cannot reach.}}"
+    )
+    lines.append(r"\label{tab:floorcap}")
+    lines.append(r"\begin{tabular}{lrrrrr}")
+    lines.append(r"\toprule")
+    lines.append(
+        r"& \multicolumn{2}{c}{depth cap} & \multicolumn{3}{c}{matched floor} \\"
+    )
+    lines.append(r"\cmidrule(lr){2-3}\cmidrule(lr){4-6}")
+    lines.append(r"$\bar{D}$ & $U$ & $\pi_S$ & $a_{\min}$ & $U$ & $\pi_S$ \\")
+    lines.append(r"\midrule")
+    for row in sorted(match["rows"], key=lambda r: r["cap"]):
+        lines.append(
+            f"{row['cap']} & {row['U_cap']:.4f} & {row['social_cap']:.1f} & "
+            f"{row['matched_floor']:.2f} & {row['U_floor']:.4f} & "
+            f"{row['social_floor']:.1f} " + r"\\"
+        )
+    lines.append(r"\bottomrule")
+    lines.append(r"\end{tabular}")
+    lines.append(r"\end{table}")
+
+    (tables_dir / "tables_regimes.tex").write_text(
+        "\n".join(lines) + "\n", encoding="utf-8"
+    )
 
 
 if __name__ == "__main__":

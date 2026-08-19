@@ -38,7 +38,7 @@ from .functionals import (
     intent_distribution,
     mean_social_payoff,
 )
-from .race import STRATEGIES, RaceTables
+from .race import STRATEGIES, RaceTables, action_paths
 
 
 # --------------------------------------------------------------------------
@@ -54,6 +54,14 @@ def erosion_monotone(tables: RaceTables, tol: float = 1e-12) -> bool:
     the opponent does.  When it holds, a hand-off kernel that only moves mass
     down the erosion order makes the realised harm of a chain non-decreasing in
     its depth, for every intent and every opponent.
+
+    The property is a theorem rather than a numerical finding (Lemma 1 of the
+    paper): against a fixed opponent the focal *action path* itself is
+    non-decreasing along the erosion order, round by round, so the ordering
+    survives every horizon law and every payoff parameter.  This function is
+    therefore a regression check on the assembled matrices, not evidence for
+    the claim.  :func:`erosion_monotone_pathwise` checks the stronger statement
+    the proof actually uses.
     """
     return bool(np.all(np.diff(tables.unsafe_count, axis=0) >= -tol))
 
@@ -61,6 +69,22 @@ def erosion_monotone(tables: RaceTables, tol: float = 1e-12) -> bool:
 def erosion_monotone_frequency(tables: RaceTables, tol: float = 1e-12) -> bool:
     """The same monotonicity for the Unsafe frequency."""
     return bool(np.all(np.diff(tables.unsafe_frequency, axis=0) >= -tol))
+
+
+def erosion_monotone_pathwise(horizons: tuple[int, ...] = (1, 2, 3, 7, 40, 401)) -> bool:
+    """Whether the erosion order dominates the focal action path round by round.
+
+    The pathwise statement of Lemma 1.  It involves no payoff parameter at all,
+    so it is checked on the action paths directly.
+    """
+    for col in STRATEGIES:
+        for lo, hi in zip(STRATEGIES, STRATEGIES[1:]):
+            for n in horizons:
+                a_lo, _ = action_paths(lo, col, n)
+                a_hi, _ = action_paths(hi, col, n)
+                if np.any(a_hi < a_lo):
+                    return False
+    return True
 
 
 # --------------------------------------------------------------------------
