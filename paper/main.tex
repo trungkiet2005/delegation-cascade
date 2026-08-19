@@ -121,22 +121,49 @@ Software that acts on behalf of someone else is increasingly built as a chain.
 A person instructs an agent, the agent decomposes the task and instructs
 sub-agents, and the sub-agents call further tools and agents. The process that
 finally takes an action in the world is then several hand-offs away from the
-party that wanted it taken~\citep{wu2023autogen,park2023generative}.
+party that wanted it taken~\citep{wu2023autogen,fourney2024magentic}.
 Governance of such systems is written almost entirely at the two ends of the
 chain. Safety training and evaluation act on the model; liability, procurement
-rules and disclosure requirements act on the principal. The hand-offs in
-between are treated as plumbing.
+rules and disclosure requirements act on the
+principal~\citep{shavit2023practices,chan2024visibility}. The hand-offs in
+between are treated as plumbing.\footnote{We call the result a delegation
+cascade. The term denotes compounding per-hand-off loss along a single chain
+from a principal to the party that acts, and not the informational cascade
+of~\citet{bikhchandani1992theory}, in which independent decision-makers
+rationally discard their own signals after observing what their predecessors
+did.}
 
 They are not plumbing. A hand-off does two things that matter. It transmits a
 specification imperfectly, because each layer restates the task in its own
 terms and the part most easily dropped is the qualifying clause rather than the
 task itself. Degradation under repeated re-encoding is a robust property of
-transmission chains, in human cultural transmission~\citep{kirby2008cumulative}
-and in recursive machine generation~\citep{shumailov2024collapse}. And it
+transmission chains, in human cultural transmission, where the distinctions
+that nothing selects for are the first to be lost~\citep{kirby2008cumulative},
+in recursive machine generation~\citep{shumailov2024collapse,alemohammad2023mad}
+and in chains of language models that each restate what the previous one
+wrote, with a systematic bias in which content
+survives~\citep{perez2025telephone,acerbi2023transmission}. The same decay has
+been measured on instructions directly: across fourteen frontier models,
+adherence to explicitly stated instructions falls with every additional turn,
+from $0.88$ to $0.71$ over three turns for the strongest of
+them~\citep{he2024multiif}. That setting is the easiest possible case, one model with
+the whole history in front of it and nothing restated by a third party, so it
+bounds the erosion of a specification from below rather than measuring it.
+Failure data from
+deployed agent frameworks show the same two facts in the field: specification
+errors between agents are the dominant failure class, and a linear chain of
+hand-offs degrades more than any other
+topology~\citep{cemri2025mast,huang2025resilience}. And it
 attenuates responsibility, because harm that reaches the world through several
-intermediaries is traced back to the party at the top only in part. Both
+intermediaries is traced back to the party at the top only in part. The gap
+this opens has been named for the case of a machine whose behaviour its
+operator cannot predict~\citep{matthias2004gap}; ours is a different source of
+the same gap, structural rather than epistemic, and one a principal can widen
+at will by adding a layer. Both
 effects are per-layer, so both compound geometrically with the number of
-hand-offs. What is not obvious is what a population of principals does about
+hand-offs, and a cost that compounds in that way is the classical reason a long
+hierarchy is expected not to survive competition~\citep{mcafee1995diseconomies}.
+What is not obvious is what a population of principals does about
 them.
 
 The question matters because the two effects push the principal in opposite
@@ -219,42 +246,119 @@ Section~\ref{sec:limitations} reports what changes when it is replaced.
 \label{sec:related}
 
 \paragraph{Evolutionary models of AI races.}
-The idea of treating a development race between AI teams as an evolutionary
-game is due to~\citet{han2020regulate}. The reduced four-strategy race we use as
+That a development race trades safety for speed, and that the trade worsens as
+the field gets more crowded, is the argument of~\citet{armstrong2016racing};
+treating that race as an evolutionary game played in a population of developers
+is due to~\citet{han2020regulate}. The reduced four-strategy race we use as
 our interaction layer is the model of~\citet{domingos2026falling}, in which
 participants repeatedly choose Safe or Unsafe, unsafe development pays more per
 round and advances faster, and a leader who cut corners carries a private risk
-of a setback. That line of work has since examined regulation,
-voluntary commitments and monitoring as ways of moving the
-equilibrium~\citep{han2026trust}. All of it places the strategic agent in the
-race. Our contribution is orthogonal: we leave the race exactly as it is and
+of a setback. That line of work has since examined the choice between sanctioning unsafe
+development and rewarding safe development~\citep{han2021mediating},
+heterogeneous and networked
+populations~\citep{cimpeanu2022heterogeneous}, voluntary safety
+commitments~\citep{han2022voluntary}, the incentives of the auditors a
+regulator would have to rely on~\citep{bova2024vigilant}, and the trust of the
+users who face the result~\citep{bashir2026trust,alalawi2026trust}, all as ways
+of moving the equilibrium; outside this lineage the same trade has been
+modelled as a collective action problem~\citep{lacroix2022tragedy}. All of it places the strategic agent in the race. Our contribution is orthogonal: we leave the race exactly as it is and
 ask what happens when the party whose design is being selected is several
 hand-offs removed from the party that acts.
 
 \paragraph{Delegation to artificial agents.}
 Behavioural work has shown that delegating a decision to an artificial agent
 changes what people choose, sometimes towards more prosocial
-outcomes~\citep{domingos2022delegation}. That literature studies a single
-delegation step, from a human to a machine. The governance literature has begun
-to describe multi-step agentic delegation and the accountability problems it
-raises~\citep{hammond2025multiagent,agentic2026governance,delegation2026intelligent},
-but as far as we are aware without a formal model in which the depth of the
-chain is itself selected. Making depth a strategic variable is what allows the
+outcomes~\citep{domingos2022delegation}, and that people who program an
+artificial delegate transmit their intent accurately but not
+precisely~\citep{terrucha2025delegates}; when trusting a machine is warranted
+at all has been asked in the same evolutionary
+terms~\citep{han2021trustmachines}. That literature studies a single
+delegation step, from a human to a machine. Accountability degrades because of
+the structure of an algorithmic supply chain rather than the conduct of any
+single actor in it, and visibility along such a chain ends at what has been
+called the accountability horizon; both are established arguments in the
+governance literature~\citep{cobbe2023supply}. The accountability problems raised
+specifically by multi-step agentic delegation have begun to be
+described~\citep{hammond2025multiagent,raji2026governance,tomasev2026delegation},
+the liability questions raised by chains of LLM-based sub-agents have been
+catalogued in principal-agent terms~\citep{gabison2025liability},
+and legal scholarship has started to read the relation between a principal and
+the AI agent acting for it through the doctrines built for human
+agents~\citep{kolt2025governing,okeefe2025lawfollowing}, but as far as we are
+aware without a formal model in which the depth of the chain is itself
+selected. Making depth a strategic variable is what allows the
 two mechanisms to be separated and their interaction to be measured.
 
-\paragraph{Hierarchies, control loss and responsibility.}
+\paragraph{Hierarchies and the loss of control.}
 That authority degrades as it passes down a hierarchy is a classical
 observation in the economics of organisation. It appears as the loss of control
-that bounds firm size~\citep{williamson1967hierarchical}, as the cost of
-decentralised information processing~\citep{radner1993organization}, and as
-collusion between layers~\citep{tirole1986hierarchies}. Diluted responsibility
-in teams is equally classical~\citep{holmstrom1982moral}, and the law has long
-recognised that liability must sometimes be assigned to a party other than the
-actor for incentives to survive an
-intermediary~\citep{shavell1980strict,sykes1984vicarious}. Our model brings the
+that bounds firm size~\citep{williamson1967hierarchical,calvo1978supervision},
+as the cost of
+decentralised information processing~\citep{radner1993organization}, as
+collusion between layers~\citep{tirole1986hierarchies}, as the wedge
+between the authority a principal formally holds and the authority an informed
+subordinate actually exercises~\citep{aghion1997authority}, and as the question
+of how many tiers to build at all when every tier costs
+control~\citep{qian1994incentives,garicano2000hierarchies,mcafee1995diseconomies}.
+Contract theory
+asks in the same spirit what is lost when the contract with the party that acts
+is written one tier down rather than by the principal
+itself~\citep{melumad1995hierarchical,mookherjee2006decentralization}, and in a
+benchmark model with adverse selection and collusion, delegating to one agent
+the right to subcontract with the next earns the principal strictly less than
+contracting centrally~\citep{mookherjee2004supplier}. Among the conditions
+under which that loss is mitigated entirely is one our architecture denies: the
+principal never observes what one of its agents passes to the next.
+
+\paragraph{Diluted responsibility and the judgment-proof problem.}
+Diluted responsibility
+in teams is equally classical~\citep{holmstrom1982moral}, and the difficulty of
+tracing an outcome back to any one contributor when many hands have produced it
+was named as the first barrier to accountability in computerised systems three
+decades ago~\citep{nissenbaum1996accountability}. Experiments find
+that principals delegate precisely to shed blame: an unfair choice routed
+through an agent draws less punishment, and is made more often, than the same
+choice made directly~\citep{bartling2012shifting,hamman2010selfinterest}. The
+law has long recognised that the choice of liability rule shapes how much care
+is taken~\citep{shavell1980strict} and that liability must sometimes be
+assigned to a party other than the actor for incentives to survive an
+intermediary~\citep{sykes1984vicarious}. Where that assignment stops, at the
+edge of the scope of employment and at the doctrines exempting a principal from
+the torts of an independent contractor, has been analysed in the same economic
+terms~\citep{sykes1988boundaries}, and it is that boundary, crossed once per
+hand-off, that our attribution rate encodes. Liability can be assigned by making
+a third party the gatekeeper of the harmful act~\citep{kraakman1986gatekeepers}
+or by reading an artificial agent as the servant of whoever put it to
+work~\citep{lior2020respondeat}; how those assignments extend to AI systems,
+and where the European liability instruments still leave the bill unassigned,
+is by now a literature of its own~\citep{buiten2023law,hacker2023liability}.
+The AI Liability Directive those critiques address was withdrawn in October
+2025~\citep{euaild2025withdrawal}, leaving the AI Act and the revised Product
+Liability Directive as the operative instruments.
+Closest to the mechanism we report is the
+judgment-proof problem~\citep{shavell1986judgment}: an injurer whose assets
+fall short of the harm it can cause takes too little care, because the part of
+the bill it will never be presented with does not enter its calculation. That
+status can be engineered rather than suffered, by structuring obligations so
+that little is left to seize~\citep{che2008strategic}, and liability extended
+to deeper pockets can be undone by the same
+restructuring~\citep{boyd1997search}. The response has been measured in one
+setting: as United States courts extended liability for long-latency
+occupational harms, entry of small corporations into the hazardous sectors rose
+sharply, which~\citet{ringleb1990liability} read as firms divesting the risky
+stage into entities that would not be able to pay. Depth
+is a way of becoming judgment proof by construction rather than by insolvency,
+and unlike a balance sheet it has no natural bound. Our model brings the
 two together and adds the ingredient those literatures do not have: a
 population in which the depth of the hierarchy is not chosen by an optimising
-designer but selected by differential replication of designs.
+designer but selected by differential replication of designs. Putting a
+property other than strategy under selection alongside it is the subject of
+coevolutionary games, where that property is typically the interaction network,
+reputation, mobility or age~\citep{perc2010coevolutionary}, and the closest
+precedent for a structural property of the kind we study is the evolution of
+hierarchy in human groups~\citep{perret2020hierarchy}. To our knowledge the
+number of intermediaries between a strategy and its execution has not been
+placed under selection before.
 
 \paragraph{Specification and alignment.}
 The gap between a stated objective and an executed one is the subject of the
@@ -267,7 +371,14 @@ either end of the chain removes.
 
 \paragraph{Protocols for traceability and runtime oversight.}
 A parallel and mostly separate literature builds the machinery that would make
-a delegation chain accountable in practice. The Agent Control
+a delegation chain accountable in practice: agent identifiers, activity logs
+and the rest of the infrastructure that would let an action be traced back to
+the party that commissioned
+it~\citep{chan2024visibility,chan2024ids,chan2025infrastructure}, together
+with proposed operating practices for the parties in an agentic
+deployment~\citep{shavit2023practices}; delegation itself can be
+authenticated, each hand-off carrying a verifiable credential from the party
+above it~\citep{south2025authenticated}. The Agent Control
 Protocol~\citep{fernandez2026acp} places a cryptographic admission check in
 front of every agent action, carries capabilities along a verifiable chain of
 delegations, and writes each decision to a tamper-evident ledger from which the
@@ -409,7 +520,7 @@ task intact. Two alternatives are used as controls. Under \emph{collapse} an
 erosion event discards the specification and the sub-agent falls back on the
 locally competitive design \AU{}. Under \emph{uniform} it replaces the
 specification with a uniformly random one; that kernel has the same spectral
-gap as the ladder but no direction, and it separates the effect of biased
+gap~\citep{levin2017markov} as the ladder but no direction, and it separates the effect of biased
 erosion from the effect of noise as such.
 
 The executed design of a depth-$d$ chain with intent $s$ is therefore
@@ -514,6 +625,12 @@ intends. Only the product $L=\lambda h$ enters $\piP$, so the two-parameter
 family $(\lambda,h)$ collapses to the single control $L$, the \emph{effective
 liability}; $h$ is a property of the world and stays fixed when the instrument
 moves, which is what keeps social payoffs comparable across liability regimes.
+Keeping the two functionals apart is not bookkeeping. Once the cost of an
+intervention is counted, driving a behavioural outcome to its maximum and
+maximising total population payoff are different objectives, and it is the
+second an intervention should be designed against~\citep{han2026welfare}; we
+therefore report the long-run unsafe frequency and the social payoff
+separately throughout, and never combine them.
 
 \subsection{Dynamics and the choice of parameters}
 
@@ -528,16 +645,23 @@ also what a model with explicit revision clocks would relax, and we return to
 this in Section~\ref{sec:limitations}.
 
 Designs are copied in proportion to how well they pay. We report the stationary
-regime of the finite-population pairwise-comparison process in the small-mutation
-limit~\citep{fudenberg2006imitation,nowak2004emergence} as the primary reading,
+regime of the finite-population pairwise-comparison
+process~\citep{sandholm2010population} in the small-mutation
+limit~\citep{fudenberg2006imitation,fudenberg2006strong,nowak2004emergence} as
+the primary reading,
 with population size $Z=100$ and selection intensity $\beta=0.05$, and the
 basin-averaged attractor of the replicator equation as a secondary one. The
 joint design space has $4(D+1)$ elements, $28$ at the baseline ceiling $D=6$,
 which puts the full mutation-selection chain out of reach: its state space has
 $\binom{Z+n-1}{n-1}$ elements. We therefore compute fixation probabilities in
-closed form and check the reduction against the full chain on a reduced design
+closed form, checked against the general-purpose implementation
+of~\citet{domingos2023egttools} on games small enough for it, and check the
+reduction against the full chain on a reduced design
 space (Section~\ref{sec:robustness}), where the two agree to $0.012$ at the
-smallest mutation rate examined.
+smallest mutation rate examined. How small a mutation rate the embedded chain
+needs for that agreement to hold has been characterised analytically for
+imitation processes at arbitrary selection intensity~\citep{wu2012howsmall},
+which is the class our update rule belongs to.
 
 The remaining choice is the liability level, and we fix it so that the
 delegation results cannot be an artefact of a race that was unsafe to begin
@@ -815,12 +939,22 @@ Social payoff falls from $68.0$ in the baseline cell to $-0.8$.
 The equilibrium is easy to misread as bad faith, and it is not. Every principal
 is issuing the strongest safety instruction available to it, and doing so is a
 best response: over-specification is how a principal compensates for a chain
-that will erode whatever it is told. What the equilibrium shows is that a
+that will erode whatever it is told. The classical route to an uninformative
+message runs through the sender: in the cheap-talk benchmark a message conveys
+less the further the sender's preferences diverge from the receiver's, and a
+wholly uninformative equilibrium always exists~\citep{crawford1982strategic}.
+Nothing of that kind is at work here. The declaration is sincere and as strong
+as the language permits, and the information in it is destroyed downstream of
+the party that issued it. What the equilibrium shows is that a
 declaration made at the top of a long chain carries almost no information about
 the behaviour at the bottom of it. Any governance instrument that reads
 declarations -- self-attestation, model cards, published policies -- is reading
 a quantity that the model predicts will be maximally safe regardless of the
-ecosystem it describes.
+ecosystem it describes. A liability rule keyed to intention therefore finds
+nothing in this equilibrium to attach to. \citet{ayres2024risky} arrive at the
+same place from the other direction, arguing that because an artificial agent
+has no intentions a rule turning on intention would immunise its use, and that
+the remedy is an objective standard applied to whoever deployed it.
 
 \subsection{What the instruments do}
 \label{sec:instruments}
@@ -857,7 +991,16 @@ Over-specification was an equilibrium response to erosion; once hand-offs are
 faithful enough, issuing \CS{} rather than \AS{} becomes the better reply, and
 \CS{} eroding into \CAS{} is far more damaging than \AS{} eroding into \CS{}.
 A partial fidelity improvement can therefore leave the ecosystem worse off than
-no improvement at all. The same reversal appears in the audit-placement sweep at
+no improvement at all. The structure is that of offsetting behaviour, in which
+a technological safety improvement displaces the private precaution that had
+been standing in for it. Peltzman finds the offsets from driver response to
+mandated safety devices to be virtually complete, with occupant lives saved at
+the cost of more pedestrian deaths~\citep{peltzman1975automobile}, and Viscusi
+finds a lulling effect in which child-resistant closures left poisonings on the
+covered products unchanged and raised ingestions on an adjacent
+one~\citep{viscusi1985consumer}. Over-specification is
+the precaution our hand-off technology displaces.
+The same reversal appears in the audit-placement sweep at
 full strength, and for the same reason; at half strength, where the intent
 margin does not flip, the sweep is monotone.
 
@@ -912,7 +1055,12 @@ Asking each instrument for the same target, a long-run unsafe frequency of at
 most $0.05$, and scoring it by the social payoff it delivers there
 (Figure~\ref{fig:frontier}B): attestation reaches the target at $58.7$, the
 depth ceiling at $58.3$, a punitive liability at $56.2$ and pass-through at
-$53.5$. The ranking is close enough that we would not press it, but the
+$53.5$. Comparing instruments this way, by the welfare cost of holding a
+population outcome at a fixed level, is the exercise~\citet{duong2021cost}
+formalise for institutional incentives in a finite stochastic population, where
+which of two instruments is cheaper turns out to depend on the parameters
+rather than on the instrument.
+The ranking here is close enough that we would not press it, but the
 qualitative message is not: raising the liability level is the least efficient
 of the four, because it acts on a margin -- how much harm costs -- that
 depth has already discounted.
@@ -966,7 +1114,12 @@ joint-and-several liability, under which a plaintiff recovers in full from the
 principal whatever the chain did. Super-attribution, $\phi>1$, charges a
 principal more the deeper it delegates and closes the shelter more than
 completely, but it buys little over strict liability: $0.016$ at $\phi=1.1$
-against $0.018$ at $\phi=1$.
+against $0.018$ at $\phi=1$. Two of these rules are the two responses to the
+problem of many hands that~\citet{thompson1980hands} sets out and finds
+wanting, hierarchical responsibility routed to the party at the top and
+collective responsibility spread across all participants; here they are
+separated not by their ethics but by their behaviour, the first closing the
+shelter and the second leaving it exactly where it was.
 
 What separates the rules is not the level of attribution but whether it keeps
 falling. The equal split ends lower than the baseline at the ceiling
@@ -1144,7 +1297,23 @@ The model says something specific about where the governance of agentic systems
 is currently pointed. Almost all of the instruments now being built read or act
 at the two ends of a chain: evaluations and safety training at the model, and
 liability, disclosure and procurement rules at the deploying principal. Both
-ends are exactly where the model says the leverage is weakest.
+ends are exactly where the model says the leverage is weakest. The same
+conclusion has been reached from the security side, where a multi-agent system
+can be driven to execute arbitrary code by content in an untrusted input even
+when no individual agent is susceptible to injection and every one of them
+refuses harmful actions~\citep{triedman2025malicious}. That mechanism is
+adversarial and ours is not, but the lesson is shared: per-agent safety does
+not compose. Regulation is
+written on the same plan: the AI Act allocates duties along a value chain by
+the role a party occupies and by the modification it makes, not by the number
+of hand-offs that separate an instruction from the action it eventually
+produces~\citep{euaiact2024}. The revised Product Liability Directive, which
+brings software inside the definition of a product from December 2026, is built
+the same way: it attaches liability by the role an economic
+operator occupies, treats a party that substantially modifies a product outside
+the manufacturer's control as its manufacturer, and leaves recourse among
+jointly liable operators to national law, with no reference anywhere to how
+many hands the product passed through~\citep{eupld2024}.
 
 At the principal end, Theorem~\ref{thm:shelter} says that a liability rule
 written in terms of what a principal is responsible for has a depth beyond
@@ -1160,9 +1329,19 @@ At the model end, the declaration result says that a safety commitment issued at
 the top of a long chain is close to uninformative about the ecosystem below it,
 and not because anyone is lying. In the baseline equilibrium the declaration is
 as strong as the language permits and the behaviour is $74\%$ different from it.
+Organisation theory calls that outcome decoupling, and treats the good faith
+with which a formal structure and a divergent practice are maintained side by
+side as the normal case rather than the exception~\citep{meyer1977myth}; what
+the model adds is a selection mechanism that produces it from delegation depth
+alone.
 An evaluation regime that scores what a principal says, or scores a model in
 isolation, is measuring a quantity that the model predicts will look good
-precisely when the chain is long enough for it not to matter.
+precisely when the chain is long enough for it not to matter. That a measured
+safety score can come apart from safety is already established for reasons
+internal to the evaluation, since many safety benchmarks track general
+capability closely enough that capability gains can be reported as safety
+progress~\citep{ren2024safetywashing}; the model supplies a reason external to
+it.
 
 That leaves two instruments with real leverage, and they are the two least
 discussed. The first is a limit on delegation depth. It is the constraint the
@@ -1177,9 +1356,11 @@ hand-offs more faithful can raise realised harm, because the over-specification
 that erosion had forced becomes unnecessary and the population relaxes its
 declared intent by one clause, and a clause dropped from \CS{} costs far more
 than a clause dropped from \AS{}. The general form of the caution is familiar
-from other equilibrium settings: a partial fix to a friction that agents had
-been compensating for can be worse than no fix, and the sign of the effect
-cannot be read off the mechanism. In this model, only the instruments acting on
+from second-best welfare economics, where satisfying one more of the conditions
+for an optimum while others remain out of reach is in general neither necessary
+nor sufficient for an improvement~\citep{lipsey1956secondbest}. A partial fix
+to a friction that agents had been compensating for can be worse than no fix,
+and the sign of the effect cannot be read off the mechanism. In this model, only the instruments acting on
 the incentive to delegate are monotone.
 
 Finally, the kernel comparison suggests a design principle that does not come
@@ -1216,7 +1397,10 @@ an untreated $0.322$. What our floor result adds is that a protocol does not
 have to achieve near-complete tracing to be worth deploying; it has to
 \emph{guarantee a minimum}. A ledger whose worst case is that a fixed share
 always comes back to the commissioning principal is a floor, and floors buy
-what depth caps buy. The right figure of merit for an accountability protocol
+what depth caps buy. The legal analogue is familiar: where an injurer's assets
+fall short of the harm it can do, the remedy that works is not a larger penalty
+but a minimum the injurer is required to carry at all
+times~\citep{shavell1986judgment,shavell2005minimum}. The right figure of merit for an accountability protocol
 is therefore not the average share of responsibility it traces but the smallest
 share it guarantees at the longest chain it permits.
 
@@ -1361,7 +1545,8 @@ delegation depth is $\sum_{i}x_{i}d_{i}$, and the declaration gap is the total
 variation distance between the intent marginal of $x$ and the executed-design
 marginal $x^{\top}P_{\mathrm{tr}}$, where $P_{\mathrm{tr}}$ stacks the
 transmission laws. Nothing here is estimated; the only approximation is the
-small-mutation limit itself, which Section~\ref{sec:robustness} checks against
+small-mutation limit itself~\citep{wu2012howsmall}, which
+Section~\ref{sec:robustness} checks against
 the full chain on a reduced design space.
 
 \section*{Data and code availability}

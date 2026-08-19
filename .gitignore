@@ -22,3 +22,7 @@ paper/*.spl
 paper/*.run.xml
 
 results/figure_log*.txt
+
+# Internal working notes, not published
+paper/citation_audit_*.md
+paper/refs_suggested_additions.bib
