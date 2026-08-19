@@ -72,43 +72,20 @@
 
 \begin{abstract}
 \noindent
-We study what happens to a safety instruction when it is passed down a chain of
-delegated agents before anything is done with it. A principal enters a
-competitive race but does not act in it: it issues a specification to an agent,
-which issues one to a sub-agent, and so on for $d$ hand-offs. Two things happen
-along the chain, and both are geometric in $d$. The specification is
-transmitted imperfectly, so it survives $d$ hand-offs intact with probability
-$(1-\varepsilon)^{d}$. Responsibility is traced back only in part, so a
-principal at depth $d$ is charged the fraction $\phi^{d}$ of the harm it causes.
-We embed both in the reduced four-strategy AI race of Fern\'andez Domingos and
-Han, make delegation depth part of the strategy, and analyse the resulting
-dynamics. Five results follow. First, depth is an unbounded liability shelter.
-Realised harm saturates while attributed harm decays, so for every $\phi<1$
-there is a depth beyond which each further hand-off strictly lowers the bill
-even though it strictly raises the damage. No level of liability stops chains
-from lengthening past it. Second, and against the intuition that the two
-mechanisms simply add up, neither is dangerous on its own. Start from a race
-that liability has already made safe at depth zero. Imperfect transmission alone
-lifts the long-run unsafe frequency to $0.018$ and imperfect attribution alone
-to $0.012$; together they lift it to $0.322$, so $91\%$ of the joint effect is
-an interaction. A counterfactual that freezes the population composition
-isolates its single cause. Under full pass-through the market answers
-transmission loss by \emph{shortening} its chains, from six hand-offs to two,
-and per-layer attribution is precisely what disables that answer. Third, the
-resulting equilibrium is one in which every principal issues the safest
-available instruction and the population executes the unsafe designs anyway:
-declared and executed behaviour differ by $0.74$ in total variation. Fourth,
-instruments that act on the incentive to delegate behave monotonically while
-instruments that act on transmission fidelity do not. A partial fidelity
-improvement can leave the ecosystem worse off than no improvement at all,
-because over-specification was an equilibrium response to erosion. A ceiling of
-one hand-off removes the unsafe behaviour entirely and raises social payoff from
-$-0.8$ to $60.5$. Fifth, the shelter turns on attribution vanishing in depth
-and not on its geometric form: splitting the blame equally across the chain
-reproduces it exactly, while any rule bounded away from zero closes it. A
-statutory floor under attribution traces the same safety and welfare frontier
-as a hard cap on chain length, which matters because a floor asks no regulator
-to count how many hands an instruction passed through.
+Software increasingly acts through chains: a person instructs an agent, which
+instructs sub-agents, so the process that finally acts is several hand-offs from
+the party that wanted it. Each hand-off restates the specification imperfectly
+and traces responsibility back only in part. Making delegation depth a strategic
+choice in an evolutionary model of a competitive artificial intelligence race,
+we find the two losses dangerous only together. Alone, each lifts unsafe
+behaviour by less than $0.02$; jointly they lift it to $0.32$, because
+responsibility that fades with depth disables the market's own answer to
+degraded instructions, which is to delegate less. In the resulting equilibrium
+every principal issues the safest available instruction, the population executes
+unsafe ones anyway, and depth is an unbounded shelter from liability. A
+statutory floor under attributed responsibility closes it, tracing the same
+safety and welfare frontier as a cap on chain length without anyone counting
+hand-offs.
 \end{abstract}
 
 \noindent\textbf{Keywords:} evolutionary game theory; delegation; principal-agent
