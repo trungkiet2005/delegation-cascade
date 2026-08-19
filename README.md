@@ -120,7 +120,7 @@ with a 60-digit evaluation to ten significant figures.
 
 This is the second of two studies built on the same interaction layer. The first
 asks what happens when the payoff that governs replication differs from the
-payoff earned in the game (*deployment-layer selection*); this one asks what
+payoff earned in the game ([*deployment-layer selection*](https://github.com/trungkiet2005/deployment-layer-selection)); this one asks what
 happens when the party being selected is several hand-offs away from the party
 that acts. The two share the race engine and the audit discipline, and they
 agree on the depth-zero benchmark: the liability at which `CAS` stops invading
