@@ -61,21 +61,21 @@ evolutionary game with strategic chain depth}
 \ead{23122039@student.hcmus.edu.vn}
 \credit{Conceptualization, Methodology, Software, Formal analysis,
 Investigation, Validation, Visualization, Writing -- original draft,
-Writing -- review and editing}
+Writing -- review \& editing}
 
 \author[1,2]{Dao Sy Duy Minh}[orcid=0009-0002-4501-2788]
 \fnmark[1]
 \ead{23122041@student.hcmus.edu.vn}
 \credit{Conceptualization, Methodology, Software, Formal analysis,
 Investigation, Validation, Visualization, Writing -- original draft,
-Writing -- review and editing}
+Writing -- review \& editing}
 
 \author[1,2]{Chi-Nguyen Tran}[orcid=0009-0007-6716-7269]
 \fnmark[1]
 \ead{23122044@student.hcmus.edu.vn}
 \credit{Conceptualization, Methodology, Software, Formal analysis,
 Investigation, Validation, Visualization, Writing -- original draft,
-Writing -- review and editing}
+Writing -- review \& editing}
 
 \affiliation[1]{organization={Faculty of Information Technology,
             University of Science (HCMUS)},
@@ -128,7 +128,8 @@ length.
 
 \begin{keywords}
 Evolutionary game theory \sep Markov chains \sep Fixation probability \sep
-Stationary distribution \sep Delegation \sep Liability \sep Multi-agent systems
+Delegation \sep Liability \sep Multi-agent systems
+\MSC[2020]{91A22, 60J10, 65C40, 91A80}
 \end{keywords}
 
 \maketitle
@@ -270,6 +271,18 @@ And attribution decays geometrically, which we treat as the definition of
 per-layer liability rather than as an empirical claim;
 Section~\ref{sec:floor} reports what changes when the rule is replaced, and
 Section~\ref{sec:limitations} states what the model still cannot represent.
+
+The paper is organised as follows. Section~\ref{sec:related} places the model
+in the literature. Section~\ref{sec:model} defines the interaction layer, the
+delegation chain and the functionals every reported number is built from, and
+Section~\ref{sec:analysis} proves the structural results. Section~\ref{sec:numerics}
+gives the numerical scheme, its cost and its verification, and
+Section~\ref{sec:results} reports what the model does: the decomposition of the
+two mechanisms, the attribution--erosion plane, the four governance instruments
+and the robustness checks. Section~\ref{sec:discussion} interprets and limits
+those findings and Section~\ref{sec:conclusion} concludes;
+Appendix~\ref{app:fixation} derives the closed form of
+Section~\ref{sec:fixation}.
 
 % ===========================================================================
 \section{Related work}
@@ -837,13 +850,17 @@ one exactly, the expected task payoff and expected unsafe count of $i$ against
 $j$ are finite sums
 \begin{equation}
   a(i,j) = \sum_{t} \Pr[T=t]\, a_{t}(i,j),
-  \qquad
+  \quad
   m(i,j) = \sum_{t} \Pr[T=t]\, m_{t}(i,j),
+  \quad
+  u(i,j) = \sum_{t} \Pr[T=t]\, u_{t}(i,j),
   \label{eq:horizonsum}
 \end{equation}
-in which $a_{t}$ and $m_{t}$ are read off prefix sums of the two action paths.
-Both matrices are therefore obtained in $O(|S|^{2}T_{\max})$ operations at
-machine precision, with $|S|=4$, and carry no sampling error at all. The
+in which $a_{t}$, $m_{t}$ and $u_{t}$ are read off prefix sums of the two action
+paths, $u_{t}$ being the Unsafe count of the path divided by its length. We
+write $A$, $M_{h}$ and $U_{h}$ for the three matrices they define. All three are
+therefore obtained in $O(|S|^{2}T_{\max})$ operations at machine precision, with
+$|S|=4$, and carry no sampling error at all. The
 alternative, simulating races and averaging, is what the size of the sweeps
 below makes unattractive rather than merely inelegant: the root-mean-square
 error of the payoff matrix is still $0.034$ after $10^{6}$ episodes per matchup
@@ -903,7 +920,8 @@ Under the pairwise-comparison rule with Fermi function and selection intensity
 $\beta$, an individual switches from $R$ to $I$ with probability
 $[1+e^{-\beta(\pi_{I}-\pi_{R})}]^{-1}$, so the birth-death chain on $k$ has
 $T^{-}(k)/T^{+}(k)=e^{-\beta(\pi_{I}(k)-\pi_{R}(k))}$ and the standard formula
-for a one-dimensional birth-death chain with absorbing ends gives
+for a one-dimensional birth-death chain with absorbing ends gives, as
+Appendix~\ref{app:fixation} derives,
 \begin{equation}
   \rho_{R\to I} = \left[\,1+\sum_{m=1}^{Z-1}
     \exp\!\Bigl(-\beta\sum_{k=1}^{m}\bigl(\pi_{I}(k)-\pi_{R}(k)\bigr)\Bigr)
@@ -940,7 +958,10 @@ accuracy where the naive sum survives.
 \label{sec:observables}
 
 The stationary distribution $x$ of~\eqref{eq:embedded} is its left Perron
-vector. We obtain it by replacing the last equation of the singular system
+vector, and it is unique: the embedded chain is irreducible whenever every
+$\rho_{i\to j}$ is strictly positive, which Appendix~\ref{app:fixation} shows
+is exactly what the shifted evaluation~\eqref{eq:shift} preserves and the naive
+sum destroys. We obtain it by replacing the last equation of the singular system
 $(P^{\top}-I)x=0$ with the normalisation $\mathbf{1}^{\top}x=1$ and solving the
 resulting nonsingular system directly, falling back on power iteration when the
 direct solve is ill conditioned. Every population quantity reported below is a
@@ -958,12 +979,14 @@ collects the whole pipeline.
 \label{alg:main}
 \begin{algorithmic}[1]
 \Require race parameters, ceiling $\bar D$, erosion $\varepsilon$, kernel $D$,
-  attribution rule $a(\cdot)$, liability $L$, harm $h$, $Z$, $\beta$
+  attribution rule $a(\cdot)$, liability $L$, harm $h$, $Z$, $\beta$, and
+  optionally one check $(\alpha,k)$
 \Ensure $x$, and the observables $U$, $\bar d$, $\piS$, declaration gap
 \State $A, M_{h}, U_{h} \gets$ exact horizon sums~\eqref{eq:horizonsum}
   \Comment{$O(|S|^{2}T_{\max})$}
 \State $M \gets (1-\varepsilon)I + \varepsilon D$;\quad
-  $p_{d,\cdot} \gets M^{d}$ for $d=0,\dots,\bar D$
+  $p_{d,\cdot} \gets M^{d}$, or $\alpha M^{d-k}+(1-\alpha)M^{d}$ with a check,
+  for $d=0,\dots,\bar D$
   \Comment{$O(\bar D|S|^{3})$}
 \State assemble $\piP,\piS,u$ on the $n=4(\bar D+1)$ designs
   by~\eqref{eq:bilinear}--\eqref{eq:social} \Comment{$O(n^{2}|S|^{2})$}
@@ -1161,7 +1184,7 @@ almost no information about the behaviour at the bottom of it.
 Four instruments act at different points of the chain: raise the attribution
 retention $\phi$ towards pass-through; cap the permitted chain length at
 $\bar D$; make every hand-off more faithful, multiplying $\varepsilon$ by a
-factor $\rho$; or insert one check of strength $\alpha$ at a chosen layer.
+factor $\kappa$; or insert one check of strength $\alpha$ at a chosen layer.
 Figure~\ref{fig:instruments} applies each to the same baseline.
 
 \paragraph{Attribution is a threshold, not a dial.}
@@ -1184,8 +1207,8 @@ ceiling is the constraint the shelter theorem leaves standing when attribution
 cannot be made exact.
 
 \paragraph{Fidelity is not monotone.}
-Improving transmission helps over most of its range, from $0.322$ at $\rho=1$
-down to $0.032$ at $\rho=0.35$, and then reverses: at $\rho=0.20$ the unsafe
+Improving transmission helps over most of its range, from $0.322$ at $\kappa=1$
+down to $0.032$ at $\kappa=0.35$, and then reverses: at $\kappa=0.20$ the unsafe
 frequency is back up to $0.239$. The cause is the intent margin.
 Over-specification was an equilibrium response to erosion; once hand-offs are
 faithful enough, issuing \CS{} rather than \AS{} becomes the better reply, and
@@ -1365,13 +1388,23 @@ direction, makes matters worse rather than better, with a joint cell of $0.517$.
 \input{tab_kernelshape}
 
 Three named kernels differ in more than one respect at once, so we separate the
-properties with two one-parameter families, each of which leaves the second
-eigenvalue of $M$ at exactly $1-\varepsilon$. The rate of forgetting is
-therefore held fixed throughout, and with it the specification half-life of
-Proposition~\ref{prop:erosion}. The first family runs from the ladder to the
-uniform kernel and takes the mean signed drift from $0.75$ rungs per erosion
+properties with two one-parameter families. The first runs from the ladder to
+the uniform kernel and takes the mean signed drift from $0.75$ rungs per erosion
 event down to $0$; the second runs from the ladder to collapse and takes it
-from $0.75$ up to $1.5$.
+from $0.75$ up to $1.5$. Every drift kernel along both families has second
+eigenvalue zero, so both hold the second eigenvalue of $M$ at exactly
+$1-\varepsilon$ and with it the asymptotic rate of forgetting.
+
+The two families do not both hold the specification half-life of
+Proposition~\ref{prop:erosion} fixed, and the difference is worth naming. That
+half-life is a property of the intact-arrival probability, which
+is~$(1-\varepsilon)^{d}$ only while the drift kernel keeps a zero diagonal. The
+second family keeps one, so its half-life stays at $3.11$ hand-offs. Along the
+first the diagonal fills in, the intact-arrival probability becomes
+$\tfrac{3}{4}(1-\varepsilon)^{d}+\tfrac{1}{4}$, which tends to $\tfrac{1}{4}$
+rather than to zero because an eroded specification can be restored by chance,
+and the half-life rises to $4.92$. Fidelity improves along the first family
+while the outcome gets worse, which is the section's point in miniature.
 
 Along the first, the joint cell stays between $0.320$ and $0.327$ for four
 fifths of the range before rising to $0.517$ at pure noise, and mean depth sits
