@@ -14,12 +14,16 @@ from __future__ import annotations
 
 import json
 import math
+import platform
 import time
+from dataclasses import replace
 from pathlib import Path
 
 import mpmath as mp
 import numpy as np
+import scipy
 import scipy.sparse as sp
+import scipy.sparse.csgraph as csgraph
 
 from dcascade import config
 from dcascade.chain import ChainParams
@@ -296,6 +300,7 @@ def sml_versus_full() -> None:
     chain = config.CHAIN
     depths = (0, chain.max_depth // 2, chain.max_depth)
     Z = 40
+    mutations = (0.05, 0.02, 0.01, 0.005, 0.002, 0.001)
     rows = sml_versus_full_chain(
         TABLES,
         chain,
@@ -304,7 +309,7 @@ def sml_versus_full() -> None:
         harm=config.HARM,
         population_size=Z,
         beta=config.BETA,
-        mutations=(0.05, 0.02, 0.01, 0.005),
+        mutations=mutations,
         depths=depths,
     )
     fun = _functionals(chain)
@@ -327,6 +332,126 @@ def sml_versus_full() -> None:
             }
             for r in rows
         ],
+    }
+
+    # The two single-mechanism cells of Table 4 are themselves only 0.018 and
+    # 0.012, so a residual of 0.012 in one cell is not by itself informative.
+    # What the decomposition reports is the difference of differences, so
+    # recompute all four cells of the 2x2 on this same sub-space and compare
+    # the interaction index rather than the cells.
+    cells = {"baseline": (0.0, 1.0), "erosion": (config.CHAIN.eps, 1.0),
+             "attribution": (0.0, config.CHAIN.phi),
+             "joint": (config.CHAIN.eps, config.CHAIN.phi)}
+
+    def _sub(eps: float, phi: float):
+        fun_c = _functionals(replace(chain, eps=eps, phi=phi))
+        ix = np.array([fun_c.index(d, "AS") for d in depths])
+        return (np.ascontiguousarray(fun_c.pi_P[np.ix_(ix, ix)]),
+                np.ascontiguousarray(fun_c.unsafe_frequency[np.ix_(ix, ix)]))
+
+    sml_cells = {}
+    for name, (eps, phi) in cells.items():
+        pay, uns = _sub(eps, phi)
+        sml_cells[name] = stationary_analysis_sml(
+            pay, uns, population_size=Z, beta=config.BETA
+        ).unsafe_frequency
+    interaction_sml = (sml_cells["joint"] - sml_cells["erosion"]
+                       - sml_cells["attribution"] + sml_cells["baseline"])
+
+    interaction_rows = []
+    for mu in mutations:
+        full_cells = {}
+        for name, (eps, phi) in cells.items():
+            pay, uns = _sub(eps, phi)
+            full_cells[name] = stationary_analysis(
+                pay, uns, Z, config.BETA, mu
+            ).unsafe_frequency
+        inter = (full_cells["joint"] - full_cells["erosion"]
+                 - full_cells["attribution"] + full_cells["baseline"])
+        interaction_rows.append({
+            "mu": float(mu),
+            "cells": {k: float(v) for k, v in full_cells.items()},
+            "interaction_full": float(inter),
+            "abs_difference": abs(float(inter) - float(interaction_sml)),
+        })
+
+    joint_err = {r["mu"]: r["abs_difference"] for r in RESULTS["sml_versus_full"]["rows"]
+                 if r["mu"] > 0}
+    RESULTS["sml_versus_full"]["interaction_sml"] = float(interaction_sml)
+    RESULTS["sml_versus_full"]["interaction_rows"] = interaction_rows
+    RESULTS["sml_versus_full"]["error_over_mu"] = {
+        str(m): e / m for m, e in joint_err.items()
+    }
+    finest = sorted(joint_err)[:2]
+    if len(finest) == 2:
+        m2, m1 = finest[0], finest[1]          # m2 = mu/2 (finest), m1 = mu
+        u1 = next(r["full_chain_unsafe"] for r in RESULTS["sml_versus_full"]["rows"]
+                  if r["mu"] == m1)
+        u2 = next(r["full_chain_unsafe"] for r in RESULTS["sml_versus_full"]["rows"]
+                  if r["mu"] == m2)
+        RESULTS["sml_versus_full"]["richardson"] = {
+            "mu_pair": [m1, m2],
+            "extrapolated": 2 * u2 - u1,
+            "abs_difference": abs(2 * u2 - u1 - sml.unsafe_frequency),
+        }
+
+
+# --------------------------------------------------------------------------
+# 5b. the condition Proposition 9 needs, certified on every reported regime
+# --------------------------------------------------------------------------
+
+
+def _closed_classes(p: np.ndarray) -> tuple[int, int, int]:
+    """(components, closed classes, zero off-diagonal entries) of a computed P."""
+    n = p.shape[0]
+    off = ~np.eye(n, dtype=bool)
+    pos = (p > 0.0) & off
+    ncomp, labels = csgraph.connected_components(
+        sp.csr_matrix(pos), directed=True, connection="strong"
+    )
+    closed = 0
+    for c in range(ncomp):
+        inside = np.where(labels == c)[0]
+        outside = np.setdiff1d(np.arange(n), inside)
+        if outside.size == 0 or not pos[np.ix_(inside, outside)].any():
+            closed += 1
+    return int(ncomp), int(closed), int((~pos & off).sum())
+
+
+def closed_class_certification() -> None:
+    """Check the hypothesis of Proposition 9 across every regime the paper reports."""
+    chain = config.CHAIN
+    Z, beta = config.POPULATION, config.BETA
+    worst = {"n_components_max": 1, "n_closed_max": 1, "zero_entries_max": 0}
+    checked = 0
+
+    def _check(ch: ChainParams, z: int, b: float) -> None:
+        nonlocal checked, worst
+        fun = _functionals(ch)
+        p = sml_transition_matrix(np.ascontiguousarray(fun.pi_P), z, b)
+        ncomp, closed, zeros = _closed_classes(p)
+        worst["n_components_max"] = max(worst["n_components_max"], ncomp)
+        worst["n_closed_max"] = max(worst["n_closed_max"], closed)
+        worst["zero_entries_max"] = max(worst["zero_entries_max"], zeros)
+        checked += 1
+
+    for phi in np.linspace(0.6, 1.0, 21):
+        for eps in np.linspace(0.0, 0.4, 21):
+            _check(replace(chain, eps=float(eps), phi=float(phi)), Z, beta)
+    for z in (50, 100, 200):
+        for b in (0.01, 0.05, 0.1, 0.2):
+            _check(chain, z, b)
+    for kernel in ("ladder", "collapse", "uniform"):
+        _check(replace(chain, kernel=kernel), Z, beta)
+    for ceiling in (4, 6, 8):
+        _check(replace(chain, max_depth=ceiling), Z, beta)
+    for gain in (0.0, 1.5, 5.0):
+        _check(replace(chain, gain=gain), Z, beta)
+
+    RESULTS["closed_class_certification"] = {
+        "regimes_checked": checked,
+        "unique_stationary_everywhere": worst["n_closed_max"] == 1,
+        **worst,
     }
 
 
@@ -354,14 +479,36 @@ def timing() -> None:
         _functionals(chain)
     t_build = (time.perf_counter() - t0) / reps
 
+    # The three subtracted terms of the interaction index are themselves grid
+    # points, one per row and one per column, so the plane is 441 stationary
+    # regimes and not 4 x 441.  Measure it rather than extrapolating.
+    t0 = time.perf_counter()
+    for phi in np.linspace(0.6, 1.0, 21):
+        for eps in np.linspace(0.0, 0.4, 21):
+            f = _functionals(replace(chain, eps=float(eps), phi=float(phi)))
+            stationary_analysis_sml(
+                np.ascontiguousarray(f.pi_P),
+                np.ascontiguousarray(f.unsafe_frequency),
+                population_size=Z,
+                beta=beta,
+            )
+    t_grid = time.perf_counter() - t0
+
     RESULTS["timing"] = {
         "n_designs": int(a.shape[0]),
         "Z": Z,
         "seconds_per_stationary_regime": t_one,
         "seconds_per_functional_build": t_build,
         "grid_points": 21 * 21,
-        "corners_per_grid_point": 4,
-        "estimated_grid_seconds": 21 * 21 * 4 * (t_one + t_build),
+        "measured_grid_seconds": t_grid,
+        "exponentials_per_regime": int(a.shape[0]) * (int(a.shape[0]) - 1) * Z,
+        "machine": {
+            "processor": platform.processor(),
+            "platform": platform.platform(),
+            "python": platform.python_version(),
+            "numpy": np.__version__,
+            "scipy": scipy.__version__,
+        },
     }
 
 
@@ -413,14 +560,15 @@ def emit_tex() -> None:
         r"mutation--selection process is a Markov chain on population states, of "
         r"which there are $\binom{Z+n-1}{n-1}$; the reduction of "
         r"Section~\ref{sec:reduction} needs $n(n-1)$ fixation probabilities, each "
-        r"evaluated in $O(Z)$ arithmetic operations. The depth ceiling $\bar{D}$ "
+        r"evaluated with $Z-1$ exponentials, one further exponential for the "
+        r"shift, and $O(Z)$ accompanying arithmetic. The depth ceiling $\bar{D}$ "
         r"fixes the number of designs at $n=4(\bar{D}+1)$; the manuscript runs "
         r"at $\bar{D}=6$, $Z=100$.}",
         r"\label{tab:cost}",
         r"\begin{tabular*}{\tblwidth}{@{}LLLRR@{}}",
         r"\toprule",
         r"$\bar{D}$ & $n$ & $Z$ & states of the full chain & "
-        r"operations of the reduction \\",
+        r"exponentials of the reduction \\",
         r"\midrule",
     ]
     for max_depth in (4, 6, 8):
@@ -436,24 +584,29 @@ def emit_tex() -> None:
     lines += [
         r"\begin{table}[pos=t]",
         r"\centering",
-        r"\caption{Verification of the scheme, in four independent checks. "
+        r"\caption{Verification, in four checks of four different things. "
         r"Block~1 compares the exact horizon expectation of "
         r"Section~\ref{sec:interaction} with a Monte-Carlo estimate of the same "
         r"payoff matrix: root-mean-square error over the sixteen ordered pairs "
         r"and eight independent replicates, which decays at the Monte-Carlo "
-        r"rate $N^{-1/2}$ and which the exact route removes. Block~2 "
-        r"compares the stabilised "
+        r"rate $N^{-1/2}$ and which the exact route removes. Block~2 checks the "
+        r"arithmetic, not the formula: it compares the stabilised "
         r"evaluation of~\eqref{eq:fixation} in double precision with the same "
-        r"sum evaluated in $60$-digit arithmetic, worst relative error over the "
-        r"$n(n-1)=%d$ ordered pairs of the full design space whose fixation "
-        r"probability is representable as a normal double. Block~3 compares the "
-        r"closed form with the general-purpose routine of EGTtools on the "
-        r"depth-zero design space, worst absolute difference over all ordered "
-        r"pairs. Block~4 compares the small-mutation limit with the full "
-        r"mutation--selection chain on a design space small enough for it "
-        r"($n=%d$, $Z=%d$, $%s$ population states).}"
+        r"sum evaluated in $60$-digit arithmetic, worst relative error over "
+        r"those of the $n(n-1)=%d$ ordered pairs whose fixation probability is "
+        r"representable as a normal double, $%d$ at $\beta=0.05$ and $%d$ at "
+        r"$\beta=0.2$. Block~3 checks the closed form itself against an "
+        r"independent implementation of the same birth-death formula in "
+        r"EGTtools, on the depth-zero design space, worst absolute difference "
+        r"over all ordered pairs. Block~4 compares the small-mutation "
+        r"reduction with the full mutation--selection chain on a design space "
+        r"small enough for it ($n=%d$, $Z=%d$, $%s$ population states); both "
+        r"sides use the process average $\sum_{i}x_{i}u(i,i)$ of "
+        r"Section~\ref{sec:observables}.}"
         % (
             RESULTS["stability"]["n_ordered_pairs"],
+            RESULTS["stability"]["by_beta"]["beta=0.05"]["n_pairs_representable"],
+            RESULTS["stability"]["by_beta"]["beta=0.2"]["n_pairs_representable"],
             sv["n_designs"],
             sv["Z"],
             _sci(sv["n_states"]),
@@ -504,6 +657,7 @@ def main() -> None:
         stability,
         cross_check,
         sml_versus_full,
+        closed_class_certification,
         timing,
         residuals,
     ):

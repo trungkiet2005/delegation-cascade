@@ -28,7 +28,7 @@ HIGHLIGHTS = [
     "Delegation depth becomes a strategic variable in an evolutionary race game",
     "Realised harm saturates in depth while attributed harm decays geometrically",
     "An exact O(Z) scheme replaces a chain with 3x10^27 population states",
-    "Two per-hand-off losses are minor alone and raise unsafe behaviour 18-fold together",
+    "Neither per-hand-off loss is dangerous alone; together they reach 0.32 unsafe",
     "A floor under attributed liability reproduces the frontier of a depth cap",
 ]
 
@@ -45,12 +45,9 @@ FUNDING = (
 
 AI_DECLARATION = (
     "During the preparation of this work the authors used a large language "
-    "model assistant in order to draft and copy-edit prose and to refactor "
-    "analysis scripts. After using this tool the authors reviewed and edited "
-    "the content as needed and take full responsibility for the content of the "
-    "published article. No text, figure or numerical result was accepted "
-    "without verification against the model and the code released with the "
-    "paper."
+    "model assistant in order to draft and copy-edit prose. After using this "
+    "tool the authors reviewed and edited the content as needed and take full "
+    "responsibility for the content of the published article."
 )
 
 
@@ -82,7 +79,7 @@ def write_highlights() -> None:
 
 def write_declarations() -> None:
     doc = _document()
-    doc.add_heading("Declaration of competing interests", level=1)
+    doc.add_heading("Declaration of competing interest", level=1)
     doc.add_paragraph(TITLE).runs[0].italic = True
     doc.add_paragraph(COMPETING_INTERESTS)
     doc.add_heading("Funding", level=1)

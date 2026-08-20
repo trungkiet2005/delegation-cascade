@@ -435,7 +435,7 @@ def figure_instruments(race, chain, outdir: Path, quick: bool = False) -> None:
                     xytext=(x[peak] + 0.055, y[peak] + 0.035), ha="left", va="bottom",
                     fontsize=FS["annot"], color=PALETTE["neutral"],
                     arrowprops=dict(arrowstyle="->", lw=0.7, color=PALETTE["neutral"]))
-    ax.set_xlabel(r"erosion probability after attestation, $\rho\varepsilon$")
+    ax.set_xlabel(r"erosion probability after the improvement, $\rho\varepsilon$")
     ax.set_ylabel("Unsafe frequency $U$")
     panel_title(ax, "B", "fidelity is not monotone")
 
@@ -498,7 +498,7 @@ def figure_frontier(race, chain, outdir: Path, quick: bool = False) -> None:
                                cfg.LAM, cfg.HARM, "sml", **SML),
             PALETTE["AS"], "o",
         ),
-        "attestation": (
+        "fidelity": (
             iv.attestation_sweep(race, chain, np.linspace(1.0, 0.0, n),
                                  cfg.LAM, cfg.HARM, "sml", **SML),
             PALETTE["CS"], "s",
@@ -534,8 +534,9 @@ def figure_frontier(race, chain, outdir: Path, quick: bool = False) -> None:
     matched = iv.matched_effort_comparison(
         race, chain, 0.05, cfg.LAM, cfg.HARM, "sml", **SML
     )
+    # the JSON keys are historical; the labels are the manuscript's own names
     names = ["depth_cap", "attestation", "pass_through", "liability"]
-    pretty = ["depth\nceiling", "attestation", "attribution", "liability\nlevel"]
+    pretty = ["depth\nceiling", "fidelity", "attribution", "liability\nlevel"]
     colours = [PALETTE["AS"], PALETTE["CS"], PALETTE["CAS"], PALETTE["AU"]]
     values = [matched[k]["social_payoff"] for k in names]
     ax.bar(range(len(names)), values, width=0.62, color=colours)

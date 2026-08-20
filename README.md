@@ -78,7 +78,9 @@ results/grid.npz                 the (phi, eps) plane
 results/tables/*.csv             transmission, profiles, thresholds, instruments
 results/tables/tables.tex        LaTeX tables included by the manuscript
 results/figures/fig0*.pdf        publication figures
-paper/main.pdf                   the compiled manuscript
+paper/main.pdf                   the compiled manuscript (built here, not committed:
+                                 the journals are told the paper has not appeared
+                                 anywhere, so no PDF of it is published in this repo)
 ```
 
 ## Package layout

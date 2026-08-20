@@ -8,9 +8,18 @@
 %%   pdflatex main && bibtex main && pdflatex main && pdflatex main
 %% =========================================================================
 
+%% Loading float ahead of the class stops the algorithm package from
+%% re-registering the float counters, which otherwise emits one
+%% "destination with the same identifier" warning per float.
+\RequirePackage{float}
 \documentclass[a4paper,fleqn]{cas-sc}
 
 \usepackage[numbers,sort&compress]{natbib}
+
+%% cas-sc leaves \sfdefault at the EC family, whose \textsf is embedded as a
+%% Type 3 PK bitmap; the strategy labels use \textsf on nearly every page.
+\renewcommand{\sfdefault}{lmss}
+\renewcommand{\ttdefault}{lmtt}
 
 \usepackage{placeins}
 \usepackage{algorithm}
@@ -37,6 +46,14 @@
 \newcommand{\AU}{\textsf{AU}}
 \newcommand{\piP}{\pi_{P}}
 \newcommand{\piS}{\pi_{S}}
+
+%% Full-width floats in a single-column layout fill most of a top area, so the
+%% class defaults leave a backlog that never clears and every figure prints two
+%% or three pages after the text that discusses it.
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.75}
 
 \begin{document}
 \let\WriteBookmarks\relax
@@ -98,7 +115,7 @@ depth a strategic variable in an evolutionary game puts the mutation--selection
 chain over population states, $3.0\times10^{27}$ of them, out of reach. We
 give a scheme that avoids it. The interaction tensor is summed exactly over the
 horizon law; the process is reduced to an embedded chain on the pure designs,
-exact as the mutation rate vanishes and with its residual measured against the
+exact as the mutation rate vanishes, with its residual measured against the
 full chain; and the fixation probabilities that chain needs follow from a
 closed form in $O(Z)$ operations, with the largest exponent factored out of a
 sum whose terms otherwise overflow double precision. What the reduction needs
@@ -106,13 +123,12 @@ of that evaluation is positivity rather than accuracy, and we certify it. Two
 structural results are exact. Realised harm saturates in the depth while
 attributed harm carries one extra factor per layer, so for every attribution
 retention below one there is a depth beyond which each further hand-off
-strictly lowers the bill the principal is charged and never lowers the harm it
-causes; and any attribution rule whose share is bounded below by a positive
-constant closes that shelter. Numerically, from a calibration whose depth-zero
-unsafe frequency is $0.000$, each loss alone leaves it at or below $0.018$
-while the two together raise it to $0.322$, and a statutory floor under
-attributed responsibility reproduces a depth cap's frontier wherever a floor
-can reach.
+strictly lowers the principal's bill and never lowers the harm it causes; and
+any attribution rule whose share is bounded below by a positive constant closes
+that shelter. Numerically, from a calibration whose depth-zero unsafe frequency
+is $0.000$, each loss alone leaves it at or below $0.018$ while the two
+together raise it to $0.322$, and a statutory floor under attributed
+responsibility reproduces a depth cap's frontier wherever it can reach.
 \end{abstract}
 
 \begin{highlights}
@@ -260,29 +276,21 @@ is $91\%$ of the joint effect. A counterfactual that holds the population
 composition fixed shows why. Under full pass-through the population answers
 transmission loss by shortening its chains from six hand-offs to two, and that
 answer, rather than any change of behaviour at a given depth, is what per-layer
-attribution removes. In the resulting equilibrium every principal issues the
-safest available specification and the population executes it only $26\%$ of
-the time. Among the four governance instruments we compare, restoring
-attribution has a threshold rather than a gradient, capping chain length is
-monotone and cheap, and improving transmission fidelity is neither monotone nor
-safe in the small. A statutory floor under attributed responsibility reproduces
-the frontier of a depth cap wherever a floor can reach it: over the five
-ceilings a floor can match on welfare it matches the unsafe frequency to
-$0.0011$, and it asks a regulator to count no hand-offs.
-
-\subsection{Assumptions}
-\label{sec:assumptions}
+attribution removes. Among the four governance instruments we compare,
+restoring attribution has a threshold rather than a gradient, capping chain
+length is monotone and cheap, and improving transmission fidelity is neither
+monotone nor safe in the small. A statutory floor under attributed
+responsibility reproduces the frontier of a depth cap wherever a floor can
+reach it, and asks a regulator to count no hand-offs.
 
 Three assumptions belong at the outset rather than at the end. The chain
 transmits one specification per race, so the executed designs of the two seats
-are independent draws and every payoff is bilinear; a model in which layers
-renegotiate during play would not have this structure. The erosion kernel is
-exogenous and is not itself under selection, so we describe what a population
-does under a given transmission technology and not how that technology evolves.
-And attribution decays geometrically, which we treat as the definition of
-per-layer liability rather than as an empirical claim;
-Section~\ref{sec:floor} reports what changes when the rule is replaced, and
-Section~\ref{sec:limitations} states what the model still cannot represent.
+are independent draws and every payoff is bilinear. The erosion kernel is
+exogenous and is not itself under selection. And attribution decays
+geometrically, which we treat as the definition of per-layer liability rather
+than as an empirical claim; Section~\ref{sec:floor} reports what changes when
+the rule is replaced, and Section~\ref{sec:limitations} states what the model
+still cannot represent.
 
 The paper is organised as follows. Section~\ref{sec:related} places the model
 in the literature. Section~\ref{sec:model} defines the interaction layer, the
@@ -313,12 +321,11 @@ round and advances faster, and a leader that cut corners carries a private risk
 of a setback. That line of work has since examined sanctioning against
 rewarding~\citep{han2021mediating}, heterogeneous and networked
 populations~\citep{cimpeanu2022heterogeneous}, voluntary safety
-commitments~\citep{han2022voluntary}, the incentives of the auditors a
-regulator would rely on~\citep{bova2024vigilant} and the trust of the users who
-face the result~\citep{bashir2026trust}. All of it places the strategic agent
-in the race. We leave the race exactly as it is and ask what happens when the
-party whose design is selected is several hand-offs removed from the party that
-acts.
+commitments~\citep{han2022voluntary}, the auditors a regulator would rely
+on~\citep{bova2024vigilant} and the trust of the users who face the
+result~\citep{bashir2026trust}, all of it placing the strategic agent in the
+race. We leave the race exactly as it is and ask what happens when the party
+whose design is selected is several hand-offs removed from the party that acts.
 
 \paragraph{Delegation and hierarchy.}
 Behavioural work has shown that delegating a decision to an artificial agent
@@ -333,10 +340,9 @@ described~\citep{hammond2025multiagent,tomasev2026delegation,gabison2025liabilit
 as far as we are aware without a formal model in which the depth of the chain
 is itself selected. That authority degrades as it passes down a hierarchy is
 classical in the economics of organisation, appearing as the loss of control
-that bounds firm size~\citep{williamson1967hierarchical,calvo1978supervision},
-as the cost of decentralised information
-processing~\citep{radner1993organization}, and as the question of how many
-tiers to build when every tier costs
+that bounds firm
+size~\citep{williamson1967hierarchical,calvo1978supervision,radner1993organization}
+and as the question of how many tiers to build when every tier costs
 control~\citep{garicano2000hierarchies,mcafee1995diseconomies}. Diluted
 responsibility in teams is equally classical~\citep{holmstrom1982moral}, and
 experiments find that principals delegate precisely to shed blame: an unfair
@@ -609,8 +615,17 @@ The two functionals differ only in the second term, and their difference is the
   \Delta(d) \;=\; \piP - \piS \;=\; h\bigl(1-\lambda\phi^{d}\bigr)\, m,
   \label{eq:wedge}
 \end{equation}
-which is non-decreasing in $d$ for every $\phi\le1$ and vanishes identically at
-$\phi=\lambda=1$. Depth alone widens the gap between what a principal optimises
+which vanishes identically at $\phi=\lambda=1$ and is non-decreasing in $d$
+whenever $\lambda\in[0,1]$, $\phi\in[0,1]$ and the hand-off kernel satisfies the
+hypothesis of Proposition~\ref{prop:monotone}. Both factors then move the same
+way: $\phi^{d}$ is non-increasing, so $1-\lambda\phi^{d}$ is non-negative and
+non-decreasing, and $m$ is non-negative and non-decreasing in $d$ by that
+proposition, so their product is non-decreasing. The restriction is not
+vacuous. The uniform kernel fails the hypothesis, and
+Section~\ref{sec:robustness} sweeps $\phi$ above one, where the factor
+$1-\lambda\phi^{d}$ decreases and the wedge can close rather than widen; the
+statement is made for the regime the rest of the paper works in.
+Depth alone widens the gap between what a principal optimises
 and what society bears, without any change in what the principal intends. Only
 the product $L=\lambda h$ enters $\piP$, so the two-parameter family
 $(\lambda,h)$ collapses to the single control $L$, the \emph{effective
@@ -735,7 +750,7 @@ respects the stochastic order. Bilinearity in~\eqref{eq:bilinear} extends the
 statement from pure opponents to mixtures. \qed
 \end{pf}
 
-\begin{figure}[pos=t]
+\begin{figure}[pos=tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fig02_transmission.pdf}
 \caption{What a hand-off does to a specification.
@@ -895,18 +910,17 @@ reduced rate: by Proposition~\ref{prop:monotone} its chain also causes more
 harm for the same intent, so $d^{\dagger}$ locates the depth at which the
 nominal instrument has been diluted past its depth-zero calibration rather than
 predicting exactly when deterrence fails. Section~\ref{sec:instruments}
-compares $d^{\dagger}$ with the threshold the simulated ecosystem actually
-shows.
+compares it with the threshold the simulated ecosystem shows.
 
-The last panel of Figure~\ref{fig:shelter} records a fact that is easy to miss.
-The depth the population reaches is not the depth that is best for the
+The last panel of Figure~\ref{fig:shelter} records a fact that is easy to miss:
+the depth the population reaches is not the depth that is best for the
 principals themselves. A monomorphic population of one-hand-off principals
-earns more than a monomorphic population of six-hand-off principals, and yet
-the deeper design invades at every step, because an invader is judged against
-the resident environment rather than against its own. Delegation depth is a
-social dilemma at the private level before it is one at the social level.
+earns more than one of six-hand-off principals, and yet the deeper design
+invades at every step, because an invader is judged against the resident
+environment rather than against its own. Delegation depth is a social dilemma
+at the private level before it is one at the social level.
 
-\begin{figure}[pos=t]
+\begin{figure}[pos=tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fig03_shelter.pdf}
 \caption{Depth as a liability shelter.
@@ -1166,20 +1180,78 @@ naive sum survives.
 \label{sec:observables}
 
 The stationary distribution $x$ of~\eqref{eq:embedded} is its left Perron
-vector, and it is unique: the embedded chain is irreducible whenever every
-$\rho_{i\to j}$ is strictly positive, which Appendix~\ref{app:fixation} shows
-is exactly what the shifted evaluation~\eqref{eq:shift} preserves and the naive
-sum destroys. We obtain it by replacing the last equation of the singular system
+vector. In exact arithmetic every $\rho_{i\to j}$ is strictly positive at finite
+$\beta$, so $P$ is irreducible and $x$ is unique. Double precision does not
+preserve that positivity, and the honest statement of what it does preserve is
+the following.
+
+\begin{proposition}[What double precision has to keep]
+\label{prop:closed}
+Let $\hat P$ be the matrix~\eqref{eq:embedded} assembled from computed fixation
+probabilities, some of which may have underflowed to zero. If the digraph of
+the strictly positive off-diagonal entries of $\hat P$ has exactly one closed
+communicating class, then $\hat P$ has a unique stationary distribution, and it
+assigns mass exactly zero to every design outside that class. Full
+irreducibility is sufficient for this but not necessary.
+\end{proposition}
+
+\begin{pf}
+A finite stochastic matrix has one stationary distribution for each closed
+communicating class of its digraph, and these are affinely independent, so
+uniqueness is equivalent to there being exactly one such class. Every state
+outside a closed class is transient, and the stationary distribution of a
+finite chain vanishes on transient states.
+\qed
+\end{pf}
+
+The condition is not automatic and it is not free. At $\beta=0.05$, $12$ of the
+$756$ fixation probabilities return exactly zero and the division by $n-1$
+in~\eqref{eq:embedded} loses one more, leaving $13$ zero off-diagonal entries;
+the digraph is nonetheless strongly connected, so $\hat P$ is irreducible and
+Proposition~\ref{prop:closed} applies trivially. At $\beta=0.2$ the counts are
+$161$ and $162$, the digraph splits into a class of $26$ designs and the pair
+$\{\CAS{}@0,\AU{}@0\}$, and only the first is closed, so $x$ is still unique and
+the transient pair receives mass exactly zero. What matters is that the
+unshifted evaluation does not clear the condition on the same problem: it
+returns zero for $383$ of the $756$ pairs at $\beta=0.05$ and $407$ at
+$\beta=0.2$, and its digraph then has a single absorbing design as its only
+closed class, so its stationary vector is a point mass and every quantity we
+report off that equilibrium is lost. We check the condition of
+Proposition~\ref{prop:closed} by Tarjan's algorithm, at cost $O(n^{2})$, on
+every regime reported here: over the $462$ regimes behind the parameter plane
+and the process, kernel, ceiling and benefit sweeps, the computed chain splits
+into at most four communicating classes and always has exactly one closed
+class, so the stationary vector is unique throughout.
+
+We obtain $x$ by replacing the last equation of the singular system
 $(P^{\top}-I)x=0$ with the normalisation $\mathbf{1}^{\top}x=1$ and solving the
-resulting nonsingular system directly, falling back on power iteration when the
-direct solve is ill conditioned. Every population quantity reported below is a
-functional of $x$: the long-run unsafe frequency is
-$U=\sum_{ij}x_{i}x_{j}u(i,j)$, the mean delegation depth is
-$\bar d=\sum_{i}x_{i}d_{i}$, the social payoff is
-$\sum_{ij}x_{i}x_{j}\piS(i,j)$, and the \emph{declaration gap} is the total
+resulting nonsingular system by LU factorisation, at the dense cost $O(n^{3})$.
+Entries below zero, which a near-singular solve produces at the $10^{-16}$
+level and below, are set to zero before renormalisation; the returned vector is
+accepted when it is finite, has positive mass and satisfies
+$\lVert x^{\top}P-x^{\top}\rVert_{\infty}<10^{-8}$, and is otherwise recomputed
+by power iteration from the uniform start. The subtraction-free GTH
+elimination of~\citet{grassmann1985gth} removes the cancellation at its source
+and is the right route at larger $n$.
+
+Every population quantity reported below is a functional of $x$. The mean
+delegation depth is $\bar d=\sum_{i}x_{i}d_{i}$; the long-run unsafe frequency
+is $U=\sum_{ij}x_{i}x_{j}u(i,j)$ and the social payoff
+$\sum_{ij}x_{i}x_{j}\piS(i,j)$; and the \emph{declaration gap} is the total
 variation distance between the intent marginal of $x$ and the executed-design
 marginal $x^{\top}P_{\mathrm{tr}}$, where $P_{\mathrm{tr}}$ stacks the
-transmission laws $p_{d,s}$. Nothing here is estimated. Algorithm~\ref{alg:main}
+transmission laws $p_{d,s}$. The bilinear form deserves a word, because under
+the small-mutation limit the population is monomorphic almost always and $x$ is
+therefore a distribution over monomorphic states, whose process average would
+be the diagonal $\sum_{i}x_{i}u(i,i)$. We report the bilinear form because it
+is the unsafe rate an outside observer sees on drawing two principals
+independently from the long-run design distribution, and because it is also
+what the replicator comparison delivers, so the two dynamics are scored on one
+definition. The two agree to $10^{-9}$ at the joint cell of
+Section~\ref{sec:decomposition} and to $5\times10^{-4}$ at the two
+single-mechanism cells, and over the plane of Section~\ref{sec:plane} they
+differ by at most $0.123$, attained at $\phi=0.60$, $\varepsilon=0$, where $x$
+is least concentrated. Nothing here is estimated. Algorithm~\ref{alg:main}
 collects the whole pipeline.
 
 \begin{algorithm}[t]
@@ -1187,7 +1259,7 @@ collects the whole pipeline.
 \label{alg:main}
 \begin{algorithmic}[1]
 \Require race parameters, ceiling $\bar D$, erosion $\varepsilon$, kernel $D$,
-  attribution rule $a(\cdot)$, liability $L$, harm $h$, $Z$, $\beta$, and
+  attribution rule $r(\cdot)$, liability $L$, harm $h$, $Z$, $\beta$, and
   optionally one check $(\alpha,k)$
 \Ensure $x$, and the observables $U$, $\bar d$, $\piS$, declaration gap
 \State $A, M_{h}, U_{h} \gets$ exact horizon sums~\eqref{eq:horizonsum}
@@ -1200,11 +1272,16 @@ collects the whole pipeline.
   by~\eqref{eq:bilinear}--\eqref{eq:social} \Comment{$O(n^{2}|S|^{2})$}
 \For{each ordered pair $(i,j)$, $i\ne j$}
   \State $\theta \gets$ cumulative sum of $-\beta(\pi_{j}(k)-\pi_{i}(k))$,
-    $k=1,\dots,Z-1$ \Comment{$O(Z)$}
+    $k=1,\dots,Z-1$ \Comment{$Z-1$ exponentials}
   \State $\rho_{i\to j} \gets$ shifted sum~\eqref{eq:shift}
 \EndFor
-\State build $P$ by~\eqref{eq:embedded}; \quad
-  $x \gets$ left Perron vector of $P$ \Comment{$O(n^{3})$}
+\State build $P$ by~\eqref{eq:embedded}
+\State \textbf{assert} the digraph of $\{P_{ij}>0,\ i\ne j\}$ has exactly one
+  closed class \Comment{Prop.~\ref{prop:closed}, $O(n^{2})$}
+\State $B \gets P^{\top}-I$ with its last row replaced by $\mathbf{1}^{\top}$;
+  \quad solve $Bx=e_{n}$ by LU \Comment{$O(n^{3})$}
+\State clip $x$ at zero, renormalise, and accept if
+  $\lVert x^{\top}P-x^{\top}\rVert_{\infty}<10^{-8}$; else power-iterate
 \State \Return $x$ and its functionals
 \end{algorithmic}
 \end{algorithm}
@@ -1214,19 +1291,35 @@ collects the whole pipeline.
 
 Steps 4 to 7 of Algorithm~\ref{alg:main} dominate, at $n(n-1)$ fixation
 probabilities of $O(Z)$ each, so one stationary regime costs
-$O\!\left(n^{2}Z+n^{3}\right)$ arithmetic operations against the
-$\binom{Z+n-1}{n-1}$ states of the route it replaces. At the baseline that is
-$75\,600$ operations for the fixation stage and $28$ milliseconds end to end in
-a NumPy implementation, so the $21\times21$ grid of Section~\ref{sec:plane},
-which needs four stationary regimes per grid point, completes in under a
-minute. The stationary solve is well behaved: the rows of $P$ sum to one to
-$2.2\times10^{-16}$ and the residual $\lVert x^{\top}P-x^{\top}\rVert_{\infty}$
-of the returned vector is $4.2\times10^{-17}$.
+$O\!\left(n^{2}Z+n^{3}\right)$ arithmetic against the $\binom{Z+n-1}{n-1}$
+states of the route it replaces. The dominant transcendental count is exact:
+$n(n-1)Z=75\,600$ exponential evaluations at the baseline, one per term of the
+$n(n-1)$ shifted sums, together with $O(n^{2}Z)$ accompanying arithmetic and
+one $n\times n$ LU factorisation.
+
+Wall-clock figures are single-core on a Windows 11 laptop with an AMD Ryzen 5
+5500U, Python 3.12, NumPy 1.26 and SciPy 1.17. One stationary regime, payoff
+assembly included, costs $39$ milliseconds, and the $21\times21$ grid of
+Section~\ref{sec:plane} costs $17.6$ seconds. That grid is $441$ stationary
+regimes and not $4\times441$: the three subtracted terms of the interaction
+index~\eqref{eq:interaction} are themselves grid points, one per row and one
+per column, and are computed once. The gap between the operation count and the
+wall clock is interpreter and array-allocation overhead rather than
+floating-point work. The stationary solve is well behaved: the rows of $P$ sum
+to one to $2.2\times10^{-16}$, the residual
+$\lVert x^{\top}P-x^{\top}\rVert_{\infty}$ of the returned vector is
+$4.2\times10^{-17}$, and the returned vector is not strictly positive, $11$ of
+its $28$ entries being exactly zero at the baseline and $18$ at $\beta=0.2$,
+which is the underflow of Proposition~\ref{prop:closed} and not a failure of
+the solve.
 
 \subsection{Verification}
 \label{sec:verification}
 
-Table~\ref{tab:verification} reports four independent checks.
+Table~\ref{tab:verification} reports four checks, and they check four different
+things: the interaction tensor, the arithmetic of the stabilised sum, the
+closed form itself, and the small-mutation reduction. No one of them verifies
+the scheme as a whole, and we set out what each does and does not cover.
 
 \input{tab_verification}
 
@@ -1237,28 +1330,44 @@ error and the sweeps below are correspondingly free of it, which matters
 because the interaction index of Section~\ref{sec:plane} is a difference of
 four stationary regimes and would otherwise be a difference of four noisy ones.
 
-\emph{Against a high-precision reference.} Evaluating the sum
-in~\eqref{eq:fixation} in $60$-digit arithmetic and comparing with the shifted
-double-precision evaluation~\eqref{eq:shift} over all $756$ ordered pairs gives
-a worst relative error of $4.4\times10^{-16}$ at $\beta=0.05$ and
-$2.8\times10^{-16}$ at $\beta=0.2$, taken over the pairs whose fixation
-probability is representable as a normal double. The shift therefore costs
-nothing where the naive sum survives and recovers the value where it does not.
+\emph{Against a high-precision reference.} This block checks the arithmetic,
+not the formula: it evaluates the sum in~\eqref{eq:fixation} in $60$-digit
+arithmetic and compares with the shifted double-precision
+evaluation~\eqref{eq:shift}. Over the pairs whose fixation probability is
+representable as a normal double, $738$ of $756$ at $\beta=0.05$ and $589$ at
+$\beta=0.2$, the worst relative error is $4.4\times10^{-16}$ and
+$2.8\times10^{-16}$ respectively. On the excluded pairs the shifted evaluation
+is either zero or subnormal, and Section~\ref{sec:fixation} reports the error
+there.
 
-\emph{Against an independent implementation.} On the depth-zero design space,
-which is small enough for a general-purpose routine organised around the full
-state space, the closed form agrees with
-EGTtools~\citep{domingos2023egttools} to at most $5.6\times10^{-16}$ at every
-population size and selection intensity tried. The one systematic difference is
-in the other direction: the general-purpose routine returns exactly zero for
-strongly disadvantaged mutants that~\eqref{eq:shift} still resolves.
+\emph{Against an independent implementation.} This block checks the closed form
+itself, against an independent implementation of the same birth-death formula
+in EGTtools~\citep{domingos2023egttools} on the depth-zero design space; the
+two agree to at most $5.6\times10^{-16}$ at every population size and selection
+intensity tried. The one systematic difference is in the other direction: the
+unshifted evaluation returns exactly zero for strongly disadvantaged mutants
+that~\eqref{eq:shift} still resolves.
 
-\emph{Against the full chain.} On a design space of three designs, where the
-full mutation--selection chain has $861$ population states and can be solved
-directly, the small-mutation limit is approached monotonically as $\mu$ falls,
-with an absolute difference in long-run unsafe frequency of $0.0116$ at
-$\mu=0.005$. That residual is the price of the reduction, and it is small
-against the effects reported below, which are of order $0.3$.
+\emph{Against the full chain.} On a design space of three designs, the intent
+\AS{} at depths $0$, $3$ and $6$, the full mutation--selection chain has $861$
+population states at $Z=40$ and can be solved directly. The error of the
+reduction is first order in the mutation rate: for the joint cell the absolute
+difference in long-run unsafe frequency is $0.0116$ at $\mu=5\times10^{-3}$ and
+$0.0024$ at $\mu=10^{-3}$, an error-to-rate ratio of $2.32$ and $2.38$, and one
+Richardson step $2U(\mu/2)-U(\mu)$ on the finest pair reproduces the
+small-mutation value to $2.8\times10^{-5}$.
+
+That residual deserves a sharper comparison than the joint cell alone, because
+the two single-mechanism cells of Table~\ref{tab:decomposition} are themselves
+only $0.018$ and $0.012$: at any mutation rate we can afford, the reduction
+does not separately resolve quantities of that size, and we do not claim it
+does. What the decomposition reports is a difference of differences, and that
+is reproduced an order of magnitude better than the cells. Recomputing all four
+cells of the $2\times2$ on this same sub-space gives an interaction index of
+$+0.274$ at $\mu=5\times10^{-3}$ and $+0.273$ at $\mu=10^{-3}$, against
+$+0.268$ under the reduction: agreement to $2.3\%$ at a rate at which the joint
+cell itself is still off by $0.012$. The errors are largely common mode across
+the four cells, which is why the index survives what the cells do not.
 
 \emph{Against the alternative dynamics.} Every headline number is additionally
 recomputed under the basin-averaged attractor of the replicator equation, an
@@ -1282,9 +1391,16 @@ Table~\ref{tab:decomposition} and Figure~\ref{fig:decomposition}.
 Starting from a race that is already safe, erosion alone raises the long-run
 unsafe frequency to $0.018$ and attenuated attribution alone to $0.012$. An
 additive reading predicts $0.030$ when both are present. The measured value is
-$0.322$. The interaction, $+0.293$, is $91\%$ of the joint effect, and the same
-picture appears under the replicator reading, where the interaction is
-$+0.331$.
+$0.322$. The interaction, $+0.293$, is $91\%$ of the joint effect.
+
+The replicator reading reaches the same joint cell, $0.3225$, with an even
+larger interaction, $+0.331$, but by a different route and it should not be
+described as the same picture. Its baseline is $0.026$ rather than $0$, so each
+mechanism on its own \emph{lowers} the unsafe frequency, by $0.008$ for erosion
+and $0.026$ for attenuated attribution, and the interaction consequently
+exceeds the total rise, an interaction share of $1.12$. What the two dynamics
+agree on is the thing the section is about: essentially none of the joint
+effect is additive.
 
 The mechanism behind the interaction is visible in the second panel of
 Figure~\ref{fig:decomposition}, and it is not what one would guess. Under full
@@ -1306,7 +1422,7 @@ conclusion that the harm comes from erosion, because in this model almost all
 of it comes from the depth the market selects once erosion is no longer its
 problem.
 
-\begin{figure}[pos=t]
+\begin{figure}[pos=tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fig04_decomposition.pdf}
 \caption{The two mechanisms, separately and together.
@@ -1326,7 +1442,8 @@ instruction and the population executes something else.}
 \label{sec:plane}
 
 Neither baseline value is doing the work. Figure~\ref{fig:plane} sweeps the
-plane $(\varepsilon,\phi)$ on a $21\times21$ grid. Writing $U(\varepsilon,\phi)$
+plane $(\varepsilon,\phi)$ on a $21\times21$ grid over
+$\varepsilon\in[0,0.4]$ and $\phi\in[0.6,1]$. Writing $U(\varepsilon,\phi)$
 for the long-run unsafe frequency of the stationary regime at that pair, the
 \emph{interaction index} is the difference of differences of the $2\times2$
 whose corners are the pair itself and the two switched-off mechanisms,
@@ -1337,11 +1454,13 @@ whose corners are the pair itself and the two switched-off mechanisms,
 \end{equation}
 and the interaction share quoted alongside it is
 $I/\bigl[U(\varepsilon,\phi)-U(0,1)\bigr]$, the fraction of the total rise that
-neither mechanism produces alone. Every point of the grid therefore costs four
-stationary-regime computations, one per corner, each exact given the payoff
-matrices rather than sampled; the whole figure is $1764$ of them. The index is
-positive over $89\%$ of the interior and reaches $0.81$; the long-run unsafe
-frequency reaches $0.995$ and the declaration gap $0.95$.
+neither mechanism produces alone. Each of the four corners is exact given the
+payoff matrices rather than sampled, and three of them are themselves grid
+points, one per row and one per column, so the whole figure is $441$ stationary
+regimes and not $4\times441$. The index is positive over $89\%$ of the
+interior, meaning the $20\times20$ block with $\varepsilon>0$ and $\phi<1$ on
+which it is not identically zero by construction, and it reaches $0.81$; the
+long-run unsafe frequency reaches $0.995$ and the declaration gap $0.95$.
 
 The second panel is the one to read for policy. Mean delegation depth splits
 the plane along a frontier: below it the ceiling binds and chains are as long
@@ -1351,12 +1470,13 @@ chains. A regime with faithful hand-offs tolerates much weaker attribution
 before the ceiling binds, and a regime with strong attribution tolerates much
 noisier hand-offs.
 
-\begin{figure}[pos=t]
+\begin{figure}[pos=tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fig05_plane.pdf}
 \caption{The attribution--erosion plane. Long-run unsafe frequency
 \textbf{(A)}, mean delegation depth \textbf{(B)}, declaration gap \textbf{(C)}
-and interaction index \textbf{(D)} over a $21\times21$ grid; the star marks the
+and interaction index \textbf{(D)} over a $21\times21$ grid on
+$\varepsilon\in[0,0.4]$ and $\phi\in[0.6,1]$; the star marks the
 baseline. Chains are at the ceiling throughout the yellow region of
 \textbf{(B)}, and the frontier that bounds it is diagonal: attribution and
 transmission fidelity substitute for each other in keeping chains short.}
@@ -1372,6 +1492,16 @@ six-hand-off chain. What is executed is another matter. The realised mixture is
 $26\%$ \AS{}, $39\%$ \CS{}, $25\%$ \CAS{} and $10\%$ \AU{}, the total variation
 distance between what is declared and what is executed is $0.74$, and social
 payoff falls from $68.0$ in the baseline cell to $-0.8$.
+
+The gap is an identity rather than an independent measurement, and saying so
+sharpens rather than weakens it. Because the intent marginal is a point mass on
+the top rung of the erosion order and the ladder moves mass only downward, the
+total variation distance collapses to $1-\mathbb{E}[(1-\varepsilon)^{d}]$,
+which is $0.738$ here; the statistic is Proposition~\ref{prop:erosion}
+evaluated at the equilibrium depth distribution, so all of its content is in
+the depth. That is the point worth making. Under pass-through the same identity
+returns $0.358$, not because hand-offs became more faithful, since
+$\varepsilon$ is unchanged, but because the population stopped at two of them.
 
 The equilibrium is easy to misread as bad faith, and it is not. Every principal
 is issuing the strongest safety instruction available to it, and doing so is a
@@ -1441,59 +1571,80 @@ $0.050$, after which the unsafe frequency rises to $0.239$. The lag between the
 sign change and the switch is the fixation barrier of the finite population: a
 positive margin is necessary for the invasion, not sufficient.
 
-The mechanism generalises beyond this particular race. It needs two things: an
-intent that is safe only conditionally and that outperforms the
-unconditionally safe intent against an unsafe opponent, which here is \CS{}
-earning $26.6$ against \CAS{} where \AS{} earns $8.6$; and a resident
-population whose executed mixture contains unsafe designs for the conditional
-intent to exploit, which erosion itself supplies.
+The mechanism needs only two things and so generalises beyond this race: an
+intent that is safe only conditionally and outperforms the unconditionally safe
+one against an unsafe opponent, here \CS{} earning $26.6$ against \CAS{} where
+\AS{} earns $8.6$; and a resident population whose executed mixture contains
+unsafe designs for it to exploit, which erosion itself supplies.
 
 \paragraph{Check late, not early.}
-Proposition~\ref{prop:audit} orders the placements for a fixed design, and in
-the equilibrium the effect is large: the same check is worth a factor of $18$
-more at the agent that acts than at the principal, $0.018$ against $0.322$.
-Checking the specification a party \emph{received} tells one little about what
-will be done with it several hand-offs later. The sweep is non-monotone at full
-check strength for the same reason the fidelity sweep is, and monotone at half
-strength, where the intent margin does not flip.
+Proposition~\ref{prop:audit} orders the placements for a fixed design. In
+equilibrium the ordering is not monotone, because the composition of the
+population moves as well: taking one full-strength check from the first agent
+to the last gives $0.225$, $0.136$, $0.064$, $0.050$, $0.160$ and $0.018$, so
+the last placement is the best but the fifth is worse than the third, for the
+same reason the fidelity sweep reverses. At half strength the sweep is
+monotone, the intent margin not having flipped. The comparison against $0.322$,
+the figure for no check at all, is a comparison with a null intervention rather
+than with an early one, since by Proposition~\ref{prop:audit} a check at layer
+zero returns the intent to itself. What the sweep supports is the ordering of
+real placements: checking the specification a party \emph{received} tells one
+little about what will be done with it several hand-offs later.
 
 \paragraph{Which instrument is cheapest.}
 Asking each instrument for the same target, a long-run unsafe frequency of at
-most $0.05$, and scoring it by the social payoff it delivers there
-(Figure~\ref{fig:frontier}B): improving fidelity reaches the target at $58.7$,
-the depth ceiling at $58.3$, a punitive liability at $56.2$ and pass-through at
-$53.5$. Comparing instruments by the welfare cost of holding a population
-outcome at a fixed level is the exercise~\citet{duong2021cost} formalise for
-institutional incentives in a finite stochastic population, where which of two
-instruments is cheaper turns out to depend on the parameters rather than on the
-instrument. The ranking here is close enough that we would not press it, but
-the qualitative message is not: raising the liability level is the least
-efficient of the four, because it acts on a margin, namely how much harm costs,
-that depth has already discounted.
+most $0.05$, and scoring it by the social payoff it delivers at the weakest
+setting that reaches the target (Figure~\ref{fig:frontier}B): improving
+fidelity reaches it at $58.7$, the depth ceiling at $58.3$ and pass-through at
+$53.5$, and a fifth setting we add here for comparison, raising the effective
+liability from $L=20$ to $L=58$ at fixed $h$, reaches it at $56.2$. The single
+check is not on the same scale, its setting being a placement rather than a
+strength, and we leave it out of the ranking: at half strength it never reaches
+the target at any layer, and at full strength placed at the agent that acts it
+reaches $0.018$ at a social payoff of $64.2$, above everything in the list. The
+four settings that do share a strength scale also land at different distances
+past the target, from $0.018$ for the ceiling to $0.044$ for pass-through, and
+social payoff rises with the overshoot, so these levels are an upper bound on
+each instrument's cost at the target rather than the cost itself.
 
-\begin{figure}[pos=t]
+Comparing instruments by the welfare cost of holding a population outcome at a
+fixed level is the exercise~\citet{duong2021cost} formalise for institutional
+incentives in a finite stochastic population, where which of two instruments is
+cheaper turns out to depend on the parameters rather than on the instrument.
+The ranking here is close enough that we would not press it, but its two ends
+are not close: restoring attribution and raising the liability level are the
+least efficient routes, $53.5$ and $56.2$ against $58.3$ and $58.7$, and for
+the same reason in both cases. Each acts on a margin, how much of the harm is
+traced back and how much it costs, that depth has already discounted.
+
+\begin{figure}[pos=tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fig06_instruments.pdf}
 \caption{Four instruments.
 \textbf{(A)}~Restoring attribution has a threshold at $\phi=0.86$ and does
 almost nothing below it. \textbf{(B)}~Making every hand-off more faithful is
-not monotone: the marked point is safer than settings with less erosion.
-\textbf{(C)}~One check, moved down the chain. Late placement dominates; the
-non-monotonicity at full strength is the intent margin flipping, and it is
-absent at half strength. \textbf{(D)}~A ceiling on chain length improves safety
-and welfare together.}
+not monotone: at the marked point, $\rho\varepsilon=0.04$, the unsafe frequency
+is $0.239$, worse than the $0.032$ reached at $\rho\varepsilon=0.07$ where
+hand-offs are less faithful. \textbf{(C)}~One check, moved down the chain. The
+last placement is the best but the sweep is not monotone at full strength,
+where the intent margin flips; it is monotone at half strength. Layer zero is a
+null intervention. \textbf{(D)}~A ceiling on chain length improves safety and
+welfare together.}
 \label{fig:instruments}
 \end{figure}
 
-\begin{figure}[pos=t]
+\begin{figure}[pos=tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fig07_frontier.pdf}
 \caption{What each instrument costs. \textbf{(A)}~The frontier each instrument
 traces in the plane of social payoff against long-run unsafe frequency,
-starting from the untreated baseline (star). \textbf{(B)}~Social payoff at the
-weakest setting of each instrument that reaches an unsafe frequency of $0.05$.
-Raising the liability level is the least efficient route, because depth has
-already discounted the margin it acts on.}
+starting from the untreated baseline (star). Improving fidelity traces a
+strictly better frontier; the other three coincide to within the line width, so
+any of them buys safety at about the same welfare price.
+\textbf{(B)}~Social payoff at the weakest setting of each instrument that
+reaches an unsafe frequency of $0.05$. Restoring attribution and raising the
+liability level are the two least efficient routes, because depth has already
+discounted the margins they act on.}
 \label{fig:frontier}
 \end{figure}
 
@@ -1509,53 +1660,60 @@ changing nothing else.
 
 \input{tab_regimes}
 
-Two of them reproduce the baseline almost exactly. Splitting the blame equally
-between the principal and its $d$ agents, $a(d)=1/(1+d)$, is a much slower
+Two of the rules reproduce results already in hand. Splitting the blame equally
+between the principal and its $d$ agents, $r(d)=1/(1+d)$, is a much slower
 decay than $\phi^{d}$ and it is the rule an intuitive notion of shared
 responsibility suggests; it gives an unsafe frequency of $0.3224$ against the
 baseline $0.3225$, the same mean depth of $6.00$ and the same declaration gap.
-Top-level strict liability, $a(d)\equiv1$, is the same object as pass-through
-and reproduces the $\phi=1$ cell of Section~\ref{sec:decomposition}.
-Super-attribution, $\phi>1$, charges a principal more the deeper it delegates
-and closes the shelter more than completely, but it buys little over strict
-liability: $0.016$ at $\phi=1.1$ against $0.018$ at $\phi=1$.
+Top-level strict liability, $r(d)\equiv1$, is the same object as pass-through
+and reproduces the $\phi=1$ cell of Section~\ref{sec:decomposition}, $0.018$,
+not the baseline. Super-attribution, $\phi>1$, charges a principal more the
+deeper it delegates and closes the shelter more than completely, but it buys
+little over strict liability: $0.016$ at $\phi=1.1$ against $0.018$ at
+$\phi=1$.
 
-What separates the rules is not the level of attribution but whether it keeps
-falling, which is exactly the content of Proposition~\ref{prop:floor}. The
-equal split ends lower than the baseline at the ceiling ($1/7=0.143$ against
-$\phi^{6}=0.178$) and behaves identically, while a rule that stops falling
-behaves entirely differently even when it is lower in between. The mechanism is
-visible in the marginal attributed harm, the quantity a principal weighs when
-it considers one more layer. Under the baseline it rises and then decays,
-$0.087$, $0.152$, $0.144$, $0.095$, $0.037$, so the sixth hand-off is nearly
-free. Under a floor at $a_{\min}=0.5$ it climbs throughout, $0.087$, $0.196$,
-$0.323$, $0.402$, $0.440$, so every layer costs more than the one before it.
+What separates the rules is not the level of attribution but whether it
+vanishes in the depth, which is exactly the content of
+Proposition~\ref{prop:floor}. The equal split ends lower than the baseline at
+the ceiling ($1/7=0.143$ against $\phi^{6}=0.178$) and behaves identically,
+while a rule bounded below behaves entirely differently even when it is lower
+in between. The mechanism is visible in the marginal attributed harm, the
+quantity a principal weighs when it considers one more layer. The first
+hand-off is free under the ladder because $m(1)=0$; for $d=1,\dots,5$ the
+baseline rule gives $0.087$, $0.152$, $0.144$, $0.095$, $0.037$, rising and
+then decaying, so the sixth hand-off is nearly free. Over the same range a
+floor at $a_{\min}=0.5$ gives $0.087$, $0.196$, $0.323$, $0.402$, $0.440$: it
+climbs throughout, so every layer costs more than the one before it.
 
 \input{tab_floorcap}
 
 The practical consequence is the reason to report this at all. A floor is not a
-weak version of pass-through, it is a substitute for a depth cap.
-Table~\ref{tab:floorcap} matches each ceiling against the floor delivering the
-same social payoff and finds it also delivers the same unsafe frequency: the
-gap is below $0.01$ for five of the seven ceilings and at most $0.018$, with a
-mean of $0.005$. The agreement holds across variations in $\phi$, $\varepsilon$,
-the organisational benefit and the ceiling, where the mean gap ranges from
-$0.001$ to $0.016$. The floor has no effect at all while it lies under
+weak version of pass-through, it is a substitute for a depth cap over the range
+a floor can reach. Table~\ref{tab:floorcap} matches each ceiling against the
+floor whose social payoff comes closest to it, and finds that wherever a floor
+can match a ceiling on welfare, at $\bar D=2$ to $6$, it also matches its
+unsafe frequency to within $0.0011$. The two shallowest ceilings are out of a
+floor's reach: even $a_{\min}=1$ leaves social payoff at $58.3$ against the
+$59.0$ and $60.5$ those ceilings deliver, so their rows are not welfare-matched
+at all, and the mean gap of $0.005$ over all seven rows includes them and
+therefore overstates the disagreement; over the five matched ceilings the mean
+gap is $0.0003$. The agreement holds across variations in $\phi$, $\varepsilon$
+and the ceiling, where the mean gap stays between $0.001$ and $0.016$; it is
+sensitive to the organisational benefit, falling to $0.000$ at $g=0$ and rising
+to $0.027$ at $g=5$, where the cap and the floor part company at the shallow
+end. The floor has no effect at all while it lies under
 $\phi^{\bar D}=0.178$, the attribution a chain already reaches at the ceiling,
 and begins to bite as soon as it binds, at $a_{\min}=0.22$; $a_{\min}=0.31$
 halves the harm and $a_{\min}=0.5$ recovers $86\%$ of the welfare that
 separates the baseline from strict liability.
 
 This matters because the two instruments make very different demands on a
-regulator. A depth cap has to be enforced against a quantity that is hard to
+regulator. A depth cap must be enforced against a quantity that is hard to
 observe from outside and easy to restructure, namely how many hands an
-instruction passed through. A floor is a statement about liability alone: it
-says that no chain, however long, reduces the principal's share below
-$a_{\min}$, and it needs no one to count the layers. Where the floor cannot
-follow is the shallow end. Even $a_{\min}=1$ leaves mean depth at $1.99$,
-because with full attribution the erosion cost by itself still permits two
-hand-offs, so the floor spans the frontier down to a ceiling of two and no
-further.
+instruction passed through, whereas a floor is a statement about liability
+alone and needs no one to count the layers. Where the floor cannot follow is
+the shallow end: even $a_{\min}=1$ leaves mean depth at $1.99$, because with
+full attribution the erosion cost by itself still permits two hand-offs.
 
 \subsection{Robustness}
 \label{sec:robustness}
@@ -1568,9 +1726,42 @@ level, and the choice between the finite-population and replicator readings.
 The interaction is positive in $88\%$ of them, with median $+0.292$ and
 interquartile range $[0.242,0.297]$; the median interaction share is $0.91$.
 The mean delegation depth is higher under per-layer attribution than under
-pass-through in every single cell. The negative cells are all in the
-prize-and-risk sweep and are ceiling effects, where the joint outcome is
-already at or near an unsafe frequency of one and cannot rise further.
+pass-through in every single cell. Five cells are not positive, and for two
+opposite reasons. Four are in the prize-and-risk sweep and are ceiling effects,
+where the joint outcome is already at an unsafe frequency of one and cannot
+rise further. The fifth is the collapse kernel, where the joint outcome is
+$3\times10^{-5}$ because delegation does not happen at all, as the kernel
+comparison below and Table~\ref{tab:kernelshape} show.
+
+Two of the swept quantities deserve to be read rather than summarised, because
+they set the level of every headline number. The first is the liability. Across
+$L\in\{5,10,20,40,80\}$ the joint cell is $0.973$, $0.322$, $0.322$, $0.322$
+and $3\times10^{-5}$: it is flat over a factor of four in the instrument and
+then closes at $L=80$. What the level moves is the additive baseline the joint
+cell is scored against. At $L=10$, which still satisfies our own $L\ge6.52$
+criterion, the two single-mechanism cells are $0.060$ and $0.231$ rather than
+$0.018$ and $0.012$, so the interaction falls to $+0.031$ and its share of the
+joint effect to $10\%$; at $L=40$ the share is $1.00$. We report $L=20$ because
+it is the level at which both single-mechanism cells are small enough for the
+$2\times2$ to be read as a decomposition, and we state the range rather than
+the median alone: among the $38$ cells with a positive interaction the share
+has median $0.91$ and runs from $0.07$, at the largest prize and the highest
+setback risk, to $1.13$ under the replicator reading.
+
+The second is the depth ceiling, because the equilibrium sits on it.
+Recomputing the $2\times2$ at $\bar D\in\{4,6,8\}$ gives a joint cell of
+$0.136$, $0.322$ and $0.513$ at a mean depth of $4.00$, $6.00$ and $8.00$:
+whatever ceiling the technology imposes, per-layer attribution takes the
+population to it, and the level of the unsafe frequency is a reading of
+$\bar D$ rather than of the mechanism. The mechanism is the contrast, and the
+contrast is invariant. In the same three cells the pass-through column does not
+move at all, at a mean depth of $2.00$ and an unsafe frequency of $0.018$, so
+the gap between what a principal charged in full builds and what a principal
+charged $\phi^{d}$ builds is the whole distance to the ceiling in all three.
+That is what Theorem~\ref{thm:shelter} asserts and it is why the model has no
+interior solution to report. What is not invariant is again the decomposition:
+at $\bar D=8$ the attribution-only cell rises to $0.203$ and the interaction
+share falls to $0.57$.
 
 The parameters of the evolutionary process deserve to be read cell by cell,
 since they are the ones a reader has least reason to accept on faith. The joint
@@ -1614,11 +1805,12 @@ rather than to zero because an eroded specification can be restored by chance,
 and the half-life rises to $4.92$. Fidelity improves along the first family
 while the outcome gets worse, which is the section's point in miniature.
 
-Along the first, the joint cell stays between $0.320$ and $0.327$ for four
-fifths of the range before rising to $0.517$ at pure noise, and mean depth sits
-at the ceiling throughout. Removing the direction of the drift never helps and
-eventually hurts. Along the second family the picture is not gradual at all.
-The joint cell first rises to $0.460$, and then, between mixture weights $0.25$
+Along the first, the joint cell stays between $0.320$ and $0.333$ over four
+fifths of the range before rising to $0.387$ and then to $0.517$ at pure noise,
+and mean depth sits at the ceiling throughout. Removing the direction of the
+drift never helps and eventually hurts. Along the second family the picture is
+not gradual at all. The joint cell first rises to $0.460$, and then, between
+mixture weights $0.25$
 and $0.30$, mean depth falls from $5.30$ to $0.27$ and the joint cell to
 $0.022$. Nothing about the spectral gap has changed, and the drift has become
 \emph{more} directed rather than less.
@@ -1634,39 +1826,54 @@ free, $m(1)=0$, because one lost clause turns \AS{} into \CS{}, which is still
 safe against a safe opponent, and the chain is built because its first layer
 costs nothing. Along the severity family the collapse of depth happens exactly
 where $m(1)$ crosses the interval $[0.51,0.61]$, and the direction family,
-whose $m(1)$ never exceeds $0.58$, never collapses. The property that makes a
-delegation technology safe is neither fidelity nor unbiasedness: it is that the
-first thing to go wrong is expensive.
+whose $m(1)$ never exceeds $0.58$, never collapses. Within these two families,
+then, what orders the outcomes is neither the spectral gap nor the direction of
+the drift but the severity of a single hand-off. Fidelity still matters, as the
+$\kappa$ sweep of Section~\ref{sec:instruments} shows; what it does not do is
+order kernels of equal gap.
 
-A last ablation asks whether a taller hierarchy being genuinely harder to run
-would close the shelter without any intervention. It does not, and the margin
-is wide. Raising the quadratic coordination cost $c$ leaves the unsafe
-frequency at $0.322$ and mean depth at the ceiling all the way to $c=0.16$, and
-depth is still $5.95$ at $c=0.20$. It falls to $4.50$ only at $c=0.25$, which
-is exactly the point where $B(\bar D)=g\bar D-c\bar D^{2}$ reaches zero: cost
-prevents the shelter only once it has removed the entire organisational benefit
-of the deepest chain, not merely made the last layer unprofitable. The reason
-is that the organisational benefit is not the main private return to depth.
-Against a resident $\AS{}@\bar D$ at $c=0.14$, the race payoff of the focal
-chain rises monotonically with depth from $41.3$ to $48.1$, because an eroded
-chain executes more aggressive designs and those earn more in the race, while
-the attributed liability peaks at $11.4$ at depth four and falls to $10.3$ at
-the ceiling. Of the private gain the deepest chain enjoys, the organisational
-benefit supplies less than a third, and a cost instrument acts on that third
-alone.
+The obvious objection to $B(d)=gd-cd^{2}$ with $c=0$ is that depth has been
+made free by construction. It has not. Setting $g=0$, so that a chain of any
+length produces exactly what a lone principal produces, leaves the joint cell
+at $0.321$ and the mean depth at $5.98$: the population still builds to the
+ceiling. The private return to depth in this model is the race payoff itself.
+Against a resident $\AS{}@\bar D$, the race payoff of the focal chain rises
+monotonically with depth from $41.3$ to $48.1$, because an eroded chain
+executes more aggressive designs and those earn more in the race, while the
+attributed liability peaks at $11.4$ at depth four and falls to $10.3$ at the
+ceiling.
 
-\begin{figure}[pos=t]
+A last ablation asks the same question from the other side: whether a taller
+hierarchy being genuinely harder to run would close the shelter without any
+intervention. It does not, and the margin is wide. Raising the quadratic
+coordination cost $c$ leaves the unsafe frequency at $0.322$ and mean depth at
+the ceiling all the way to $c=0.16$, and depth is still $5.95$ at $c=0.20$. It
+falls to $4.50$ only at $c=0.25$, which is exactly the point where
+$B(\bar D)=g\bar D-c\bar D^{2}$ reaches zero: cost prevents the shelter only
+once it has removed the entire organisational benefit of the deepest chain, not
+merely made the last layer unprofitable. At $c=0.14$, where the marginal
+benefit of the sixth hand-off is already negative at $-0.04$, the ceiling still
+binds. Of the two channels through which the deepest chain gains over a
+depth-zero one, a race payoff that rises by $6.8$ and an organisational benefit
+worth $4.0$ at $c=0.14$ and $9.0$ at the baseline $c=0$, a cost instrument acts
+on the second alone.
+
+\begin{figure}[pos=tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fig08_robustness.pdf}
 \caption{Robustness.
 \textbf{(A)}~The interaction index across every sweep; each dot is one
-parameter cell. \textbf{(B)}~Drift kernels. Graceful erosion produces the
-cascade; catastrophic erosion deters delegation altogether; undirected noise is
-worse than graded erosion, so the effect is not about the direction of the
-slippage. \textbf{(C)}~The small-mutation limit against the full
-mutation-selection chain on a reduced design space. \textbf{(D)}~Long-run
-unsafe frequency against the effective liability at four attribution
-retentions; a lower $\phi$ shifts the whole curve rather than tilting it.}
+parameter cell. \textbf{(B)}~The three named drift kernels. The \emph{ladder}
+produces the cascade; \emph{collapse} deters delegation altogether;
+\emph{uniform} noise is worse than the graded ladder, so the effect is not
+about the direction of the slippage. \textbf{(C)}~The small-mutation limit
+against the full mutation-selection chain on the three-design sub-space, over
+$\mu\in[0.005,0.05]$ at $Z=60$; Table~\ref{tab:verification} reports the same
+check at $Z=40$ and down to $\mu=0.001$. \textbf{(D)}~Long-run unsafe frequency
+against the effective liability at four attribution retentions; a lower $\phi$
+shifts the whole curve rather than tilting it, which is the population-level
+counterpart of Corollary~\ref{cor:failure}, whose failure depth enters through
+$\log\phi$.}
 \label{fig:robustness}
 \end{figure}
 
@@ -1678,39 +1885,41 @@ The model says something specific about where the governance of agentic systems
 is currently pointed. Almost all of the instruments now being built read or act
 at the two ends of a chain: evaluations and safety training at the model, and
 liability, disclosure and procurement rules at the deploying principal. Both
-ends are exactly where the model says the leverage is weakest. Regulation is
-written on the same plan, since the European Union's Artificial Intelligence
-Act allocates duties along a value chain by the role a party occupies and by
-the modification it makes, not by the number of hand-offs that separate an
-instruction from the action it eventually produces~\citep{euaiact2024}.
+ends are where the model says the usual dials are weakest, raising a penalty at
+one end and improving the model at the other; regulation is written on the same
+plan, since the European Union's Artificial Intelligence Act allocates duties
+along a value chain by the role a party occupies and by the modification it
+makes, not by the number of hand-offs that separate an instruction from the
+action it eventually produces~\citep{euaiact2024}. What the model does not say
+is that the principal end is the wrong place to act. Section~\ref{sec:floor}
+finds an instrument there, a floor under the principal's share, that behaves as
+well as a cap on the chain itself.
 
 At the principal end, Theorem~\ref{thm:shelter} says that a liability rule
 written in terms of what a principal is responsible for has a depth beyond
-which it stops binding, and Corollary~\ref{cor:failure} says where that depth
-is. Raising the penalty does not move the failure depth much, because it enters
-logarithmically; restoring attribution does, because it enters through
-$\log\phi$. The practical form of that observation is unwelcome for a
-regulator: partial pass-through is worth very little, and recovering $85\%$ of
+which it stops binding, and Corollary~\ref{cor:failure} says where. Raising the
+penalty does not move that depth much, because it enters logarithmically;
+restoring attribution does, because it enters through $\log\phi$. The practical
+form of the observation is unwelcome for a regulator: recovering $85\%$ of
 responsibility at each of six hand-offs recovers $38\%$ overall and, in our
 baseline, changes nothing at all. What the floor result adds is that an
 accountability mechanism does not have to achieve near-complete tracing to be
-worth deploying; it has to \emph{guarantee a minimum}. The right figure of
-merit for such a mechanism is therefore not the average share of responsibility
-it traces but the smallest share it guarantees at the longest chain it permits.
-The legal analogue is familiar: where an injurer's assets fall short of the
-harm it can do, the remedy that works is not a larger penalty but a minimum the
-injurer is required to carry at all
+worth deploying; it has to \emph{guarantee a minimum}. If the model is right
+about which margin binds, the figure of merit is then not the average share of
+responsibility a mechanism traces but the smallest share it guarantees at the
+longest chain it permits, which is a prediction the model makes rather than a
+finding it establishes. The legal analogue is familiar: where an injurer's
+assets fall short of the harm it can do, the remedy that works is not a larger
+penalty but a minimum the injurer must carry at all
 times~\citep{shavell1986judgment,shavell2005minimum}.
 
 At the model end, the declaration result says that a safety commitment issued
 at the top of a long chain is close to uninformative about the ecosystem below
-it, and not because anyone is lying. In the baseline equilibrium the
-declaration is as strong as the language permits and the behaviour is $74\%$
-different from it. Organisation theory calls that outcome decoupling and treats
-the good faith with which a formal structure and a divergent practice are
-maintained side by side as the normal case rather than the
-exception~\citep{meyer1977myth}; what the model adds is a selection mechanism
-that produces it from delegation depth alone.
+it, and not because anyone is lying. Organisation theory calls that outcome
+decoupling and treats the good faith with which a formal structure and a
+divergent practice are maintained side by side as the normal case rather than
+the exception~\citep{meyer1977myth}; what the model adds is a selection
+mechanism that produces it from delegation depth alone.
 
 The non-monotonicity result deserves its own caution. Making hand-offs more
 faithful can raise realised harm, because the over-specification that erosion
@@ -1720,36 +1929,21 @@ dropped from \AS{}. The general form of the caution is familiar from
 second-best welfare economics, where satisfying one more of the conditions for
 an optimum while others remain out of reach is in general neither necessary nor
 sufficient for an improvement~\citep{lipsey1956secondbest}. In this model only
-the instruments acting on the incentive to delegate are monotone.
+the instruments acting on the incentive to delegate are monotone. The kernel
+comparison adds a design principle to the same effect: a specification that
+degrades gracefully is more dangerous than one that fails loudly, because
+graceful degradation lets a principal build a chain whose failures it never
+sees, and a specification that fails closed restores the private cost of depth
+that per-layer attribution removes.
 
-Finally, the kernel comparison suggests a design principle that does not come
-from the liability literature at all. A specification that degrades gracefully
-is more dangerous than one that fails loudly, because graceful degradation lets
-a principal build a chain whose failures it never sees. Systems whose
-specifications fail closed, refusing rather than approximating when a clause is
-lost, restore the private cost of depth that per-layer attribution removes.
-
-\paragraph{What would have to be measured.}
 We have no empirical estimate of $\varepsilon$ or $\phi$ for any deployed
-system, and the numbers here should not be read as if we had. The two are not
-the same kind of quantity. Both $\varepsilon$ and the drift kernel are
-properties of a transmission technology and are directly observable in an
-instrumented pipeline: fix a task, write the principal's specification as an
-explicit inventory of clauses, log the instruction each agent passes to the
-next, and label each logged instruction for which clauses it still carries. The
-empirical hand-off matrix $\hat M$ is then the transition matrix of that
-labelled sequence between consecutive layers, and $\varepsilon$ and $\hat D$
-are read off it directly. Section~\ref{sec:robustness} says which feature of
-$\hat D$ matters, and it is neither the spectral gap nor the direction: the
-quantity to estimate is the harm a single hand-off already causes, which needs
-only the same task run at depth zero and depth one with the unsafe actions
-counted in both. By contrast $\phi$ is not a property of the system at all but
-of the liability regime around it, so it has to be estimated from practice
-rather than from logs, as the share of remediation cost actually borne by the
-commissioning principal in incidents at each chain depth. The model asks less
-of these estimates than it might appear, because its claims are ordinal and the
-policy-relevant questions are which side of the severity threshold a
-transmission technology sits on and whether attribution is bounded below.
+system, and the numbers here should not be read as if we had. The model asks
+less of such estimates than it might appear, because its claims are ordinal:
+$\varepsilon$ and the drift kernel are properties of a transmission technology
+and are read off an instrumented pipeline, and
+Section~\ref{sec:robustness} says which feature of the kernel matters, which is
+the harm a single hand-off already causes rather than its spectral gap or its
+direction.
 
 \subsection{Limitations}
 \label{sec:limitations}
@@ -1779,8 +1973,12 @@ that depends on which layer failed rather than on how many there were.
 
 On the computational side, the small-mutation limit is exact only as $\mu\to0$
 and Table~\ref{tab:verification} quantifies the residual at finite $\mu$ on a
-reduced design space; we have not established a bound on that residual for the
-full space, where the full chain cannot be formed to compare against. The
+reduced design space. We have not formed the full chain on the full design
+space and cannot, so we have no bound on the residual there. The criterion
+of~\citet{wu2012howsmall} applies to our update rule but not uniformly to our
+design space, twelve of whose $378$ unordered pairs are coexistence games; and
+even where it applies it bounds the rate the reduction needs rather than the
+error at a given rate. The
 revision clock is Poisson, and the Erlang alternative
 of~\citet{kara2022erlang} is the natural next test. Finally, the harm scale $h$
 enters the social functional and therefore the welfare comparisons, and we do
@@ -1794,7 +1992,12 @@ free of welfare weights for that reason.
 Delegation depth is not neutral plumbing between a principal and an action. It
 erodes the specification geometrically and it dilutes the attributed harm
 geometrically, and because the second effect is unbounded while the first
-saturates, depth is a liability shelter that no level of liability closes. What
+saturates, depth is a shelter that no liability rule of the form $L\phi^{d}$
+closes at the margin: beyond the shelter depth, raising $L$ makes the deeper
+design more attractive rather than less. What a large enough $L$ still does is
+block the shallow hand-offs a population would have to climb through first, and
+in our baseline $L=58$ does so, at a welfare cost exceeded only by pass-through
+among the instruments we compare. What
 makes the combination dangerous is not either mechanism but the loss of a
 response: a principal that is charged for what its chain does answers
 unreliable hand-offs by keeping the chain short, and per-layer attribution is
@@ -1811,21 +2014,27 @@ matrices: the interaction tensor is summed over the horizon law rather than
 sampled, the mutation--selection chain on $3.0\times10^{27}$ population states
 is replaced by an embedded chain on $28$ designs, and the fixation
 probabilities that chain needs are evaluated in $O(Z)$ operations from a sum
-whose terms are shifted before exponentiation. The same three ingredients
-transfer unchanged to any evolutionary game whose strategy space is a product
-of a behavioural coordinate with a structural one.
+whose terms are shifted before exponentiation. What that shift has to preserve
+is positivity rather than accuracy, and Proposition~\ref{prop:closed} says how
+much of it. The three ingredients transfer to any evolutionary game whose
+strategy space is a product of a behavioural coordinate with a structural one,
+provided the interaction layer is deterministic given a summable horizon law
+and the pairwise payoffs are linear, so that the invasion advantage stays
+affine in the invader count; the small-mutation reduction requires neither.
 
 The instruments that follow from the model are not the ones currently receiving
-attention. Limiting how many hand-offs may separate an instruction from an
-action, and verifying specifications at the agent that acts rather than at the
-party that spoke, are the two levers that behave predictably here. Raising
-penalties works least of all, because depth has already discounted the margin
-they act on. Restoring attribution hand-off by hand-off works only when it is
-nearly complete, but that is a fact about the geometric rule rather than about
-attribution: what the shelter needs is for the principal's share to keep
-falling, and a rule that stops falling closes it. A floor under attribution
-buys what a cap on chain length buys and asks less of whoever has to enforce
-it.
+attention. Within this model the depth cap is the only instrument monotone in
+its own strength, and moving a check from the party that spoke to the agent
+that acts is worth more than strengthening the check. We report these as
+properties of the model and not as recommendations, because we have no estimate
+of the per-hand-off erosion probability or the attribution retention for any
+deployed system. Raising penalties and restoring attribution hand-off by
+hand-off work least of all, because depth has already discounted the margins
+they act on. That the second works only when it is nearly complete is a fact
+about the geometric rule rather than about attribution: what the shelter needs
+is for the principal's share to vanish in the depth, and a rule bounded below
+closes it. A floor under attribution buys what a cap on chain length buys over
+the range a floor can reach, and asks less of whoever has to enforce it.
 
 % ===========================================================================
 \section*{Declaration of competing interest}
@@ -1845,17 +2054,19 @@ All results are deterministic given the seed used for the replicator start
 measure. The code, the generated tables, the numerical benchmarks of
 Section~\ref{sec:numerics} and the figure pipeline are openly available under
 the MIT licence at
-\sloppy\url{https://github.com/trungkiet2005/delegation-cascade}.
+\sloppy\url{https://github.com/trungkiet2005/delegation-cascade}. Parts of the
+analysis code were refactored with the assistance of a large language model;
+every refactor is covered by the test suite released with the paper, and no
+numerical result was accepted without reproduction from the released code.
 
 \section*{Declaration of generative AI and AI-assisted technologies in the
 manuscript preparation process}
 
-During the preparation of this work the authors used a large language model
-assistant in order to draft and copy-edit prose and to refactor analysis
-scripts. After using this tool the authors reviewed and edited the content as
-needed and take full responsibility for the content of the published article.
-No text, figure or numerical result was accepted without verification against
-the model and the code released with the paper.
+During the preparation of this work the authors used Anthropic's Claude,
+accessed through the Claude Code command-line interface, in order to draft and
+copy-edit prose. After using this tool the authors reviewed and edited the
+content as needed and take full responsibility for the content of the published
+article.
 
 \printcredits
 
@@ -1896,14 +2107,19 @@ Section~\ref{sec:fixation}. Two limits are useful as unit tests of an
 implementation: at $\beta=0$ every ratio is one and $\rho=1/Z$, and for a
 neutral game the same holds at every $\beta$.
 
-Under the small-mutation limit the embedded chain~\eqref{eq:embedded} is
-irreducible whenever every $\rho_{i\to j}$ is strictly positive, which
-holds at finite $\beta$ for every pair, so its stationary distribution is
-unique. Section~\ref{sec:fixation} is the reason that positivity has to be
-preserved numerically rather than merely asserted: a routine that returns
-exactly zero for a strongly disadvantaged mutant makes the embedded chain
-reducible in floating point, and the stationary vector of a reducible chain is
-no longer unique.
+In exact arithmetic every $\rho_{i\to j}$ is strictly positive at finite
+$\beta$, so the embedded chain~\eqref{eq:embedded} is irreducible and its
+stationary distribution is unique. What Section~\ref{sec:observables} adds is
+that irreducibility is more than is needed and more than double precision
+delivers. Uniqueness requires only one closed communicating class, so a routine
+that returns exactly zero for a strongly disadvantaged mutant does not by
+itself make $x$ ambiguous; what it does is move designs into transient classes,
+which then receive stationary mass exactly zero rather than their true
+subnormal mass. At $\beta=0.2$ that happens for $\{\CAS{}@0,\AU{}@0\}$, which
+is transient in double precision while the remaining $26$ designs form the
+unique closed class. It is when the closed class shrinks to a single absorbing
+design, as it does under the unshifted evaluation, that the stationary regime
+stops carrying information.
 
 \bibliographystyle{elsarticle-num-names}
 \bibliography{refs}

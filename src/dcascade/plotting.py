@@ -84,7 +84,13 @@ def use_paper_style() -> None:
     mpl.rcParams.update(
         {
             "figure.dpi": 160,
-            "savefig.dpi": 400,
+            # matplotlib always emits an ``imshow`` panel as a raster XObject, so
+            # the heatmap figures are combination art and have to clear the
+            # 500 dpi minimum after the on-page reduction, which 400 does not
+            "savefig.dpi": 600,
+            # embed real fonts rather than Type 3 bitmaps
+            "pdf.fonttype": 42,
+            "ps.fonttype": 42,
             # a fixed saved size is what keeps the on-page scale uniform, so the
             # bounding box must not be cropped to the ink
             "savefig.bbox": None,

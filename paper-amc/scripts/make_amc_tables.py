@@ -31,23 +31,38 @@ SOURCES = (
     "robustness_generated.tex",
 )
 
+#: Emitted by ``paper-amc/scripts/run_numerics.py`` into ``paper-amc`` itself
+#: rather than into ``paper``, and split here for the same reason.  Leaving it
+#: out is how ``tab_cost`` and ``tab_verification`` went stale against their
+#: own generator once already.
+LOCAL_SOURCES = ("numerics_generated.tex",)
+
 HEADER = (
-    "%% one table per file, split from paper/{source} by\n"
+    "%% one table per file, split from {where}/{source} by\n"
     "%% paper-amc/scripts/make_amc_tables.py -- do not edit\n"
 )
 
 
+def _split(text: str, header: str) -> None:
+    for block in re.findall(r"\\begin\{table\}.*?\\end\{table\}", text, flags=re.S):
+        key = re.search(r"\\label\{tab:([A-Za-z]+)\}", block).group(1)
+        block = block.replace(r"\begin{table}[t]", r"\begin{table}[pos=t]")
+        out = DST / ("tab_%s.tex" % key)
+        out.write_text(header + block + "\n", encoding="utf-8")
+        print(out.relative_to(ROOT))
+
+
 def main() -> None:
     for source in SOURCES:
-        text = (SRC / source).read_text(encoding="utf-8")
-        for block in re.findall(r"\\begin\{table\}.*?\\end\{table\}", text, flags=re.S):
-            key = re.search(r"\\label\{tab:([A-Za-z]+)\}", block).group(1)
-            block = block.replace(r"\begin{table}[t]", r"\begin{table}[pos=t]")
-            out = DST / ("tab_%s.tex" % key)
-            out.write_text(
-                HEADER.format(source=source) + block + "\n", encoding="utf-8"
-            )
-            print(out.relative_to(ROOT))
+        _split(
+            (SRC / source).read_text(encoding="utf-8"),
+            HEADER.format(where="paper", source=source),
+        )
+    for source in LOCAL_SOURCES:
+        _split(
+            (DST / source).read_text(encoding="utf-8"),
+            HEADER.format(where="paper-amc", source=source),
+        )
 
 
 if __name__ == "__main__":

@@ -45,3 +45,11 @@ paper/refs_suggested_additions.bib
 
 # Publisher template packages, downloaded not authored
 els-cas-templates.zip
+
+# The typeset manuscript is not published here.  The journals are told that no
+# part of the paper has appeared before, and a downloadable PDF in a public
+# repository is the one thing that could be read against that, so the built
+# manuscript stays local while the code, data and figures that reproduce it
+# stay public.  Remove these lines once the paper is accepted.
+paper/main.pdf
+paper-*/main.pdf

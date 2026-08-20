@@ -207,17 +207,126 @@
         "mu": 0.005,
         "full_chain_unsafe": 0.3108707870005881,
         "abs_difference": 0.011598980707088646
+      },
+      {
+        "mu": 0.002,
+        "full_chain_unsafe": 0.31774731320248767,
+        "abs_difference": 0.0047224545051891
+      },
+      {
+        "mu": 0.001,
+        "full_chain_unsafe": 0.3200943706132021,
+        "abs_difference": 0.0023753970944746516
       }
-    ]
+    ],
+    "interaction_sml": 0.2675894843913243,
+    "interaction_rows": [
+      {
+        "mu": 0.05,
+        "cells": {
+          "baseline": 0.0,
+          "erosion": 0.03531346855785867,
+          "attribution": 0.0,
+          "joint": 0.23151097514640193
+        },
+        "interaction_full": 0.19619750658854326,
+        "abs_difference": 0.07139197780278103
+      },
+      {
+        "mu": 0.02,
+        "cells": {
+          "baseline": 0.0,
+          "erosion": 0.032002194727912735,
+          "attribution": 0.0,
+          "joint": 0.27982500939625243
+        },
+        "interaction_full": 0.2478228146683397,
+        "abs_difference": 0.019766669722984603
+      },
+      {
+        "mu": 0.01,
+        "cells": {
+          "baseline": 0.0,
+          "erosion": 0.03345653781867115,
+          "attribution": 0.0,
+          "joint": 0.29992998840697677
+        },
+        "interaction_full": 0.2664734505883056,
+        "abs_difference": 0.0011160338030186678
+      },
+      {
+        "mu": 0.005,
+        "cells": {
+          "baseline": 0.0,
+          "erosion": 0.037020888876501526,
+          "attribution": 0.0,
+          "joint": 0.3108707870005881
+        },
+        "interaction_full": 0.2738498981240866,
+        "abs_difference": 0.0062604137327623155
+      },
+      {
+        "mu": 0.002,
+        "cells": {
+          "baseline": 0.0,
+          "erosion": 0.04321681726387538,
+          "attribution": 0.0,
+          "joint": 0.31774731320248767
+        },
+        "interaction_full": 0.2745304959386123,
+        "abs_difference": 0.00694101154728799
+      },
+      {
+        "mu": 0.001,
+        "cells": {
+          "baseline": 0.0,
+          "erosion": 0.04751209099585432,
+          "attribution": 0.0,
+          "joint": 0.3200943706132021
+        },
+        "interaction_full": 0.2725822796173478,
+        "abs_difference": 0.0049927952260235275
+      }
+    ],
+    "error_over_mu": {
+      "0.05": 1.8191758512254967,
+      "0.02": 2.1322379155712166,
+      "0.01": 2.25397793007,
+      "0.005": 2.3197961414177293,
+      "0.002": 2.3612272525945497,
+      "0.001": 2.3753970944746516
+    },
+    "richardson": {
+      "mu_pair": [
+        0.002,
+        0.001
+      ],
+      "extrapolated": 0.32244142802391657,
+      "abs_difference": 2.833968376020346e-05
+    }
+  },
+  "closed_class_certification": {
+    "regimes_checked": 462,
+    "unique_stationary_everywhere": true,
+    "n_components_max": 4,
+    "n_closed_max": 1,
+    "zero_entries_max": 243
   },
   "timing": {
     "n_designs": 28,
     "Z": 100,
-    "seconds_per_stationary_regime": 0.027639295000699348,
-    "seconds_per_functional_build": 0.00042562999879010023,
+    "seconds_per_stationary_regime": 0.03917285499919672,
+    "seconds_per_functional_build": 0.0007530750008299947,
     "grid_points": 441,
-    "corners_per_grid_point": 4,
-    "estimated_grid_seconds": 49.50652769909939
+    "measured_grid_seconds": 17.625717899994925,
+    "exponentials_per_regime": 75600,
+    "machine": {
+      "processor": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "python": "3.12.3",
+      "numpy": "1.26.4",
+      "scipy": "1.17.1"
+    }
   },
   "residuals": {
     "max_row_sum_error": 2.220446049250313e-16,

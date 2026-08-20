@@ -1,12 +1,12 @@
 # Cover letter
 
-*Replace the bracketed fields before submitting. Paste the body into the
-"Enter Comments" box of the Editorial Manager submission, or upload it as a
-separate "Cover Letter" item.*
+*Paste the body into the "Enter Comments" box of the Editorial Manager
+submission, or upload it as a separate "Cover Letter" item. Suggested reviewers
+go in Editorial Manager's own field; see the note near the end.*
 
 ---
 
-[Date]
+21 August 2026
 
 To the Editors
 *Applied Mathematics and Computation*
@@ -31,11 +31,14 @@ The specific contributions are the following.
 1. **Structure.** We prove that realised harm saturates in the delegation depth
    while attributed harm decays geometrically, so that for every attribution
    retention below one there is a depth beyond which each further hand-off
-   strictly lowers the liability charged to the principal and strictly raises
-   the harm it causes (Theorem 4). We prove the converse condition: an
-   attribution rule that is bounded below removes the effect (Proposition 8).
-   Two further exact statements order the placement of a verification step
-   along the chain and establish monotonicity of harm in depth.
+   strictly lowers the liability charged to the principal and never lowers the
+   harm it causes (Theorem 4). We prove the converse condition: an attribution
+   rule bounded below by a positive constant removes the effect
+   (Proposition 8). Four further exact statements order the erosion sequence as
+   a harm order in each argument, give the erosion law and its spectral rate,
+   establish monotonicity of harm in depth, and order the placement of a
+   verification step along the chain. All eight numbered results carry
+   hypotheses and proofs.
 
 2. **Computation.** The joint space of depths and specifications makes the
    mutation-selection chain over population states a Markov chain on
@@ -45,22 +48,39 @@ The specific contributions are the following.
    on the pure designs, and the fixation probabilities that chain requires are
    evaluated from a closed form in O(Z) operations with the largest exponent
    factored out of a sum whose terms overflow double precision by three orders
-   of magnitude in the exponent. One stationary regime costs 28 ms; the full
-   21 x 21 parameter plane costs under a minute. Section 5.6 verifies the
-   scheme against a 60-digit reference, against an independent implementation
-   and against the full mutation-selection chain on a design space small enough
-   to carry one.
+   of magnitude in the exponent. The analysis that the size of this design space
+   forces is not of the relative error but of the exponent range: what the
+   embedded chain needs of its fixation probabilities is positivity, not
+   accuracy, and Proposition 9 states the condition under which double precision
+   still determines the stationary regime, which we then certify on all 462
+   regimes the paper reports. We also give an a priori bound on the horizon
+   truncation. One stationary regime costs 39 ms and the full 21 x 21 parameter
+   plane 17.6 s, on hardware named in the paper. Section 5.6 sets out four
+   checks of four different things: the interaction tensor against Monte Carlo,
+   the arithmetic of the stabilised sum against a 60-digit reference, the closed
+   form against an independent implementation, and the small-mutation reduction
+   against the full chain.
 
-3. **Numerical results.** The two per-hand-off losses raise the long-run unsafe
-   frequency by less than 0.02 each and to 0.32 together, so 91% of the effect
-   is interaction rather than either mechanism. A statutory floor under
-   attributed responsibility traces the same safety and welfare frontier as a
-   cap on chain length, with a mean gap of 0.005 at matched welfare. Improving
-   transmission fidelity is not monotone in its own strength.
+3. **Numerical results.** From a calibration whose depth-zero unsafe frequency
+   is 0.000, each per-hand-off loss acting alone leaves that frequency at or
+   below 0.018 while the two together raise it to 0.322, so 91% of the effect is
+   interaction rather than either mechanism. We report how that share moves with
+   the two calibration constants, the liability level and the depth ceiling,
+   rather than the median alone. A statutory floor under attributed
+   responsibility reproduces the frontier of a depth cap wherever a floor can
+   reach it, matching the unsafe frequency of each reachable ceiling to 0.0011.
+   Improving transmission fidelity is not monotone in its own strength.
 
-The manuscript is 25 pages in the Elsevier CAS single-column layout, including
-figures, tables and references, and is therefore within the length the journal
-asks authors to justify.
+The manuscript is 29 numbered pages in the Elsevier CAS single-column layout,
+including figures, tables and the reference list, and we should say plainly why
+it is over the 25 pages beyond which the journal scrutinises length. Four of
+those pages are the proofs and the two error bounds: every one of the nine
+numbered results is stated with its hypotheses and proved, the horizon
+truncation carries an a priori bound, and the floating-point condition the
+stationary regime depends on is stated as a proposition and certified rather
+than asserted. Three further pages are the reference list. We would rather
+submit the proofs than the assertions, but we will cut Section 7 and the
+related-work section further if the editors prefer a shorter paper.
 
 The work has not been published previously and is not under consideration
 elsewhere. All authors have approved the submission. The code, the generated
@@ -68,8 +88,11 @@ tables, the numerical benchmarks and the figure pipeline are openly available
 under the MIT licence at <https://github.com/trungkiet2005/delegation-cascade>,
 so every number in the paper can be regenerated from the repository.
 
-We have no competing interests to declare. We suggest the following reviewers,
-none of whom has been involved in the work: [names, affiliations, emails].
+We have no competing interests to declare.
+
+<!-- TO COMPLETE BEFORE SUBMISSION: enter three or four suggested reviewers in
+     Editorial Manager, none of them a co-author, a collaborator within the
+     last three years, or a colleague at HCMUS. -->
 
 Thank you for considering the manuscript.
 

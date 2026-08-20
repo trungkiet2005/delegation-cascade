@@ -1,7 +1,8 @@
-% split from numerics_generated.tex; do not edit
+%% one table per file, split from paper-amc/numerics_generated.tex by
+%% paper-amc/scripts/make_amc_tables.py -- do not edit
 \begin{table}[pos=t]
 \centering
-\caption{Verification of the scheme, in four independent checks. Block~1 compares the exact horizon expectation of Section~\ref{sec:interaction} with a Monte-Carlo estimate of the same payoff matrix: root-mean-square error over the sixteen ordered pairs and eight independent replicates, which decays at the Monte-Carlo rate $N^{-1/2}$ and which the exact route removes. Block~2 compares the stabilised evaluation of~\eqref{eq:fixation} in double precision with the same sum evaluated in $60$-digit arithmetic, worst relative error over the $n(n-1)=756$ ordered pairs of the full design space whose fixation probability is representable as a normal double. Block~3 compares the closed form with the general-purpose routine of EGTtools on the depth-zero design space, worst absolute difference over all ordered pairs. Block~4 compares the small-mutation limit with the full mutation--selection chain on a design space small enough for it ($n=3$, $Z=40$, $861$ population states).}
+\caption{Verification, in four checks of four different things. Block~1 compares the exact horizon expectation of Section~\ref{sec:interaction} with a Monte-Carlo estimate of the same payoff matrix: root-mean-square error over the sixteen ordered pairs and eight independent replicates, which decays at the Monte-Carlo rate $N^{-1/2}$ and which the exact route removes. Block~2 checks the arithmetic, not the formula: it compares the stabilised evaluation of~\eqref{eq:fixation} in double precision with the same sum evaluated in $60$-digit arithmetic, worst relative error over those of the $n(n-1)=756$ ordered pairs whose fixation probability is representable as a normal double, $738$ at $\beta=0.05$ and $589$ at $\beta=0.2$. Block~3 checks the closed form itself against an independent implementation of the same birth-death formula in EGTtools, on the depth-zero design space, worst absolute difference over all ordered pairs. Block~4 compares the small-mutation reduction with the full mutation--selection chain on a design space small enough for it ($n=3$, $Z=40$, $861$ population states); both sides use the process average $\sum_{i}x_{i}u(i,i)$ of Section~\ref{sec:observables}.}
 \label{tab:verification}
 \begin{tabular*}{\tblwidth}{@{}LLR@{}}
 \toprule
@@ -26,6 +27,8 @@ small mutation vs.\ full chain & $\mu=5\times 10^{-2}$ & $0.0910$ \\
 small mutation vs.\ full chain & $\mu=2\times 10^{-2}$ & $0.0426$ \\
 small mutation vs.\ full chain & $\mu=10^{-2}$ & $0.0225$ \\
 small mutation vs.\ full chain & $\mu=5\times 10^{-3}$ & $0.0116$ \\
+small mutation vs.\ full chain & $\mu=2\times 10^{-3}$ & $0.0047$ \\
+small mutation vs.\ full chain & $\mu=10^{-3}$ & $0.0024$ \\
 \bottomrule
 \end{tabular*}
 \end{table}

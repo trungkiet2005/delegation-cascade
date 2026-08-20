@@ -1,11 +1,12 @@
-% split from numerics_generated.tex; do not edit
+%% one table per file, split from paper-amc/numerics_generated.tex by
+%% paper-amc/scripts/make_amc_tables.py -- do not edit
 \begin{table}[pos=t]
 \centering
-\caption{Cost of the two routes to the stationary regime. The full mutation--selection process is a Markov chain on population states, of which there are $\binom{Z+n-1}{n-1}$; the reduction of Section~\ref{sec:reduction} needs $n(n-1)$ fixation probabilities, each evaluated in $O(Z)$ arithmetic operations. The depth ceiling $\bar{D}$ fixes the number of designs at $n=4(\bar{D}+1)$; the manuscript runs at $\bar{D}=6$, $Z=100$.}
+\caption{Cost of the two routes to the stationary regime. The full mutation--selection process is a Markov chain on population states, of which there are $\binom{Z+n-1}{n-1}$; the reduction of Section~\ref{sec:reduction} needs $n(n-1)$ fixation probabilities, each evaluated with $Z-1$ exponentials, one further exponential for the shift, and $O(Z)$ accompanying arithmetic. The depth ceiling $\bar{D}$ fixes the number of designs at $n=4(\bar{D}+1)$; the manuscript runs at $\bar{D}=6$, $Z=100$.}
 \label{tab:cost}
 \begin{tabular*}{\tblwidth}{@{}LLLRR@{}}
 \toprule
-$\bar{D}$ & $n$ & $Z$ & states of the full chain & operations of the reduction \\
+$\bar{D}$ & $n$ & $Z$ & states of the full chain & exponentials of the reduction \\
 \midrule
 4 & 20 & 50 & $4.6\times 10^{16}$ & $19\,000$ \\
 4 & 20 & 100 & $4.9\times 10^{21}$ & $38\,000$ \\

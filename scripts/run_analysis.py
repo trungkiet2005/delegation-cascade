@@ -430,19 +430,77 @@ def main(outdir: Path) -> None:
         )
     pd.DataFrame(cap_match).to_csv(tables_dir / "floor_versus_cap.csv", index=False)
     gaps = np.array([r["abs_gap"] for r in cap_match])
+    matched = np.array([abs(r["social_floor"] - r["social_cap"]) < 1e-6 for r in cap_match])
     key["floor_versus_cap"] = {
         "max_gap": float(gaps.max()),
         "mean_gap": float(gaps.mean()),
+        "mean_gap_over_welfare_matched": float(gaps[matched].mean()) if matched.any() else None,
+        "n_welfare_matched": int(matched.sum()),
         "caps_matched_within_001": int((gaps < 0.01).sum()),
         "n_caps": int(gaps.size),
         "rows": cap_match,
     }
+
+    # How far does the floor/cap agreement travel?  The manuscript quotes a range
+    # over phi, eps and the ceiling and a separate sensitivity to the
+    # organisational benefit, so store both rather than asserting them.
+    key["floor_versus_cap_sensitivity"] = _floorcap_sensitivity(race)
 
     _write_latex_tables(tables_dir, race, fun, dec, sweeps, key, regimes)
 
     with open(outdir / "key_numbers.json", "w", encoding="utf-8") as handle:
         json.dump(key, handle, indent=2, default=_default)
     print(f"wrote {outdir / 'key_numbers.json'} and {len(list(tables_dir.glob('*.csv')))} tables")
+
+
+def _floorcap_sensitivity(race) -> dict:
+    """Mean floor-versus-cap gap under variations of the four free parameters.
+
+    The manuscript separates two claims: that the agreement holds across the
+    transmission and attribution parameters and the ceiling, and that it is
+    sensitive to the organisational benefit.  Both are computed here so neither
+    has to be asserted.
+    """
+    from dataclasses import replace as _replace
+
+    sml = dict(population_size=cfg.POPULATION, beta=cfg.BETA)
+
+    def _outcome(chain):
+        fun = build_functionals(race, chain, cfg.LAM, cfg.HARM)
+        eq = th.equilibrium(fun, "sml", **sml)
+        return eq.unsafe_frequency, eq.social_payoff
+
+    def _mean_gap(chain) -> float:
+        caps = [_outcome(_replace(chain, max_depth=d)) for d in range(chain.max_depth + 1)]
+        floors = [
+            (a, *_outcome(_replace(chain, attribution_rule="floored",
+                                   attribution_floor=float(a))))
+            for a in np.round(np.arange(0.0, 1.001, 0.01), 2)
+        ]
+        gaps = []
+        for u_cap, s_cap in caps:
+            k = int(np.argmin([abs(s - s_cap) for _, _, s in floors]))
+            gaps.append(abs(floors[k][1] - u_cap))
+        return float(np.mean(gaps))
+
+    grid = {
+        "baseline": cfg.CHAIN,
+        "phi=0.6": _replace(cfg.CHAIN, phi=0.6),
+        "phi=0.9": _replace(cfg.CHAIN, phi=0.9),
+        "eps=0.10": _replace(cfg.CHAIN, eps=0.10),
+        "eps=0.40": _replace(cfg.CHAIN, eps=0.40),
+        "Dbar=4": _replace(cfg.CHAIN, max_depth=4),
+        "Dbar=8": _replace(cfg.CHAIN, max_depth=8),
+        "g=0": _replace(cfg.CHAIN, gain=0.0),
+        "g=5": _replace(cfg.CHAIN, gain=5.0),
+    }
+    cells = {label: _mean_gap(chain) for label, chain in grid.items()}
+    core = [v for k, v in cells.items() if not k.startswith("g=")]
+    return {
+        "mean_gap_by_cell": cells,
+        "core_range": [float(min(core)), float(max(core))],
+        "benefit_range": [float(cells["g=0"]), float(cells["g=5"])],
+    }
 
 
 def _default(obj):
@@ -567,14 +625,17 @@ def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key, regimes) 
         r"\caption{Attribution regimes. Long-run Unsafe frequency, mean delegation "
         r"depth and social payoff when the law mapping depth to the principal's share "
         r"of the harm is changed, with everything else at the baseline. The shelter "
-        r"survives every rule whose attribution keeps falling in the depth, including "
-        r"the equal split, and closes under every rule that is bounded below.}"
+        r"survives every rule whose attribution vanishes in the depth, including the "
+        r"equal split. A rule bounded below by $a_{\min}$ closes it only above the "
+        r"depth $d_{0}$ at which the bound binds, $\phi^{d_{0}}=a_{\min}$, which is "
+        r"why $a_{\min}=0.25$ ($d_{0}=4.8$) still leaves mean depth at $5.07$ while "
+        r"$a_{\min}=0.5$ ($d_{0}=2.4$) brings it to $2.99$.}"
     )
     lines.append(r"\label{tab:regimes}")
     lines.append(r"\begin{tabular}{llrrrr}")
     lines.append(r"\toprule")
     lines.append(
-        r"rule & setting & $a(D)$ & $U$ & $\bar{d}$ & $\pi_S$ \\"
+        r"rule & setting & $r(\bar{D})$ & $U$ & $\bar{d}$ & $\pi_S$ \\"
     )
     lines.append(r"\midrule")
     for o in regimes:
@@ -603,10 +664,15 @@ def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key, regimes) 
     lines.append(r"\centering")
     lines.append(
         r"\caption{A floor under attribution reproduces a depth cap. For each "
-        r"ceiling $\bar{D}$, the attribution floor $a_{\min}$ delivering the same "
-        r"social payoff, and the Unsafe frequency each delivers. The two instruments "
-        rf"trace the same frontier: the mean gap is {match['mean_gap']:.3f} and the "
-        rf"largest is {match['max_gap']:.3f}, at the shallow end a floor cannot reach.}}"
+        r"ceiling $\bar{D}$, the attribution floor $a_{\min}$ whose social payoff "
+        r"comes closest to that ceiling's, and the Unsafe frequency each delivers. "
+        r"Wherever a floor can match a ceiling on welfare, at $\bar{D}=2$ to $6$, it "
+        r"matches its Unsafe frequency to within $0.0011$. The two shallowest "
+        r"ceilings are out of a floor's reach, since even $a_{\min}=1$ leaves social "
+        r"payoff at $58.3$ against $59.0$ and $60.5$; the mean gap of "
+        rf"{match['mean_gap']:.3f} and the largest of {match['max_gap']:.3f} include "
+        r"those two rows and so overstate the disagreement, the mean over the five "
+        r"matched ceilings being $0.0003$.}"
     )
     lines.append(r"\label{tab:floorcap}")
     lines.append(r"\begin{tabular}{lrrrrr}")
