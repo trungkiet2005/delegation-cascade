@@ -66,7 +66,7 @@ def write_highlights() -> None:
     doc = _document()
     doc.add_heading("Highlights", level=1)
     doc.add_paragraph(TITLE).runs[0].bold = True
-    doc.add_paragraph("Trung-Kiet Huynh, Minh Dao Sy Duy, Chi-Nguyen Tran")
+    doc.add_paragraph("Trung-Kiet Huynh, Dao Sy Duy Minh, Chi-Nguyen Tran")
     for item in HIGHLIGHTS:
         assert len(item) <= 85, "highlight over 85 characters: %r" % item
         doc.add_paragraph(item, style="List Bullet")

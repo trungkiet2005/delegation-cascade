@@ -76,6 +76,7 @@ Thank you for considering the manuscript.
 Yours sincerely,
 
 Trung-Kiet Huynh, on behalf of all three authors
-Faculty of Information Technology, University of Science,
-Vietnam National University Ho Chi Minh City, Vietnam
+Faculty of Information Technology, University of Science (HCMUS)
+Vietnam National University -- Ho Chi Minh City (VNU-HCM)
+Ho Chi Minh City, Vietnam
 23122039@student.hcmus.edu.vn
