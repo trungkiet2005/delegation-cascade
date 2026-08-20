@@ -92,27 +92,27 @@ Writing -- review \& editing}
 
 \begin{abstract}
 Software increasingly acts through chains: a principal instructs an agent,
-which instructs further agents; each hand-off restates the specification
-imperfectly and traces responsibility back only in part. Making delegation
-depth a strategic variable in an evolutionary game puts the mutation--selection
-chain over population states, $3.0\times10^{27}$ of them, out of reach. We
-give a scheme that avoids it. The interaction tensor is summed exactly over the
-horizon law; the process is reduced to an embedded chain on the pure designs,
-exact as the mutation rate vanishes and with its residual measured against the
-full chain; and the fixation probabilities that chain needs follow from a
-closed form in $O(Z)$ operations, with the largest exponent factored out of a
-sum whose terms otherwise overflow double precision. What the reduction needs
-of that evaluation is positivity rather than accuracy, and we certify it. Two
-structural results are exact. Realised harm saturates in the depth while
-attributed harm carries one extra factor per layer, so for every attribution
-retention below one there is a depth beyond which each further hand-off
-strictly lowers the bill the principal is charged and never lowers the harm it
-causes; and any attribution rule whose share is bounded below by a positive
-constant closes that shelter. Numerically, from a calibration whose depth-zero
-unsafe frequency is $0.000$, each loss alone leaves it at or below $0.018$
-while the two together raise it to $0.322$, and a statutory floor under
-attributed responsibility reproduces a depth cap's frontier wherever a floor
-can reach.
+which instructs further agents, so the process that finally acts is several
+hand-offs from the party that wanted it. Each hand-off restates the
+specification imperfectly and traces responsibility back only in part. We make
+delegation depth a strategic variable in an evolutionary game whose interaction
+layer is a repeated two-player development race, and study the stationary
+regime of the resulting finite-population process. Two structural results are
+exact. Realised harm saturates in the depth while attributed harm carries one
+extra factor per layer, so for every attribution retention below one there is a
+depth beyond which each further hand-off strictly lowers the bill the principal
+is charged and raises the harm it causes; and any attribution rule whose share
+stops falling closes that shelter. The joint space of depths and specifications
+puts the mutation--selection chain over population states out of reach, at
+$3.0\times10^{27}$ states here. We instead evaluate the interaction tensor
+exactly over the horizon law, reduce the process to an embedded chain on pure
+designs, and compute its fixation probabilities from a closed form in $O(Z)$
+operations with the largest exponent factored out; the scheme is verified
+against a $60$-digit reference, an independent implementation and the full
+chain. Numerically, the two per-hand-off losses raise unsafe behaviour by less
+than $0.02$ each and to $0.32$ together, and a statutory floor under attributed
+responsibility traces the same safety and welfare frontier as a cap on chain
+length.
 \end{abstract}
 
 \begin{highlights}
@@ -121,8 +121,8 @@ can reach.
       geometrically
 \item An exact $O(Z)$ scheme replaces a chain with $3\times10^{27}$ population
       states
-\item Neither per-hand-off loss is dangerous alone; together they reach $0.32$
-      unsafe
+\item Two per-hand-off losses are minor alone and raise unsafe behaviour
+      $18$-fold together
 \item A floor under attributed liability reproduces the frontier of a depth cap
 \end{highlights}
 
@@ -171,13 +171,10 @@ wrote~\citep{perez2025telephone,acerbi2023transmission}. It has been measured
 on instructions directly: across fourteen frontier models, adherence to
 explicitly stated instructions falls with every additional turn, from $0.88$ to
 $0.71$ over three turns for the strongest of them~\citep{he2024multiif}.
-Failure data from deployed agent frameworks show both effects in the field.
-Across annotated traces from seven agent frameworks, the largest single failure
-class is rooted in the specification and design of the system itself and the
-second in misalignment between agents~\citep{cemri2025mast}; and when faulty
-agents are injected deliberately, a linear chain of hand-offs degrades more
-than any other topology tested, by $23.7\%$ against $5.5\%$ for a hierarchical
-arrangement~\citep{huang2025resilience}. A hand-off also attenuates
+Failure data from deployed agent frameworks show the same two facts in the
+field, namely that specification errors between agents are the dominant failure
+class and that a linear chain of hand-offs degrades more than any other
+topology~\citep{cemri2025mast,huang2025resilience}. A hand-off also attenuates
 responsibility, because harm that reaches the world through several
 intermediaries is traced back to the party at the top only in part. The gap
 this opens has been named for the case of a machine whose behaviour its
@@ -213,44 +210,35 @@ theory~\citep{taylor1978ess,hofbauer1998evolutionary,traulsen2006stochastic}.
 The contribution is an explanation together with the scheme that makes it
 computable, and it has three parts.
 
+\emph{Structure.} Realised harm saturates in the depth because the
+specification is eventually forgotten, while attributed harm carries the extra
+factor $\phi$ per layer and is bounded below by nothing. Theorem~\ref{thm:shelter}
+turns that asymmetry into a threshold: for every $\phi<1$ there is a depth
+beyond which each further hand-off strictly reduces the harm the principal is
+charged for while strictly increasing the harm it causes. Beyond that depth the
+invasion condition for one more layer stops depending on liability in the usual
+direction, and raising the penalty makes the deeper design more attractive
+rather than less (Proposition~\ref{prop:invasion}). What closes the shelter is
+not the level of attribution but whether it keeps falling
+(Proposition~\ref{prop:floor}).
+
 \emph{Computation.} The joint design space has $n=4(\bar D+1)$ elements, which
 is $28$ at the depth ceiling $\bar D=6$ used here. The mutation--selection
 process over population states is then a Markov chain on $\binom{Z+n-1}{n-1}$
 states, which is $3.0\times10^{27}$ at $Z=100$ and beyond any direct treatment.
 Section~\ref{sec:numerics} sets out the scheme we use instead. It has three
 ingredients. The interaction tensor is evaluated exactly over the horizon law
-rather than sampled, so the payoff matrices carry no simulation noise, and the
-truncation of the horizon law is bounded a priori. The process is reduced to an
-embedded chain on the $n$ pure designs in the small-mutation limit. And the
-$n(n-1)$ fixation probabilities that chain needs are evaluated from a closed
-form in $O(Z)$ operations each, with the largest exponent factored out of a sum
-whose terms otherwise overflow double precision by three orders of magnitude in
-the exponent. What makes that last step more than a routine application of a
-standard identity is the use the reduction makes of its output. The embedded
-chain needs its fixation probabilities to be positive, not to be accurate, and
-the analysis that matters is therefore of the exponent range rather than of the
-relative error: Sections~\ref{sec:fixation} and~\ref{sec:observables} state the
-condition under which double precision still determines the stationary regime, and
-Section~\ref{sec:observables} certifies it on every regime we report. One
-stationary regime costs $28$ milliseconds and the whole $21\times21$ parameter
-plane of Section~\ref{sec:plane} costs under a minute.
-Table~\ref{tab:verification} checks the four parts separately: the interaction
-tensor against Monte Carlo, the arithmetic of the stabilised sum against a
-$60$-digit evaluation of the same expression, the closed form itself against an
-independent implementation on the depth-zero sub-space, and the small-mutation
-reduction against the full chain on a three-design space.
-
-\emph{Structure.} Realised harm saturates in the depth because the
-specification is eventually forgotten, while attributed harm carries the extra
-factor $\phi$ per layer and is bounded below by nothing. Theorem~\ref{thm:shelter}
-turns that asymmetry into a threshold: for every $\phi<1$ there is a depth
-beyond which each further hand-off strictly reduces the harm the principal is
-charged for while never reducing the harm it causes. Beyond that depth the
-invasion condition for one more layer stops depending on liability in the usual
-direction, and raising the penalty makes the deeper design more attractive
-rather than less (Proposition~\ref{prop:invasion}). What closes the shelter is
-not the level of attribution but whether it vanishes in the depth
-(Proposition~\ref{prop:floor}).
+rather than sampled, so the payoff matrices carry no simulation noise. The
+process is reduced to an embedded chain on the $n$ pure designs in the
+small-mutation limit. And the $n(n-1)$ fixation probabilities that chain needs
+are evaluated from a closed form in $O(Z)$ operations each, with the largest
+exponent factored out of a sum whose terms otherwise overflow double precision
+by three orders of magnitude in the exponent. One stationary regime costs $28$
+milliseconds and the whole $21\times21$ parameter plane of
+Section~\ref{sec:plane} costs under a minute.
+Table~\ref{tab:verification} verifies the scheme against a $60$-digit
+evaluation of the same sum, against an independent implementation and against
+the full mutation--selection chain on a design space small enough to carry it.
 
 \emph{Numerical results.} The two mechanisms do not add. With the liability
 calibrated so that the depth-zero race is already safe, imperfect transmission
@@ -265,10 +253,10 @@ safest available specification and the population executes it only $26\%$ of
 the time. Among the four governance instruments we compare, restoring
 attribution has a threshold rather than a gradient, capping chain length is
 monotone and cheap, and improving transmission fidelity is neither monotone nor
-safe in the small. A statutory floor under attributed responsibility reproduces
-the frontier of a depth cap wherever a floor can reach it: over the five
-ceilings a floor can match on welfare it matches the unsafe frequency to
-$0.0011$, and it asks a regulator to count no hand-offs.
+safe in the small. A statutory floor under attributed responsibility traces the
+same safety and welfare frontier as a depth cap, with a mean gap of $0.005$ in
+unsafe frequency at matched welfare, and it asks a regulator to count no
+hand-offs.
 
 \subsection{Assumptions}
 \label{sec:assumptions}
@@ -286,17 +274,15 @@ Section~\ref{sec:limitations} states what the model still cannot represent.
 
 The paper is organised as follows. Section~\ref{sec:related} places the model
 in the literature. Section~\ref{sec:model} defines the interaction layer, the
-delegation chain, the functionals every reported number is built from and the
-dynamics, and Section~\ref{sec:analysis} proves the structural results.
-Section~\ref{sec:numerics} gives the numerical scheme, its cost and its
-verification, and Section~\ref{sec:results} reports what the model does: the
-decomposition of the two mechanisms, the attribution--erosion plane, the gap
-between the specification a principal declares and the behaviour its chain
-executes, the four governance instruments, the floor under attribution that
-substitutes for a depth cap, and the robustness checks.
-Section~\ref{sec:discussion} interprets and limits those findings and
-Section~\ref{sec:conclusion} concludes; Appendix~\ref{app:fixation} derives the
-closed form of Section~\ref{sec:fixation}.
+delegation chain and the functionals every reported number is built from, and
+Section~\ref{sec:analysis} proves the structural results. Section~\ref{sec:numerics}
+gives the numerical scheme, its cost and its verification, and
+Section~\ref{sec:results} reports what the model does: the decomposition of the
+two mechanisms, the attribution--erosion plane, the four governance instruments
+and the robustness checks. Section~\ref{sec:discussion} interprets and limits
+those findings and Section~\ref{sec:conclusion} concludes;
+Appendix~\ref{app:fixation} derives the closed form of
+Section~\ref{sec:fixation}.
 
 % ===========================================================================
 \section{Related work}
@@ -364,21 +350,13 @@ embedded chain on the pure
 strategies~\citep{fudenberg2006imitation,fudenberg2006strong,nowak2004emergence};
 how small a mutation rate that limit needs has been characterised analytically
 for imitation processes at arbitrary selection
-intensity~\citep{wu2012howsmall}. The general-purpose implementation of this
-route, EGTtools~\citep{domingos2023egttools}, offers both the full-state-space
-transition matrix at a positive mutation rate and the embedded chain of the
-small-mutation limit. The first is unavailable at $\binom{Z+n-1}{n-1}=
-3.0\times10^{27}$ states. The second is available and runs on our $n=28$ space
-in about three seconds, and it agrees with our closed form to
-$6.7\times10^{-16}$ on every ordered pair both resolve; but evaluating the
-fixation sum as written returns exactly zero for $383$ of the $756$ ordered
-pairs at $Z=100$, $\beta=0.05$ and for $407$ at $\beta=0.2$, and those zeros
-leave the embedded chain with a single absorbing design as its only closed
-communicating class, so its stationary vector collapses to a point mass and
-every off-equilibrium quantity we report is lost. What our scheme adds is
-therefore not speed but the exponent analysis that keeps the chain informative
-at this strategy-space size and selection intensity;
-Section~\ref{sec:numerics} makes the comparison quantitative.
+intensity~\citep{wu2012howsmall}. General-purpose implementations organise the
+computation around the full population state
+space~\citep{domingos2023egttools}, which is exactly what a design space of the
+size used here forbids. Our scheme keeps the analytical route and adds the
+numerical care that a strategy space of this size and a selection intensity of
+this strength require; Section~\ref{sec:numerics} makes the comparison
+quantitative.
 
 % ===========================================================================
 \section{The model}
@@ -413,12 +391,12 @@ rounds.
 
 \input{tab_race}
 
-Reading down any column of $m$ in Table~\ref{tab:race} the entries never fall,
-and reading across any row they never fall either. This double monotonicity is
-the structural fact on which everything below rests, and we record it as a
-property of the interaction layer rather than as an assumption of ours. It
-holds round by round and not merely in expectation, which is what makes it
-independent of every numerical choice in the paragraph above.
+Reading down any column of $m$ in Table~\ref{tab:race}, the entries never fall.
+This monotonicity is the structural fact on which everything below rests, and
+we record it as a property of the interaction layer rather than as an
+assumption of ours. It holds round by round and not merely in expectation,
+which is what makes it independent of every numerical choice in the paragraph
+above.
 
 \FloatBarrier
 
@@ -430,14 +408,12 @@ $\mathrm{S}<\mathrm{U}$. For every opponent $j$, every horizon $n$ and every
 round $t\le n$,
 \begin{equation}
   a^{\AS{}|j}_{t}\;\le\;a^{\CS{}|j}_{t}\;\le\;a^{\CAS{}|j}_{t}
-  \;\le\;a^{\AU{}|j}_{t},
+  \;\le\;a^{\AU{}|j}_{t}.
   \label{eq:pathwise}
 \end{equation}
-and for every focal design $i$ the same ordering holds in the opponent
-argument, $a^{i|\AS{}}_{t}\le a^{i|\CS{}}_{t}\le a^{i|\CAS{}}_{t}\le
-a^{i|\AU{}}_{t}$. Consequently $m$ and $u$ are non-decreasing in each argument
-separately along the erosion order, for every horizon law and every setting of
-the stage payoffs, the step sizes, the prize, $p_{\max}$ and the setback scope.
+Consequently $m(\AS{},j)\le m(\CS{},j)\le m(\CAS{},j)\le m(\AU{},j)$, and the
+same holds for $u$, for every horizon law and every setting of the stage
+payoffs, the step sizes, the prize, $p_{\max}$ and the setback scope.
 \end{lemma}
 
 \begin{pf}
@@ -460,33 +436,20 @@ each closed form monotonically, so raising $f_{i}$ from Safe to Unsafe raises
 the path in some rounds and lowers it in none, which gives the middle
 inequality.
 
-For the opponent argument, fix $i$. If $i$ does not copy its path is constant
-at $f_{i}$ whatever $j$ is, and the ordering holds with equality. If $i$ copies,
-the four opponents give the paths $(f_{i},f_{j},f_{j},\dots)$ when $j$ does not
-copy and $f_{i}$ on odd rounds with $f_{j}$ on even rounds when it does, so
-along \AS{}, \CS{}, \CAS{}, \AU{} the focal path is, after round $1$, Safe
-throughout, Safe on the even rounds and $f_{i}$ on the odd ones, $f_{i}$ on the
-odd rounds and Unsafe on the even ones, and Unsafe throughout. Each of these
-dominates the one before it pointwise, whichever value $f_{i}$ takes.
-
 At a fixed horizon, $m$ counts the Unsafe entries of the path and $u$ divides
 that count by $n$, so both are non-decreasing functions of the path and both
-inherit the two orderings. Neither depends on any other parameter of the
-race, so taking the expectation over any law for $T$ preserves them.
+inherit~\eqref{eq:pathwise}. Neither depends on any other parameter of the
+race, so taking the expectation over any law for $T$ preserves the ordering.
 \qed
 \end{pf}
 
 The same case analysis evaluates $m$ exactly rather than only ordering it. With
-$\bar T=\mathbb{E}[T]$ and $\pi=\Pr[T\text{ odd}]$, the rows of $m$ in the
-erosion order are $(0,0,0,0)$ for \AS{},
-$\bigl(0,0,\tfrac{\bar T-\pi}{2},\bar T-1\bigr)$ for \CS{},
-$\bigl(1,\tfrac{\bar T+\pi}{2},\bar T,\bar T\bigr)$ for \CAS{} and
-$(\bar T,\bar T,\bar T,\bar T)$ for \AU{}. At our horizon law $\bar T=9$ and
-$\pi=5/9$, which reproduces Table~\ref{tab:race} exactly. Every entry lies in
-$[0,\bar T]$ and the largest is attained, so $\max_{ij}m(i,j)=\bar T>0$; that
-bound is the saturation Theorem~\ref{thm:shelter} needs. Throughout, $\mu$
-denotes the mutation rate of Section~\ref{sec:reduction} and never the expected
-horizon.
+$\mu=\mathbb{E}[T]$ and $\pi=\Pr[T\text{ odd}]$, the rows of $m$ in the erosion
+order are $(0,0,0,0)$ for \AS{}, $\bigl(0,0,\tfrac{\mu-\pi}{2},\mu-1\bigr)$ for
+\CS{}, $\bigl(1,\tfrac{\mu+\pi}{2},\mu,\mu\bigr)$ for \CAS{} and
+$(\mu,\mu,\mu,\mu)$ for \AU{}. At our horizon law $\mu=9$ and $\pi=5/9$, which
+reproduces Table~\ref{tab:race} exactly. Every entry is bounded by $\mu$, and
+that bound is the saturation Theorem~\ref{thm:shelter} needs.
 
 \subsection{The delegation chain}
 \label{sec:chain}
@@ -657,9 +620,8 @@ at which the single-layer race is already safe. At that level the depth-zero
 ecosystem has long-run unsafe frequency $0.000$ under the finite-population
 reading and $0.026$ under the replicator reading. The baseline erosion
 probability is $\varepsilon=0.20$ and the baseline attribution retention is
-$\phi=0.75$; both are swept in Section~\ref{sec:plane}, over
-$\varepsilon\in[0,0.4]$ and $\phi\in[0.6,1]$, and varied again in
-Section~\ref{sec:robustness}, where $\phi$ additionally takes values above one.
+$\phi=0.75$; both are swept over their full ranges in Section~\ref{sec:plane}
+and Section~\ref{sec:robustness}.
 
 % ===========================================================================
 \section{Analytical results}
@@ -675,36 +637,14 @@ are exact.
 
 \begin{proposition}[Erosion law]
 \label{prop:erosion}
-Suppose the drift kernel satisfies $D(s,s)=0$ at every intent $s$ other than
-the absorbing one; the ladder and collapse kernels satisfy this and the uniform
-kernel does not. Then for any such intent the specification survives $d$
+For any intent other than the absorbing one, the specification survives $d$
 hand-offs intact with probability exactly $(1-\varepsilon)^{d}$, and the
-\emph{specification half-life}
-$d_{1/2}=\ln2/\ln\bigl(1/(1-\varepsilon)\bigr)$ depends on nothing but the
-per-hand-off erosion probability. For all three kernels $D$ has spectrum
-$\{1,0,0,0\}$, so $M$ has spectrum $\{1,1-\varepsilon,1-\varepsilon,
-1-\varepsilon\}$ and the influence of the intent on the executed design decays
-at the exponential rate $1-\varepsilon$ in every case.
+influence of the intent on the executed design decays at the rate given by the
+second-largest eigenvalue modulus of $M$, which for the ladder and collapse
+kernels equals $1-\varepsilon$. The \emph{specification half-life}
+$d_{1/2}=\ln2/\ln\bigl(1/(1-\varepsilon)\bigr)$ therefore depends on nothing
+but the per-hand-off erosion probability.
 \end{proposition}
-
-\begin{pf}
-Under the hypothesis an intent that is left cannot be re-entered, so
-$M^{d}(s,s)=(1-\varepsilon)^{d}$, and solving $(1-\varepsilon)^{d}=1/2$ gives
-$d_{1/2}$. For the spectrum, $M=(1-\varepsilon)I+\varepsilon D$ gives
-$\operatorname{spec}(M)=(1-\varepsilon)+\varepsilon\operatorname{spec}(D)$. The
-ladder $D$ is a nilpotent shift with the absorbing state fixed, and the
-collapse and uniform $D$ are rank one and row stochastic, so all three have
-spectrum $\{1,0,0,0\}$ and the second-largest eigenvalue modulus of $M$ is
-$1-\varepsilon$. For the ladder $M$ is defective at $1-\varepsilon$, so the
-approach to the absorbing design carries a polynomial factor: from \AS{} the
-number of clauses lost is $\mathrm{Bin}(d,\varepsilon)$, and
-$\lVert M^{d}(\AS{},\cdot)-\delta_{\AU{}}\rVert_{TV}=\Pr[\mathrm{Bin}
-(d,\varepsilon)\le2]=\Theta\bigl(d^{2}(1-\varepsilon)^{d}\bigr)$.
-Under the uniform kernel $D(s,s)=1/4$, the hypothesis fails,
-and instead $M^{d}(s,s)=\tfrac34(1-\varepsilon)^{d}+\tfrac14$, which is the
-form Section~\ref{sec:robustness} reports.
-\qed
-\end{pf}
 
 At the baseline $\varepsilon=0.20$ the half-life is $3.11$ hand-offs and only
 $26.2\%$ of specifications reach a six-deep executor unaltered
@@ -755,78 +695,36 @@ damage that never reaches the principal's accounts.}
 \label{sec:shelter}
 
 The harm a chain causes is bounded: once the specification has been forgotten,
-the executed design is the absorbing one whatever the intent, so the harm
+the executed design is the absorbing one whatever the intent, so $m(d)$
 converges. The harm a chain is charged for carries the extra factor $\phi$ per
 layer and is bounded below by nothing. Comparing the two gives the central
 structural result of the model.
 
-One piece of notation first, because the rest of this section turns on it.
-Throughout, $m(d)$ abbreviates the \emph{self-play} harm
-$m(d,s;d,s)$ of a fixed intent $s$: the harm a depth-$d$ chain causes in a
-monomorphic population of depth-$d$ chains issuing the same intent. That is the
-environment a depth-$(d+1)$ mutant faces, which is why it is the right object
-here; the fixed-resident quantities $m(d{+}1,d)$ and $m(d,d)$ that
-enter~\eqref{eq:invasion} below are written out in full whenever they are meant.
-
 \begin{theorem}[Liability shelter]
 \label{thm:shelter}
-Fix an intent $s$, write $m(d)=m(d,s;d,s)$, and assume the hand-off kernel
-satisfies the hypothesis of Proposition~\ref{prop:monotone}. Adopt the
-convention $\phi^{*}(d)=0$ when $m(d+1)=0$. Then adding a hand-off strictly
-lowers the attributed harm exactly when
+Adding a hand-off lowers the attributed harm exactly when
 \begin{equation}
   \phi \;<\; \phi^{*}(d) \;=\; \frac{m(d)}{m(d+1)}.
   \label{eq:phistar}
 \end{equation}
-Moreover $d\mapsto m(d)$ is non-decreasing and bounded, so $m(d)\uparrow
-m_{\max}:=\lim_{d}m(d)$; and if $m_{\max}>0$ then $\phi^{*}(d)\to1$, so for
-every $\phi<1$ there exists a depth $d^{\star}(\phi)$ such that every hand-off
-beyond $d^{\star}$ strictly reduces the harm attributed to the principal while
-never reducing the harm it causes, and $\lim_{d}\phi^{d}m(d)=0$ while
-$\lim_{d}m(d)=m_{\max}$.
+Because $m$ is non-decreasing and bounded, $\phi^{*}(d)\to1$. Hence for every
+$\phi<1$ there exists a depth $\bar d(\phi)$ such that every hand-off beyond
+$\bar d$ strictly reduces the harm attributed to the principal while strictly
+increasing the harm it causes, and
+\[
+  \lim_{d\to\infty}\phi^{d} m(d) = 0,
+  \qquad
+  \lim_{d\to\infty} m(d) = m_{\max}.
+\]
 \end{theorem}
 
-\begin{pf}
-The attributed harm at depth $d$ is $\phi^{d}m(d)$, so
-$\phi^{d+1}m(d+1)<\phi^{d}m(d)$ if and only if $\phi\,m(d+1)<m(d)$. When
-$m(d+1)>0$ this is $\phi<m(d)/m(d+1)$. When $m(d+1)=0$, monotonicity gives
-$m(d)=0$ and the strict inequality fails for every $\phi\ge0$, which is the
-stated convention.
-
-For the monotonicity, Proposition~\ref{prop:monotone} gives
-$M^{d}(s,\cdot)\preceq M^{d+1}(s,\cdot)$ in the stochastic order, and by
-Lemma~\ref{lem:order} $m(\cdot,\cdot)$ is non-decreasing in each argument
-separately along that order. Raising the depth in the focal argument and then
-in the opponent argument therefore gives
-$m(d,d)\le m(d{+}1,d)\le m(d{+}1,d{+}1)$, so $d\mapsto m(d)$ is non-decreasing;
-it is bounded by $\max_{ij}m(i,j)=\bar T$, so it converges to some
-$m_{\max}\le\bar T$. If $m_{\max}>0$ there is a $d_{1}$ with $m(d)>0$ for all
-$d\ge d_{1}$, and on that range $\phi^{*}(d)=m(d)/m(d+1)\to
-m_{\max}/m_{\max}=1$. Given $\phi<1$, convergence supplies a
-$d^{\star}\ge d_{1}$ with $\phi^{*}(d)>\phi$ for every $d\ge d^{\star}$, which
-is the first claim; the harm caused is non-decreasing by the same monotonicity.
-Finally $0\le\phi^{d}m(d)\le m_{\max}\phi^{d}\to0$.
-\qed
-\end{pf}
-
-The chain $m(d,d)\le m(d{+}1,d)\le m(d{+}1,d{+}1)$ in the proof is what carries
-the theorem across to the fixed-resident comparison of~\eqref{eq:invasion}, and
-it is worth recording that the two readings need not open the shelter at the
-same depth: at the baseline the self-play reading opens it at
-$d^{\star}=6$ and the fixed-resident reading at $5$.
-
-The harm caused increases strictly, rather than merely not decreasing, exactly
-when $m(d{+}1)>m(d)$. That holds at the baseline for the intents \AS{} and
-\CS{}, and fails for \CAS{} and \AU{}, whose executed harm is already at the
-ceiling at every depth, and it fails for every intent at $\varepsilon=0$, a
-column of the parameter plane of Section~\ref{sec:plane}. Probing
-\eqref{eq:phistar} to depth $40$ puts $\phi^{*}$ at $0.99993$ and, at the
-baseline $\phi=0.75$ with intent \AS{}, the shelter opening at $d^{\star}=6$
+Probing~\eqref{eq:phistar} to depth $40$ puts $\phi^{*}$ at $0.99993$ and, at
+the baseline $\phi=0.75$, the shelter opening at $\bar d=6$
 (Figure~\ref{fig:shelter}A,B). The theorem is the reason the model has no
 interior solution to appeal to: a principal that can add layers can drive its
 attributed harm to zero while driving its real harm to the maximum, and the
 only things that stop it are a rule limiting the number of layers or an
-attribution rule whose share does not vanish in the depth.
+attribution rule with $\phi=1$ exactly.
 
 The consequence for the liability instrument is sharp. In a resident population
 of depth-$d$ principals with intent $s$, the advantage of a depth-$(d+1)$
@@ -837,66 +735,30 @@ mutant is affine in the effective liability,
   \;-\; L\underbrace{\bigl[\phi^{d+1}m(d{+}1,d)-\phi^{d}m(d,d)\bigr]}_{\text{attributed gain}},
   \label{eq:invasion}
 \end{equation}
-so the sign of the attributed gain, and not its size alone, decides how the
-outcome responds to liability.
+so the single ratio implied by~\eqref{eq:invasion} decides the outcome.
 
 \begin{proposition}[Invasion by depth]
 \label{prop:invasion}
-Write $G(d)=\phi^{d+1}m(d{+}1,d)-\phi^{d}m(d,d)$ for the attributed gain
-of~\eqref{eq:invasion} and assume the benefit is strictly positive, as it is at
-every depth for every intent at our baseline, where its smallest value is
-$1.208$. Three cases exhaust the possibilities. If $G(d)>0$ the advantage is
-strictly decreasing in $L$ and vanishes at
-$L^{*}(d)=\text{benefit}/G(d)$, so every $L>L^{*}(d)$ blocks the deeper design.
-If $G(d)<0$, which by Theorem~\ref{thm:shelter} happens for all $d$ large
-enough whenever $\phi<1$, the advantage is strictly increasing in $L$ and no
-level of liability blocks the deeper design. If $G(d)=0$ the advantage does not
-depend on $L$ at all, and the deeper design invades at every liability level.
+The critical effective liability at which depth $d+1$ loses its advantage over
+depth $d$ is $L^{*}(d)=\text{benefit}/\text{attributed gain}$. When the
+attributed gain is positive, $L>L^{*}(d)$ blocks the deeper design. When the
+attributed gain is negative, which by Theorem~\ref{thm:shelter} happens for all
+$d$ large enough whenever $\phi<1$, the advantage is increasing in $L$ and no
+level of liability blocks the deeper design.
 \end{proposition}
 
-\begin{pf}
-By~\eqref{eq:invasion} the advantage is the affine map
-$L\mapsto\text{benefit}-L\,G(d)$, whose slope is $-G(d)$. A strictly positive
-benefit puts its value at $L=0$ above zero, so the three signs of the slope give
-the three cases, and in the first the unique zero is at
-$\text{benefit}/G(d)$.
-\qed
-\end{pf}
-
-The third case is not a curiosity. At the baseline the headline intent \AS{}
-has $m(0,0)=m(1,0)=0$, because one lost clause turns \AS{} into \CS{}, which is
-still safe against a safe opponent; so $G(0)=0$ exactly and the first hand-off
-is taken whatever the liability. Figure~\ref{fig:shelter}C shows $G$ for each
-intent. For the intents \CAS{} and \AU{} it is negative at every depth, so for
-those principals liability is not a tax on delegation but a subsidy for it.
+Figure~\ref{fig:shelter}C shows the attributed gain for each intent at the
+baseline. For the intent \CAS{} it is negative at every depth, so for those
+principals liability is not a tax on delegation but a subsidy for it.
 
 \begin{corollary}[When a rule calibrated at depth zero stops binding]
 \label{cor:failure}
-Suppose a liability $L$ clears a threshold $L_{c}$ for principals that act for
-themselves, and suppose a depth-$d$ principal faces that same depth-zero
-decision problem under the reduced rate $L\phi^{d}$. Then the rule stops
-clearing the threshold at depth $d^{\dagger}=\log(L_{c}/L)/\log\phi$, which is
-finite for every $\phi<1$. At the baseline, $L_{c}=6.52$, $L=20$ and
+A liability $L$ that clears a threshold $L_{c}$ for principals that act for
+themselves stops clearing it at depth $d^{\dagger}=\log(L_{c}/L)/\log\phi$,
+which is finite for every $\phi<1$. At the baseline, $L_{c}=6.52$, $L=20$ and
 $\phi=0.75$ give $d^{\dagger}=3.9$: the rule survives three hand-offs and fails
 at the fourth.
 \end{corollary}
-
-\begin{pf}
-The nominal rate a depth-$d$ principal faces is $L\phi^{d}$, which clears the
-threshold while $L\phi^{d}\ge L_{c}$, that is while
-$d\log\phi\ge\log(L_{c}/L)$; since $\log\phi<0$ this is
-$d\le\log(L_{c}/L)/\log\phi$.
-\qed
-\end{pf}
-
-The second hypothesis is a simplification and should be read as one. A
-depth-$d$ principal does not in fact face the depth-zero decision problem at a
-reduced rate: by Proposition~\ref{prop:monotone} its chain also causes more
-harm for the same intent, so $d^{\dagger}$ locates the depth at which the
-nominal instrument has been diluted past its depth-zero calibration rather than
-predicting exactly when deterrence fails. Section~\ref{sec:instruments}
-compares $d^{\dagger}$ with the threshold the simulated ecosystem actually
-shows.
 
 The last panel of Figure~\ref{fig:shelter} records a fact that is easy to miss.
 The depth the population reaches is not the depth that is best for the
@@ -910,13 +772,10 @@ social dilemma at the private level before it is one at the social level.
 \centering
 \includegraphics[width=\linewidth]{figures/fig03_shelter.pdf}
 \caption{Depth as a liability shelter.
-\textbf{(A)}~The deniability threshold $\phi^{*}(d)=m(d)/m(d{+}1)$ of
-Theorem~\ref{thm:shelter} rises towards one because realised harm saturates, so
-any attribution retention below one is eventually below the threshold; at
-$\phi=0.75$ the shelter opens at six hand-offs. The threshold is zero at
-$d=0$ and $d=1$ by the convention of Theorem~\ref{thm:shelter}, since a chain
-that has lost at most one clause from \AS{} causes no harm against a chain like
-itself. \textbf{(B)}~Beyond that depth, realised harm still climbs towards
+\textbf{(A)}~The deniability threshold $\phi^{*}(d)=m(d)/m(d{+}1)$ rises towards
+one because realised harm saturates, so any attribution retention below one is
+eventually below the threshold; at $\phi=0.75$ the shelter opens at six
+hand-offs. \textbf{(B)}~Beyond that depth, realised harm still climbs towards
 its ceiling while attributed harm falls geometrically. \textbf{(C)}~What one
 more hand-off adds to the principal's bill. Where the curve is negative,
 liability rewards delegation instead of taxing it. \textbf{(D)}~Private and
@@ -929,74 +788,46 @@ everybody else.}
 \subsection{Where a check belongs, and what closes the shelter}
 \label{sec:checks}
 
-Two further statements are exact. The first orders the placements of a single
-check along the chain and is applied in Section~\ref{sec:instruments}; the
-second identifies the property an attribution rule must have for the shelter to
-close, and is the basis of the instrument compared in Section~\ref{sec:floor}.
+Two further statements are exact and both bear directly on the instruments
+compared in Section~\ref{sec:instruments}. The first orders the placements of a
+single check along the chain.
 
-\begin{proposition}[Check placement]
+\begin{proposition}[Audit placement]
 \label{prop:audit}
 Under a kernel satisfying the hypothesis of Proposition~\ref{prop:monotone},
 the realised harm of a depth-$d$ chain carrying one check of strength $\alpha$
-at layer $k\in\{0,\dots,d\}$ is non-increasing in $k$.
+at layer $k$ is non-increasing in $k$.
 \end{proposition}
 
 \begin{pf}
 The executed law is $\alpha M^{d-k}(s,\cdot)+(1-\alpha)M^{d}(s,\cdot)$, and by
 Proposition~\ref{prop:monotone} the expected harm under $M^{j}$ is
-non-decreasing in $j$. Increasing $k$ decreases $d-k$, hence does not increase
-the first term and leaves the second unchanged. \qed
+non-decreasing in $j$. Increasing $k$ decreases $d-k$, hence decreases the
+first term and leaves the second unchanged. \qed
 \end{pf}
 
-The proposition presumes a check that restores the principal's stated intent,
-which is the right model for an external audit against a published
-specification and the wrong model for an internal reviewer who sees only what
-reached it; under the second reading the ordering in $k$ is no longer
-guaranteed, and we have not modelled that case. Note also that $k=0$ is a null
-intervention: the executed law is then $M^{d}(s,\cdot)$ whatever $\alpha$ is.
-
-The second statement identifies what an attribution rule has to violate for
-Theorem~\ref{thm:shelter} to lose its force. Writing $r(d)$ for the share of
-the realised harm charged to the principal, the theorem needs only
-$r(d)m(d)\to0$; the geometric rule $r(d)=\phi^{d}$ is one way of arranging
-that, and so is any rule with $r(d)\to0$. What matters is not that the share
-keeps falling but that it converges to zero: the rule
-$r(d)=a_{\min}+(1-a_{\min})\phi^{d}$ is strictly decreasing at every depth and
-still leaves $r(d)m(d)\to a_{\min}m_{\max}>0$.
+The second identifies what an attribution rule has to violate for
+Theorem~\ref{thm:shelter} to lose its force. The theorem needs only
+$a(d)m(d)\to0$, where $a(d)$ is the share of the realised harm charged to the
+principal; the geometric rule $a(d)=\phi^{d}$ is one way of arranging that, and
+so is any rule that keeps falling.
 
 \begin{proposition}[A floor closes the shelter]
 \label{prop:floor}
-Let the attribution rule satisfy $r(d)=a_{\min}>0$ for every $d\ge d_{0}$, and
+Let the attribution rule satisfy $a(d)=a_{\min}>0$ for every $d\ge d_{0}$, and
 let the hand-off kernel satisfy the hypothesis of
-Proposition~\ref{prop:monotone}. Then $d\mapsto r(d)\,m(d)$ is non-decreasing
-on $d\ge d_{0}$, the attributed-harm contribution to $\piP$ is there
-non-increasing in the depth, and no depth beyond $d_{0}$ is a shelter in the
-sense of Theorem~\ref{thm:shelter}.
+Proposition~\ref{prop:monotone}. Then $d\mapsto a(d)\,m(d)$ is non-decreasing
+on $d\ge d_{0}$, so the private gain from one further hand-off there is at most
+$B(d+1)-B(d)$ and no depth beyond $d_{0}$ is a shelter in the sense of
+Theorem~\ref{thm:shelter}.
 \end{proposition}
 
 \begin{pf}
-For $d\ge d_{0}$, $r(d+1)m(d+1)-r(d)m(d)=a_{\min}\bigl[m(d+1)-m(d)\bigr]\ge0$
-by Theorem~\ref{thm:shelter}. The attributed-harm summand of $\piP$
-is $-L\,r(d)m(d)$, which is therefore non-increasing in the depth beyond
-$d_{0}$, so attributed harm never falls with depth there and no such depth is a
-shelter in the sense of Theorem~\ref{thm:shelter}. \qed
+For $d\ge d_{0}$, $a(d+1)m(d+1)-a(d)m(d)=a_{\min}\bigl[m(d+1)-m(d)\bigr]\ge0$
+by Proposition~\ref{prop:monotone}. The attributed-harm term of $\piP$ is
+therefore non-increasing in depth beyond $d_{0}$, leaving the organisational
+benefit as the only remaining gain. \qed
 \end{pf}
-
-The floor removes the attribution channel and nothing else. It does not bound
-the private gain from one further hand-off by the organisational increment
-$B(d{+}1)-B(d)$, because the task term of~\eqref{eq:bilinear} also moves with
-the depth: what the proposition leaves is
-\[
-  \piP(d{+}1)-\piP(d)\;\le\;
-  \bigl[p_{d+1,s}^{\top}A\,p'-p_{d,s}^{\top}A\,p'\bigr]
-  \;+\;\bigl[B(d{+}1)-B(d)\bigr],
-\]
-the race-payoff increment plus the organisational one. That first bracket is
-positive here, because an eroded chain executes more aggressive designs and
-those earn more in the race, and Section~\ref{sec:robustness} measures it: it
-is the larger of the two terms at the baseline. A floor is therefore an
-instrument against the shelter and not against depth as such, which is exactly
-what Table~\ref{tab:floorcap} shows at the shallow end.
 
 % ===========================================================================
 \section{Numerical method}
@@ -1029,24 +860,11 @@ in which $a_{t}$, $m_{t}$ and $u_{t}$ are read off prefix sums of the two action
 paths, $u_{t}$ being the Unsafe count of the path divided by its length. We
 write $A$, $M_{h}$ and $U_{h}$ for the three matrices they define. All three are
 therefore obtained in $O(|S|^{2}T_{\max})$ operations at machine precision, with
-$|S|=4$, and carry no sampling error at all.
-
-The truncation is not an approximation in any practical sense, and the bound is
-worth stating because it is what licenses the word exact. Beyond the five
-guaranteed rounds the horizon law is geometric, so
-$\Pr[T\ge T_{\max}]=(1-0.2)^{T_{\max}-5}=5.3\times10^{-39}$, while the
-per-horizon quantities grow at most linearly in the horizon: $u_{t}\le1$,
-$m_{t}\le t$ and $a_{t}\le 2.4\,t+100$, the stage payoff being at most $2.4$
-per round and the prize at most $100$. Reassigning the residual mass to
-$T_{\max}$ therefore perturbs each entry of $A$, $M_{h}$ and $U_{h}$ by at most
-$\Pr[T\ge T_{\max}]\cdot(2.4T_{\max}+100)<10^{-34}$, twenty orders of magnitude
-below the rounding error of the sums themselves, and recomputing the three
-matrices at $T_{\max}=2000$ reproduces them to the last bit.
-
-The alternative, simulating races and averaging, is what the size of the sweeps
+$|S|=4$, and carry no sampling error at all. The
+alternative, simulating races and averaging, is what the size of the sweeps
 below makes unattractive rather than merely inelegant: the root-mean-square
 error of the payoff matrix is still $0.034$ after $10^{6}$ episodes per matchup
-(Table~\ref{tab:verification}), and every one of the $441$ stationary regimes
+(Table~\ref{tab:verification}), and every one of the $1764$ stationary regimes
 behind the parameter plane of Section~\ref{sec:plane} would inherit it.
 
 \subsection{Why the full mutation--selection chain is out of reach}
@@ -1071,40 +889,31 @@ either fixes or is lost before the next arrives, the population is monomorphic
 almost always, and the process reduces to an embedded chain on the $n$ pure
 designs with
 \begin{equation}
-  P_{ij} \;=\; \frac{\rho_{i\to j}}{n-1} \quad (j\ne i),
+  P_{ji} \;=\; \frac{\rho_{i\to j}}{n-1} \quad (j\ne i),
   \qquad
-  P_{ii} \;=\; 1-\sum_{j\ne i}P_{ij},
+  P_{ii} \;=\; 1-\sum_{j\ne i}P_{ji},
   \label{eq:embedded}
 \end{equation}
 where $\rho_{i\to j}$ is the probability that a single $j$ mutant takes over a
-resident population of $i$, so that $P$ is row-stochastic with the resident
-indexing the row and the invader the column, and the stationary distribution is
-its left Perron vector. The state space has fallen from $\binom{Z+n-1}{n-1}$
+resident population of $i$. The state space has fallen from $\binom{Z+n-1}{n-1}$
 to $n$. What the reduction costs is the mutation rate: it is exact only in the
 limit $\mu\to0$, and Section~\ref{sec:verification} measures the error at
 finite $\mu$ against the full chain on a design space small enough to carry
 one. How small a rate the embedded chain needs has been characterised
 analytically for imitation processes at arbitrary selection
 intensity~\citep{wu2012howsmall}, which is the class our update rule belongs
-to. That criterion is stated for dominance and coordination games, and it does
-not cover our design space uniformly: of the $378$ unordered pairs, $294$ are
-dominance games and $64$ coordination games, $8$ are payoff-degenerate and $12$
-are coexistence games, the case the criterion excludes. This is one reason we
-also measure the reduction error directly, in Section~\ref{sec:verification},
-rather than relying on a sufficient condition alone.
+to.
 
 \subsection{Fixation probabilities in closed form, evaluated stably}
 \label{sec:fixation}
 
-Let $\Pi$ denote the $n\times n$ private payoff matrix $\piP$ over designs,
-which is not the $4\times4$ task matrix $A$ of the interaction layer, and
-consider a population holding $k$ copies of an invading design $I$ and $Z-k$ of
-a resident $R$. Sampling an opponent without replacement, the expected payoffs
-are
+Let $A$ denote the private payoff matrix $\piP$ over designs, and consider a
+population holding $k$ copies of an invading design $I$ and $Z-k$ of a resident
+$R$. Sampling an opponent without replacement, the expected payoffs are
 \begin{equation}
-  \pi_{I}(k) = \frac{k-1}{Z-1}\Pi_{II} + \frac{Z-k}{Z-1}\Pi_{IR},
+  \pi_{I}(k) = \frac{k-1}{Z-1}A_{II} + \frac{Z-k}{Z-1}A_{IR},
   \qquad
-  \pi_{R}(k) = \frac{k}{Z-1}\Pi_{RI} + \frac{Z-k-1}{Z-1}\Pi_{RR}.
+  \pi_{R}(k) = \frac{k}{Z-1}A_{RI} + \frac{Z-k-1}{Z-1}A_{RR}.
   \label{eq:sampling}
 \end{equation}
 Under the pairwise-comparison rule with Fermi function and selection intensity
@@ -1138,29 +947,12 @@ largest exponent out before summing,
   \sigma = \max\Bigl(0,\ \max_{m}\theta_{m}\Bigr),
   \label{eq:shift}
 \end{equation}
-with $\theta_{m}$ the exponent of the $m$-th term of~\eqref{eq:fixation}. This
-is the standard maximum-subtraction, or log-sum-exp,
-stabilisation~\citep{blanchard2021logsumexp}; it is exact in real arithmetic
-and, because $\sigma\ge0$ and $\sigma\ge\theta_{m}$ for every $m$, it keeps
-every exponentiated quantity in $(0,1]$ and the denominator at or above one, so
-no cancellation is possible and $\rho\le1$ always.
-
-What the shift does and does not buy is worth being precise about, because it
-is not accuracy. The naive sum fails once $\sigma>\ln(\mathrm{DBL\_MAX})=709.8$;
-the shifted sum fails once $e^{-\sigma}$ itself rounds to zero, that is once
-$\sigma>1075\ln2=745.1$. The window between the two is $35.3$ in the exponent,
-and it accounts exactly for what is recovered: of the $18$ pairs the naive sum
-loses at $\beta=0.05$, six lie inside the window and twelve do not, and at
-$\beta=0.2$ the counts are $167$, six and $161$. On the six recovered pairs the
-result is a subnormal double and carries only the precision the subnormal range
-affords: against the $60$-digit reference the relative error there is up to
-$0.14$ at $\beta=0.05$ and $0.98$ at $\beta=0.2$, the latter returning
-$5\times10^{-324}$ where the true value is $2.5\times10^{-324}$. What the shift
-delivers on those pairs is a strictly positive entry of the right order rather
-than an accurate one, and Section~\ref{sec:observables} shows that order, not
-accuracy, is what the reduction needs of them.
-Section~\ref{sec:verification} shows that the shift costs nothing where the
-naive sum survives.
+with $\theta_{m}$ the exponent of the $m$-th term of~\eqref{eq:fixation}. The
+shift is exact in real arithmetic and keeps every exponentiated quantity in
+$[0,1]$. It recovers a strictly positive fixation probability on six of the
+pairs the naive sum loses at each selection intensity, the smallest of them
+$2\times10^{-323}$, and Section~\ref{sec:verification} shows that it costs no
+accuracy where the naive sum survives.
 
 \subsection{The embedded chain and the reported observables}
 \label{sec:observables}

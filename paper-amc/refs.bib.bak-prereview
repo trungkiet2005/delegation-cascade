@@ -133,10 +133,8 @@
                Rajkumar, Nitarshan and Krueger, David and Kolt, Noam and
                Heim, Lennart and Anderljung, Markus},
   title     = {Visibility into {AI} Agents},
-  booktitle = {Proceedings of the 2024 ACM Conference on Fairness, Accountability,
+  booktitle = {Proceedings of the ACM Conference on Fairness, Accountability,
                and Transparency (FAccT)},
-  pages     = {958--973},
-  doi       = {10.1145/3630106.3658948},
   year      = {2024}
 }
 
@@ -381,17 +379,6 @@
   year      = {2017}
 }
 
-@article{blanchard2021logsumexp,
-  author  = {Blanchard, Pierre and Higham, Desmond J. and Higham, Nicholas J.},
-  title   = {Accurately Computing the Log-Sum-Exp and Softmax Functions},
-  journal = {IMA Journal of Numerical Analysis},
-  volume  = {41},
-  number  = {4},
-  pages   = {2311--2330},
-  year    = {2021},
-  doi     = {10.1093/imanum/draa038}
-}
-
 @inproceedings{hadfieldmenell2019incomplete,
   author    = {Hadfield-Menell, Dylan and Hadfield, Gillian K.},
   title     = {Incomplete Contracting and {AI} Alignment},
@@ -413,7 +400,7 @@
                Li, Beibin and Zhu, Erkang and Jiang, Li and Zhang, Xiaoyun and
                Zhang, Shaokun and Liu, Jiale and Awadallah, Ahmed Hassan and
                White, Ryen W. and Burger, Doug and Wang, Chi},
-  title     = {{AutoGen}: Enabling Next-Gen {LLM} Applications via Multi-Agent Conversations},
+  title     = {{AutoGen}: Enabling Next-Gen {LLM} Applications via Multi-Agent Conversation},
   booktitle = {First Conference on Language Modeling (COLM)},
   year      = {2024},
   note      = {arXiv:2308.08155}
@@ -638,14 +625,13 @@
   author    = {Cemri, Mert and Pan, Melissa Z. and Yang, Shuyi and
                Agrawal, Lakshya A. and Chopra, Bhavya and Tiwari, Rishabh and
                Keutzer, Kurt and Parameswaran, Aditya and Klein, Dan and
-               Ramchandran, Kannan and Zaharia, Matei A. and Gonzalez, Joseph E. and
+               Ramchandran, Kannan and Zaharia, Matei and Gonzalez, Joseph E. and
                Stoica, Ion},
   title     = {Why Do Multi-Agent {LLM} Systems Fail?},
   booktitle = {Advances in Neural Information Processing Systems 38 (NeurIPS),
                Datasets and Benchmarks Track},
   year      = {2025},
-  note      = {arXiv:2503.13657},
-  doi       = {10.52202/085713-4082}
+  note      = {arXiv:2503.13657}
 }
 
 @inproceedings{huang2025resilience,
@@ -656,10 +642,6 @@
                Faulty Agents},
   booktitle = {Proceedings of the 42nd International Conference on Machine
                Learning (ICML)},
-  series    = {Proceedings of Machine Learning Research},
-  volume    = {267},
-  pages     = {26202--26226},
-  publisher = {PMLR},
   year      = {2025},
   note      = {arXiv:2408.00989}
 }
@@ -671,10 +653,6 @@
   title     = {Position: {AI} Agents Need Authenticated Delegation},
   booktitle = {Proceedings of the 42nd International Conference on Machine
                Learning (ICML)},
-  series    = {Proceedings of Machine Learning Research},
-  volume    = {267},
-  pages     = {82211--82231},
-  publisher = {PMLR},
   year      = {2025},
   note      = {arXiv:2501.09674}
 }
@@ -708,8 +686,7 @@
   booktitle = {2022 IEEE 61st Conference on Decision and Control (CDC)},
   pages     = {7688--7695},
   year      = {2022},
-  note      = {arXiv:2204.00593},
-  doi       = {10.1109/CDC51059.2022.9993228}
+  note      = {arXiv:2204.00593}
 }
 
 @inproceedings{cobbe2023supply,
@@ -719,8 +696,7 @@
                and Transparency (FAccT)},
   pages     = {1186--1197},
   year      = {2023},
-  note      = {arXiv:2304.14749},
-  doi       = {10.1145/3593013.3594073}
+  note      = {arXiv:2304.14749}
 }
 
 @article{nissenbaum1996accountability,
@@ -914,16 +890,15 @@
 }
 
 @inproceedings{ren2024safetywashing,
-  author    = {Ren, Richard and Basart, Steven and Khoja, Adam and Pan, Alexander and
-               Gatti, Alice and Phan, Long and Yin, Xuwang and Mazeika, Mantas and
-               Mukobi, Gabriel and Kim, Ryan Hwang and Fitz, Stephen and
+  author    = {Ren, Richard and Basart, Steven and Khoja, Adam and Gatti, Alice and
+               Phan, Long and Yin, Xuwang and Mazeika, Mantas and Pan, Alexander and
+               Mukobi, Gabriel and Kim, Ryan H. and Fitz, Stephen and
                Hendrycks, Dan},
   title     = {Safetywashing: Do {AI} Safety Benchmarks Actually Measure
                Safety Progress?},
   booktitle = {Advances in Neural Information Processing Systems 37 (NeurIPS)},
   year      = {2024},
-  note      = {arXiv:2407.21792},
-  doi       = {10.52202/079017-2190}
+  note      = {arXiv:2407.21792}
 }
 
 @article{he2024multiif,

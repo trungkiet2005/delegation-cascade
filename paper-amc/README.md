@@ -18,7 +18,7 @@ be justified by their content, so the manuscript is at, not over, that mark.
 
 Two build warnings are expected and harmless. The `Overfull \hbox (117.08pt)`
 at `\maketitle` is produced identically by Elsevier's own `cas-sc-sample.tex`
-and is a class artefact. The six BibTeX `empty pages` warnings are arXiv
+and is a class artefact. The four BibTeX `empty pages` warnings are arXiv
 preprints and technical reports with no page range; `refs.bib` is kept
 byte-identical to the audited bibliography of the parent study rather than
 edited to silence them.
@@ -108,8 +108,9 @@ rewritten for the journal's computational emphasis and its length guideline:
   placement and attribution floor propositions moved next to the shelter
   theorem they qualify;
 - Related work is cut from seven paragraphs to three, and the citation list
-  from 95 references to the 60 that carry an argument here. `refs.bib` still
-  holds all 95; a numeric style prints only what is cited;
+  from the parent's 95 references to the 61 that carry an argument here.
+  `refs.bib` holds the 96-entry union of both variants; a numeric style prints
+  only what is cited;
 - the depth-ceiling and evolutionary-process tables are folded into the text,
   leaving seven tables;
 - the numbered results keep the same order as in `paper/main.tex`
