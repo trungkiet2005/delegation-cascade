@@ -21,8 +21,27 @@ paper/*.synctex.gz
 paper/*.spl
 paper/*.run.xml
 
+paper-amc/*.aux
+paper-amc/*.bbl
+paper-amc/*.blg
+paper-amc/*.log
+paper-amc/*.out
+paper-amc/*.toc
+paper-amc/*.abs
+paper-amc/*.fls
+paper-amc/*.fdb_latexmk
+paper-amc/*.synctex.gz
+paper-amc/*.spl
+paper-amc/*.run.xml
+paper-amc/b[0-9].log
+paper-amc/build[0-9].log
+paper-amc/bib.log
+
 results/figure_log*.txt
 
 # Internal working notes, not published
 paper/citation_audit_*.md
 paper/refs_suggested_additions.bib
+
+# Publisher template packages, downloaded not authored
+els-cas-templates.zip

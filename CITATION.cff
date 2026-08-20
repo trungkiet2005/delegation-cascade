@@ -4,6 +4,25 @@ title: >-
 message: >-
   If you use this software, please cite it using the metadata from this file.
 type: software
+authors:
+  - family-names: "Huynh"
+    given-names: "Trung-Kiet"
+    orcid: "https://orcid.org/0009-0000-5463-754X"
+    email: "23122039@student.hcmus.edu.vn"
+    affiliation: >-
+      Faculty of Information Technology, University of Science, Vietnam National University Ho Chi Minh City, Vietnam
+  - family-names: "Dao Sy Duy"
+    given-names: "Minh"
+    orcid: "https://orcid.org/0009-0002-4501-2788"
+    email: "23122041@student.hcmus.edu.vn"
+    affiliation: >-
+      Faculty of Information Technology, University of Science, Vietnam National University Ho Chi Minh City, Vietnam
+  - family-names: "Tran"
+    given-names: "Chi-Nguyen"
+    orcid: "https://orcid.org/0009-0007-6716-7269"
+    email: "23122044@student.hcmus.edu.vn"
+    affiliation: >-
+      Faculty of Information Technology, University of Science, Vietnam National University Ho Chi Minh City, Vietnam
 license: MIT
 repository-code: "https://github.com/trungkiet2005/delegation-cascade"
 abstract: >-

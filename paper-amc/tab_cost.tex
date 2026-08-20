@@ -1,0 +1,21 @@
+% split from numerics_generated.tex; do not edit
+\begin{table}[pos=t]
+\centering
+\caption{Cost of the two routes to the stationary regime. The full mutation--selection process is a Markov chain on population states, of which there are $\binom{Z+n-1}{n-1}$; the reduction of Section~\ref{sec:reduction} needs $n(n-1)$ fixation probabilities, each evaluated in $O(Z)$ arithmetic operations. The depth ceiling $\bar{D}$ fixes the number of designs at $n=4(\bar{D}+1)$; the manuscript runs at $\bar{D}=6$, $Z=100$.}
+\label{tab:cost}
+\begin{tabular*}{\tblwidth}{@{}LLLRR@{}}
+\toprule
+$\bar{D}$ & $n$ & $Z$ & states of the full chain & operations of the reduction \\
+\midrule
+4 & 20 & 50 & $4.6\times 10^{16}$ & $19\,000$ \\
+4 & 20 & 100 & $4.9\times 10^{21}$ & $38\,000$ \\
+4 & 20 & 200 & $1.1\times 10^{27}$ & $76\,000$ \\
+6 & 28 & 50 & $4.4\times 10^{20}$ & $37\,800$ \\
+6 & 28 & 100 & $3.0\times 10^{27}$ & $75\,600$ \\
+6 & 28 & 200 & $7.5\times 10^{34}$ & $151\,200$ \\
+8 & 36 & 50 & $9.0\times 10^{23}$ & $63\,000$ \\
+8 & 36 & 100 & $2.8\times 10^{32}$ & $126\,000$ \\
+8 & 36 & 200 & $6.5\times 10^{41}$ & $252\,000$ \\
+\bottomrule
+\end{tabular*}
+\end{table}

@@ -1,0 +1,9 @@
+Highlights
+
+Delegation cascades: exact stationary analysis of an evolutionary game with strategic chain depth
+
+- Delegation depth becomes a strategic variable in an evolutionary race game
+- Realised harm saturates in depth while attributed harm decays geometrically
+- An exact O(Z) scheme replaces a chain with 3x10^27 population states
+- Two per-hand-off losses are minor alone and raise unsafe behaviour 18-fold together
+- A floor under attributed liability reproduces the frontier of a depth cap
