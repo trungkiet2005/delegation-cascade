@@ -1,5 +1,5 @@
 %% =========================================================================
-%% Delegation cascades: exact stationary analysis of an evolutionary game
+%% Delegation cascades: stable stationary computation in an evolutionary game
 %% with strategic chain depth
 %%
 %% Prepared for Applied Mathematics and Computation (Elsevier).
@@ -60,10 +60,10 @@
 \def\floatpagepagefraction{1}
 \def\textpagefraction{.001}
 
-\shorttitle{Delegation cascades: exact stationary analysis}
+\shorttitle{Delegation cascades: stable stationary computation}
 \shortauthors{T.-K. Huynh et al.}
 
-\title[mode=title]{Delegation cascades: exact stationary analysis of an
+\title[mode=title]{Delegation cascades: stable stationary computation in an
 evolutionary game with strategic chain depth}
 
 % =========================================================================
@@ -94,6 +94,16 @@ Writing -- review \& editing}
 Investigation, Validation, Visualization, Writing -- original draft,
 Writing -- review \& editing}
 
+\author[1,2]{Nguyen Lam Phu Quy}[orcid=0009-0002-9694-8105]
+\ead{23122048@student.hcmus.edu.vn}
+\credit{Software, Formal analysis, Investigation, Validation,
+Writing -- review \& editing}
+
+\author[1,2]{Pham Phu Hoa}[orcid=0009-0001-5471-2578]
+\ead{23122030@student.hcmus.edu.vn}
+\credit{Software, Formal analysis, Investigation, Validation,
+Writing -- review \& editing}
+
 \affiliation[1]{organization={Faculty of Information Technology,
             University of Science (HCMUS)},
             city={Ho Chi Minh City},
@@ -119,13 +129,15 @@ exact as the mutation rate vanishes, with its residual measured against the
 full chain; and the fixation probabilities that chain needs follow from a
 closed form in $O(Z)$ operations, with the largest exponent factored out of a
 sum whose terms otherwise overflow double precision. What the reduction needs
-of that evaluation is positivity rather than accuracy, and we certify it. Two
-structural results are exact. Realised harm saturates in the depth while
+of that evaluation is positivity, but positivity alone does not determine
+stationary mass in a nearly decomposable chain. We verify the stationary vector
+against an arbitrary-precision reference. Two structural results are analytical.
+Realised harm saturates in the depth while
 attributed harm carries one extra factor per layer, so for every attribution
 retention below one there is a depth beyond which each further hand-off
 strictly lowers the principal's bill and never lowers the harm it causes; and
-any attribution rule whose share is bounded below by a positive constant closes
-that shelter. Numerically, from a calibration whose depth-zero unsafe frequency
+an eventually binding constant attribution floor closes that shelter beyond its
+binding depth. Numerically, from a calibration whose depth-zero unsafe frequency
 is $0.000$, each loss alone leaves it at or below $0.018$ while the two
 together raise it to $0.322$, and a statutory floor under attributed
 responsibility reproduces a depth cap's frontier wherever it can reach.
@@ -135,11 +147,11 @@ responsibility reproduces a depth cap's frontier wherever it can reach.
 \item Delegation depth becomes a strategic variable in an evolutionary race game
 \item Realised harm saturates in depth while attributed harm decays
       geometrically
-\item An exact $O(Z)$ scheme replaces a chain with $3\times10^{27}$ population
+\item A stable $O(Z)$ scheme replaces a chain with $3\times10^{27}$ population
       states
-\item Neither per-hand-off loss is dangerous alone; together they reach $0.32$
+\item Transmission and attribution losses interact: together they reach $0.32$
       unsafe
-\item A floor under attributed liability reproduces the frontier of a depth cap
+\item A binding attribution floor closely matches a depth-cap frontier
 \end{highlights}
 
 \begin{keywords}
@@ -243,18 +255,21 @@ form in $O(Z)$ operations each, with the largest exponent factored out of a sum
 whose terms otherwise overflow double precision by three orders of magnitude in
 the exponent. What makes that last step more than a routine application of a
 standard identity is the use the reduction makes of its output. The embedded
-chain needs its fixation probabilities to be positive, not to be accurate, and
-the analysis that matters is therefore of the exponent range rather than of the
-relative error: Sections~\ref{sec:fixation} and~\ref{sec:observables} state the
+chain needs its fixation probabilities to be positive, but positivity alone does
+not determine stationary mass in a nearly decomposable chain. We therefore
+compare the stationary vector with an arbitrary-precision reference; Sections
+~\ref{sec:fixation} and~\ref{sec:observables} report the exponent range and
+relative error.
 condition under which double precision still determines the stationary regime, and
 Section~\ref{sec:observables} certifies it on every regime we report. One
-stationary regime costs $28$ milliseconds and the whole $21\times21$ parameter
-plane of Section~\ref{sec:plane} costs under a minute.
-Table~\ref{tab:verification} checks the four parts separately: the interaction
+stationary regime costs $39$ milliseconds and the whole $21\times21$ parameter
+plane of Section~\ref{sec:plane} costs $17.6$ seconds.
+Table~\ref{tab:verification} checks five parts separately: the interaction
 tensor against Monte Carlo, the arithmetic of the stabilised sum against a
-$60$-digit evaluation of the same expression, the closed form itself against an
-independent implementation on the depth-zero sub-space, and the small-mutation
-reduction against the full chain on a three-design space.
+$60$-digit evaluation of the same expression, the complete stationary result
+against arbitrary precision, the closed form itself against an independent
+implementation on the depth-zero sub-space, and the small-mutation reduction
+against the full chain on a three-design space.
 
 \emph{Structure.} Realised harm saturates in the depth because the
 specification is eventually forgotten, while attributed harm carries the extra
@@ -265,7 +280,8 @@ charged for while never reducing the harm it causes. Beyond that depth the
 invasion condition for one more layer stops depending on liability in the usual
 direction, and raising the penalty makes the deeper design more attractive
 rather than less (Proposition~\ref{prop:invasion}). What closes the shelter is
-not the level of attribution but whether it vanishes in the depth
+an eventually binding constant attribution floor, not merely a positive lower
+bound at every depth
 (Proposition~\ref{prop:floor}).
 
 \emph{Numerical results.} The two mechanisms do not add. With the liability
@@ -280,8 +296,8 @@ attribution removes. Among the four governance instruments we compare,
 restoring attribution has a threshold rather than a gradient, capping chain
 length is monotone and cheap, and improving transmission fidelity is neither
 monotone nor safe in the small. A statutory floor under attributed
-responsibility reproduces the frontier of a depth cap wherever a floor can
-reach it, and asks a regulator to count no hand-offs.
+responsibility closely matches the frontier of a depth cap over the welfare
+range a floor can reach, and asks a regulator to count no hand-offs.
 
 Three assumptions belong at the outset rather than at the end. The chain
 transmits one specification per race, so the executed designs of the two seats
@@ -625,6 +641,11 @@ vacuous. The uniform kernel fails the hypothesis, and
 Section~\ref{sec:robustness} sweeps $\phi$ above one, where the factor
 $1-\lambda\phi^{d}$ decreases and the wedge can close rather than widen; the
 statement is made for the regime the rest of the paper works in.
+For the small-mutation process, the primary unsafe-frequency observable is the
+monomorphic-state average $U_{\mathrm{process}}=\sum_i x_i u(i,i)$, where $x_i$
+is the stationary mass of design $i$. We also report the independent-draw index
+$U_{\mathrm{independent}}=\sum_{i,j}x_i x_j u(i,j)$ when comparing mixtures;
+the two quantities answer different questions and are not interchangeable.
 Depth alone widens the gap between what a principal optimises
 and what society bears, without any change in what the principal intends. Only
 the product $L=\lambda h$ enters $\piP$, so the two-parameter family
@@ -662,7 +683,10 @@ process~\citep{sandholm2010population} in the small-mutation
 limit~\citep{fudenberg2006imitation,fudenberg2006strong,nowak2004emergence} as
 the primary reading, with population size $Z=100$ and selection intensity
 $\beta=0.05$, and the basin-averaged attractor of the replicator equation as a
-secondary one.
+secondary one. The baseline uses $h=20$ and $\lambda=1$, hence effective
+liability $L=\lambda h=20$. For the secondary calculation we integrate the
+standard replicator ODE with LSODA to $t=3000$, from 200 Dirichlet-uniform
+interior starts using seed 20260818, and average the terminal states.
 
 The remaining choice is the liability level, and we fix it so that the
 delegation results cannot be an artefact of a race that was unsafe to begin
@@ -969,14 +993,12 @@ reached it; under the second reading the ordering in $k$ is no longer
 guaranteed, and we have not modelled that case. Note also that $k=0$ is a null
 intervention: the executed law is then $M^{d}(s,\cdot)$ whatever $\alpha$ is.
 
-The second statement identifies what an attribution rule has to violate for
-Theorem~\ref{thm:shelter} to lose its force. Writing $r(d)$ for the share of
-the realised harm charged to the principal, the theorem needs only
-$r(d)m(d)\to0$; the geometric rule $r(d)=\phi^{d}$ is one way of arranging
-that, and so is any rule with $r(d)\to0$. What matters is not that the share
-keeps falling but that it converges to zero: the rule
-$r(d)=a_{\min}+(1-a_{\min})\phi^{d}$ is strictly decreasing at every depth and
-still leaves $r(d)m(d)\to a_{\min}m_{\max}>0$.
+The floor result requires an eventually constant floor, not merely a positive
+lower bound. Writing $r(d)$ for the share of realised harm charged to the
+principal, the sufficient condition is $r(d)=a_{\min}>0$ for all sufficiently
+large depths. A positive lower bound alone does not guarantee that
+$r(d)m(d)$ is non-decreasing, because the attribution share may still fall
+while realised harm rises.
 
 \begin{proposition}[A floor closes the shelter]
 \label{prop:floor}
@@ -1016,7 +1038,7 @@ what Table~\ref{tab:floorcap} shows at the shallow end.
 \section{Numerical method}
 \label{sec:numerics}
 
-Everything above is exact given the two matrices $A$ and $M_{h}$ and the
+Everything above is deterministic given the two matrices $A$ and $M_{h}$ and the
 transmission laws $p_{d,s}$. What is not immediate is the stationary regime of
 the evolutionary process on the joint design space, which is the object every
 number in Section~\ref{sec:results} is a functional of. This section sets out
@@ -1235,8 +1257,11 @@ elimination of~\citet{grassmann1985gth} removes the cancellation at its source
 and is the right route at larger $n$.
 
 Every population quantity reported below is a functional of $x$. The mean
-delegation depth is $\bar d=\sum_{i}x_{i}d_{i}$; the long-run unsafe frequency
-is $U=\sum_{ij}x_{i}x_{j}u(i,j)$ and the social payoff
+delegation depth is $\bar d=\sum_{i}x_{i}d_{i}$. For the small-mutation process,
+the primary long-run unsafe frequency is the monomorphic-state average
+$U_{\mathrm{process}}=\sum_i x_i u(i,i)$; the independent-draw index is
+$U_{\mathrm{independent}}=\sum_{ij}x_i x_j u(i,j)$. We use the latter for the
+replicator comparison, where it is the natural mixture observable. The social payoff
 $\sum_{ij}x_{i}x_{j}\piS(i,j)$; and the \emph{declaration gap} is the total
 variation distance between the intent marginal of $x$ and the executed-design
 marginal $x^{\top}P_{\mathrm{tr}}$, where $P_{\mathrm{tr}}$ stacks the
@@ -1310,8 +1335,10 @@ to one to $2.2\times10^{-16}$, the residual
 $\lVert x^{\top}P-x^{\top}\rVert_{\infty}$ of the returned vector is
 $4.2\times10^{-17}$, and the returned vector is not strictly positive, $11$ of
 its $28$ entries being exactly zero at the baseline and $18$ at $\beta=0.2$,
-which is the underflow of Proposition~\ref{prop:closed} and not a failure of
-the solve.
+which reflects double-precision underflow in some transition entries. We do
+not use positivity as a proxy for stationary accuracy: Table~\ref{tab:verification}
+also compares the stationary vector and both unsafe observables with a
+60-digit reference at $\beta=0.05$ and $0.2$.
 
 \subsection{Verification}
 \label{sec:verification}
@@ -2014,9 +2041,9 @@ matrices: the interaction tensor is summed over the horizon law rather than
 sampled, the mutation--selection chain on $3.0\times10^{27}$ population states
 is replaced by an embedded chain on $28$ designs, and the fixation
 probabilities that chain needs are evaluated in $O(Z)$ operations from a sum
-whose terms are shifted before exponentiation. What that shift has to preserve
-is positivity rather than accuracy, and Proposition~\ref{prop:closed} says how
-much of it. The three ingredients transfer to any evolutionary game whose
+whose terms are shifted before exponentiation. The shift preserves positive
+transitions, while Table~\ref{tab:verification} checks stationary accuracy
+against arbitrary precision. The three ingredients transfer to any evolutionary game whose
 strategy space is a product of a behavioural coordinate with a structural one,
 provided the interaction layer is deterministic given a summable horizon law
 and the pairwise payoffs are linear, so that the invasion advantage stays

@@ -128,6 +128,26 @@
       }
     }
   },
+  "stationary_end_to_end": [
+    {
+      "beta": 0.05,
+      "total_variation": 8.26023666709943e-15,
+      "max_absolute_difference": 8.215650382226158e-15,
+      "unsafe_fast": 0.32246992822203996,
+      "unsafe_reference": 0.32246992822203646,
+      "independent_unsafe_fast": 0.3224699268821224,
+      "independent_unsafe_reference": 0.32246992688211695
+    },
+    {
+      "beta": 0.2,
+      "total_variation": 4.3239312980197515e-16,
+      "max_absolute_difference": 4.440892098500626e-16,
+      "unsafe_fast": 0.32247000291001304,
+      "unsafe_reference": 0.3224700029100131,
+      "independent_unsafe_fast": 0.322470002910013,
+      "independent_unsafe_reference": 0.3224700029100131
+    }
+  ],
   "cross_check": [
     {
       "n_designs": 4,
@@ -315,10 +335,10 @@
   "timing": {
     "n_designs": 28,
     "Z": 100,
-    "seconds_per_stationary_regime": 0.03917285499919672,
-    "seconds_per_functional_build": 0.0007530750008299947,
+    "seconds_per_stationary_regime": 0.031919304997427386,
+    "seconds_per_functional_build": 0.0005989000026602298,
     "grid_points": 441,
-    "measured_grid_seconds": 17.625717899994925,
+    "measured_grid_seconds": 12.558925700024702,
     "exponentials_per_regime": 75600,
     "machine": {
       "processor": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",

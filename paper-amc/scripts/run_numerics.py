@@ -250,6 +250,30 @@ def stability() -> None:
         "by_beta": out,
     }
 
+    # Positivity preserves connectivity, but this checks the stationary
+    # quantities themselves against the arbitrary-precision reference.
+    stationary_checks = []
+    unsafe = np.ascontiguousarray(fun.unsafe_frequency)
+    for beta in (config.BETA, 0.2):
+        fast = stationary_analysis_sml(a, unsafe, Z, beta)
+        reference = stationary_analysis_sml(a, unsafe, Z, beta, precision_digits=60)
+        stationary_checks.append(
+            {
+                "beta": beta,
+                "total_variation": float(
+                    0.5 * np.abs(fast.strategy_frequencies - reference.strategy_frequencies).sum()
+                ),
+                "max_absolute_difference": float(
+                    np.abs(fast.strategy_frequencies - reference.strategy_frequencies).max()
+                ),
+                "unsafe_fast": fast.unsafe_frequency,
+                "unsafe_reference": reference.unsafe_frequency,
+                "independent_unsafe_fast": fast.independent_unsafe_frequency,
+                "independent_unsafe_reference": reference.independent_unsafe_frequency,
+            }
+        )
+    RESULTS["stationary_end_to_end"] = stationary_checks
+
 
 # --------------------------------------------------------------------------
 # 4. cross-check of the closed form against the general-purpose routine
@@ -584,7 +608,7 @@ def emit_tex() -> None:
     lines += [
         r"\begin{table}[pos=t]",
         r"\centering",
-        r"\caption{Verification, in four checks of four different things. "
+        r"\caption{Verification, in five checks of five different things. "
         r"Block~1 compares the exact horizon expectation of "
         r"Section~\ref{sec:interaction} with a Monte-Carlo estimate of the same "
         r"payoff matrix: root-mean-square error over the sixteen ordered pairs "
@@ -602,7 +626,9 @@ def emit_tex() -> None:
         r"reduction with the full mutation--selection chain on a design space "
         r"small enough for it ($n=%d$, $Z=%d$, $%s$ population states); both "
         r"sides use the process average $\sum_{i}x_{i}u(i,i)$ of "
-        r"Section~\ref{sec:observables}.}"
+        r"Section~\ref{sec:observables}. Block~5 compares the complete "
+        r"stationary vector and both unsafe observables with a $60$-digit "
+        r"reference at the baseline and hardest selection settings.}"
         % (
             RESULTS["stability"]["n_ordered_pairs"],
             RESULTS["stability"]["by_beta"]["beta=0.05"]["n_pairs_representable"],
@@ -632,6 +658,13 @@ def emit_tex() -> None:
                 key.split("=")[1],
                 _sci(r["max_relative_error_stabilised_vs_60_digits"]),
             )
+        )
+    lines.append(r"\midrule")
+    for r in RESULTS["stationary_end_to_end"]:
+        lines.append(
+            "stationary vector vs.\\ $60$-digit reference & $n=28$, $Z=100$, "
+            "$\\beta=%g$ & TV $%s$; $U$ gap $%s$ \\\\\\\\" 
+            % (r["beta"], _sci(r["total_variation"]), _sci(abs(r["unsafe_fast"] - r["unsafe_reference"])))
         )
     lines.append(r"\midrule")
     for r in RESULTS["cross_check"]:

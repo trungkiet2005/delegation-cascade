@@ -1,21 +1,21 @@
 # Cover letter
 
-*Paste the body into the "Enter Comments" box of the Editorial Manager
+_Paste the body into the "Enter Comments" box of the Editorial Manager
 submission, or upload it as a separate "Cover Letter" item. Suggested reviewers
-go in Editorial Manager's own field; see the note near the end.*
+go in Editorial Manager's own field; see the note near the end._
 
 ---
 
 21 August 2026
 
 To the Editors
-*Applied Mathematics and Computation*
+_Applied Mathematics and Computation_
 
 Dear Editors,
 
 We are submitting the manuscript **"Delegation cascades: exact stationary
 analysis of an evolutionary game with strategic chain depth"** for
-consideration as a research article in *Applied Mathematics and Computation*.
+consideration as a research article in _Applied Mathematics and Computation_.
 
 The paper studies an evolutionary game in which the number of intermediaries
 between a decision maker and the action it produces is itself a strategic
@@ -33,7 +33,7 @@ The specific contributions are the following.
    retention below one there is a depth beyond which each further hand-off
    strictly lowers the liability charged to the principal and never lowers the
    harm it causes (Theorem 4). We prove the converse condition: an attribution
-   rule bounded below by a positive constant removes the effect
+   eventually constant attribution floor removes the shelter beyond its binding depth
    (Proposition 8). Four further exact statements order the erosion sequence as
    a harm order in each argument, give the erosion law and its spectral rate,
    establish monotonicity of harm in depth, and order the placement of a

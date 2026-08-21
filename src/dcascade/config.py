@@ -56,6 +56,9 @@ BETA = 0.05
 #: Number of interior starts for the basin-averaged replicator attractor.
 REPLICATOR_STARTS = 200
 SEED = 20260818
+# Full sweeps use the stabilised double solver; the numerics script runs the
+# arbitrary-precision reference on the reported hard cases.
+SML_PRECISION_DIGITS = None
 
 
 def effective_liability() -> float:

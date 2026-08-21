@@ -173,14 +173,19 @@ def build_functionals(
 
 
 def aggregate_unsafe_frequency(x: np.ndarray, unsafe_frequency: np.ndarray) -> float:
-    """Population-level Unsafe frequency ``U(x) = sum_ij x_i x_j u(i, j)``.
+    """Independent-draw Unsafe exposure ``U_ind(x) = sum_ij x_i x_j u(i, j)``.
 
-    This is the primary welfare-relevant observable of the model.  It needs no
-    welfare weights, so the reported harm measure does not depend on the
-    (necessarily arbitrary) choice of ``h``.
+    The finite-population process average is provided by
+    :func:`process_unsafe_frequency`.
     """
     x = np.asarray(x, dtype=float)
     return float(x @ np.asarray(unsafe_frequency, dtype=float) @ x)
+
+
+def process_unsafe_frequency(x: np.ndarray, unsafe_frequency: np.ndarray) -> float:
+    """Unsafe frequency averaged over monomorphic process states."""
+    x = np.asarray(x, dtype=float)
+    return float(x @ np.diag(np.asarray(unsafe_frequency, dtype=float)))
 
 
 def mean_depth(x: np.ndarray, depth: np.ndarray) -> float:

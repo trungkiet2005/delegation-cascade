@@ -20,16 +20,16 @@ from docx.shared import Pt
 OUT = Path(__file__).resolve().parents[1]
 
 TITLE = (
-    "Delegation cascades: exact stationary analysis of an evolutionary game "
-    "with strategic chain depth"
+    "Delegation cascades: stable stationary computation in an evolutionary "
+    "game with strategic chain depth"
 )
 
 HIGHLIGHTS = [
     "Delegation depth becomes a strategic variable in an evolutionary race game",
     "Realised harm saturates in depth while attributed harm decays geometrically",
-    "An exact O(Z) scheme replaces a chain with 3x10^27 population states",
-    "Neither per-hand-off loss is dangerous alone; together they reach 0.32 unsafe",
-    "A floor under attributed liability reproduces the frontier of a depth cap",
+    "A stable O(Z) scheme replaces a chain with 3x10^27 population states",
+    "Transmission and attribution losses interact: together they reach 0.32 unsafe",
+    "A binding attribution floor closely matches a depth-cap frontier",
 ]
 
 COMPETING_INTERESTS = (
@@ -45,7 +45,8 @@ FUNDING = (
 
 AI_DECLARATION = (
     "During the preparation of this work the authors used a large language "
-    "model assistant in order to draft and copy-edit prose. After using this "
+    "model assistant to draft and copy-edit prose and refactor analysis code. "
+    "After using this "
     "tool the authors reviewed and edited the content as needed and take full "
     "responsibility for the content of the published article."
 )

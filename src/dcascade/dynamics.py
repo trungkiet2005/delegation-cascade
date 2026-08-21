@@ -20,6 +20,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import numpy as np
+import mpmath as mp
 import scipy.sparse as sp
 import scipy.sparse.linalg as spla
 from scipy.integrate import solve_ivp
@@ -169,6 +170,9 @@ class StationaryResult:
     unsafe_frequency: float
     """Stationary population-level Unsafe frequency."""
 
+    independent_unsafe_frequency: float
+    """Unsafe exposure when two principals are drawn independently from ``x``."""
+
     population_size: int
     beta: float
     mu: float
@@ -265,6 +269,7 @@ def stationary_analysis(
         state_distribution=sd,
         strategy_frequencies=freqs,
         unsafe_frequency=float(sd @ unsafe_by_state),
+        independent_unsafe_frequency=float(freqs @ np.asarray(unsafe_frequency, dtype=float) @ freqs),
         population_size=population_size,
         beta=beta,
         mu=float(mu),
@@ -313,6 +318,63 @@ def fixation_probability(
     return float(np.exp(-shift) / total)
 
 
+def fixation_probability_mp(
+    payoff: np.ndarray,
+    invader: int,
+    resident: int,
+    population_size: int = 100,
+    beta: float = 0.1,
+    digits: int = 80,
+) -> mp.mpf:
+    """Arbitrary-precision reference evaluation of the fixation sum."""
+    a = np.asarray(payoff, dtype=float)
+    z = int(population_size)
+    with mp.workdps(digits):
+        beta_mp = mp.mpf(str(beta))
+        values = []
+        cumulative = mp.mpf("0")
+        for k in range(1, z):
+            pi_inv = ((k - 1) * mp.mpf(str(a[invader, invader]))
+                      + (z - k) * mp.mpf(str(a[invader, resident]))) / (z - 1)
+            pi_res = (k * mp.mpf(str(a[resident, invader]))
+                      + (z - k - 1) * mp.mpf(str(a[resident, resident]))) / (z - 1)
+            cumulative -= beta_mp * (pi_inv - pi_res)
+            values.append(cumulative)
+        shift = max(mp.mpf("0"), max(values, default=mp.mpf("0")))
+        total = mp.e**(-shift) + sum(mp.e**(value - shift) for value in values)
+        return mp.e**(-shift) / total
+
+
+def _stationary_distribution_mp(
+    payoff: np.ndarray,
+    population_size: int,
+    beta: float,
+    digits: int = 80,
+) -> np.ndarray:
+    """Solve the embedded-chain stationary system without underflow."""
+    n = np.asarray(payoff).shape[0]
+    with mp.workdps(digits):
+        transition = mp.matrix(n, n)
+        for resident in range(n):
+            row_sum = mp.mpf("0")
+            for invader in range(n):
+                value = mp.mpf("0") if invader == resident else (
+                    fixation_probability_mp(payoff, invader, resident, population_size, beta, digits)
+                    / (n - 1)
+                )
+                transition[resident, invader] = value
+                row_sum += value
+            transition[resident, resident] = 1 - row_sum
+        system = transition.T - mp.eye(n)
+        rhs = mp.matrix(n, 1)
+        for column in range(n):
+            system[n - 1, column] = 1
+        rhs[n - 1] = 1
+        solution = mp.lu_solve(system, rhs)
+        values = np.array([float(max(value, 0)) for value in solution], dtype=float)
+        return values / values.sum()
+
+
 def sml_transition_matrix(
     payoff: np.ndarray, population_size: int = 100, beta: float = 0.1
 ) -> np.ndarray:
@@ -342,6 +404,7 @@ def stationary_analysis_sml(
     unsafe_frequency: np.ndarray,
     population_size: int = 100,
     beta: float = 0.1,
+    precision_digits: int | None = None,
 ) -> StationaryResult:
     """Stationary distribution in the small-mutation limit.
 
@@ -352,12 +415,20 @@ def stationary_analysis_sml(
     the full chain on reduced spaces.
     """
     transitions = sml_transition_matrix(payoff, population_size, beta)
-    sd = sparse_stationary_distribution(sp.csr_matrix(transitions))
+    if precision_digits is not None:
+        sd = _stationary_distribution_mp(
+            payoff, population_size, beta, digits=precision_digits
+        )
+    else:
+        sd = sparse_stationary_distribution(sp.csr_matrix(transitions))
     u = np.asarray(unsafe_frequency, dtype=float)
+    process_u = float(sd @ np.diag(u))
+    independent_u = float(sd @ u @ sd)
     return StationaryResult(
         state_distribution=sd,
         strategy_frequencies=sd,
-        unsafe_frequency=float(sd @ np.diag(u)),
+        unsafe_frequency=process_u,
+        independent_unsafe_frequency=independent_u,
         population_size=population_size,
         beta=beta,
         mu=0.0,

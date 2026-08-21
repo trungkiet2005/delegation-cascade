@@ -37,6 +37,7 @@ from .functionals import (
     executed_distribution,
     intent_distribution,
     mean_social_payoff,
+    process_unsafe_frequency,
 )
 from .race import STRATEGIES, RaceTables, action_paths
 
@@ -398,6 +399,7 @@ class Equilibrium:
 
     frequencies: np.ndarray
     unsafe_frequency: float
+    independent_unsafe_frequency: float
     mean_depth: float
     depth_distribution: dict[int, float]
     intent_distribution: dict[str, float]
@@ -414,6 +416,7 @@ def equilibrium(
     beta: float = 0.1,
     n_starts: int = 120,
     seed: int = 20260818,
+    precision_digits: int | None = None,
 ) -> Equilibrium:
     """Long-run design distribution under the private functional.
 
@@ -425,16 +428,19 @@ def equilibrium(
     """
     if method == "sml":
         x = stationary_analysis_sml(
-            fun.pi_P, fun.unsafe_frequency, population_size, beta
+            fun.pi_P, fun.unsafe_frequency, population_size, beta, precision_digits
         ).strategy_frequencies
     elif method == "replicator":
         x = average_replicator_attractor(fun.pi_P, n_starts=n_starts, seed=seed)
     else:
         raise ValueError(f"unknown method {method!r}")
 
+    independent_unsafe = aggregate_unsafe_frequency(x, fun.unsafe_frequency)
+    process_unsafe = process_unsafe_frequency(x, fun.unsafe_frequency)
     return Equilibrium(
         frequencies=x,
-        unsafe_frequency=aggregate_unsafe_frequency(x, fun.unsafe_frequency),
+        unsafe_frequency=process_unsafe if method == "sml" else independent_unsafe,
+        independent_unsafe_frequency=independent_unsafe,
         mean_depth=float(x @ fun.depth),
         depth_distribution=depth_distribution(x, fun.depth),
         intent_distribution=intent_distribution(x, fun.intent),
@@ -548,7 +554,11 @@ def frozen_depth_counterfactual(
 
     # the same design frequencies, scored with the same behaviour matrix, isolate
     # how much of the difference is composition rather than behaviour
-    frozen = aggregate_unsafe_frequency(eq_pass.frequencies, full.unsafe_frequency)
+    frozen = (
+        process_unsafe_frequency(eq_pass.frequencies, full.unsafe_frequency)
+        if method == "sml"
+        else aggregate_unsafe_frequency(eq_pass.frequencies, full.unsafe_frequency)
+    )
     return {
         "unsafe_passthrough": eq_pass.unsafe_frequency,
         "unsafe_per_layer": eq_full.unsafe_frequency,

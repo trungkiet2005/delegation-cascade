@@ -47,7 +47,11 @@ def main(outdir: Path) -> None:
     race = build_race_tables(cfg.RACE)
     chain = cfg.CHAIN
     fun = build_functionals(race, chain, cfg.LAM, cfg.HARM)
-    sml = dict(population_size=cfg.POPULATION, beta=cfg.BETA)
+    sml = dict(
+        population_size=cfg.POPULATION,
+        beta=cfg.BETA,
+        precision_digits=cfg.SML_PRECISION_DIGITS,
+    )
     rep = dict(n_starts=cfg.REPLICATOR_STARTS, seed=cfg.SEED)
 
     # ---------------------------------------------------------------- layer 0
@@ -625,8 +629,8 @@ def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key, regimes) 
         r"\caption{Attribution regimes. Long-run Unsafe frequency, mean delegation "
         r"depth and social payoff when the law mapping depth to the principal's share "
         r"of the harm is changed, with everything else at the baseline. The shelter "
-        r"survives every rule whose attribution vanishes in the depth, including the "
-        r"equal split. A rule bounded below by $a_{\min}$ closes it only above the "
+        r"survives rules whose attribution vanishes in the depth, including the "
+        r"equal split. An eventually constant floor $a_{\min}$ closes it above the "
         r"depth $d_{0}$ at which the bound binds, $\phi^{d_{0}}=a_{\min}$, which is "
         r"why $a_{\min}=0.25$ ($d_{0}=4.8$) still leaves mean depth at $5.07$ while "
         r"$a_{\min}=0.5$ ($d_{0}=2.4$) brings it to $2.99$.}"
@@ -663,7 +667,8 @@ def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key, regimes) 
     lines.append(r"\begin{table}[t]")
     lines.append(r"\centering")
     lines.append(
-        r"\caption{A floor under attribution reproduces a depth cap. For each "
+        r"\caption{A binding floor under attribution closely matches a depth cap "
+        r"over the welfare range it can reach. For each "
         r"ceiling $\bar{D}$, the attribution floor $a_{\min}$ whose social payoff "
         r"comes closest to that ceiling's, and the Unsafe frequency each delivers. "
         r"Wherever a floor can match a ceiling on welfare, at $\bar{D}=2$ to $6$, it "
