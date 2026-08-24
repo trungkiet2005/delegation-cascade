@@ -314,8 +314,9 @@ def fixation_probability(
     # the sum is dominated by its largest term; factoring it out keeps the
     # exponentials in range for the large beta * Z products used in the sweeps
     shift = max(0.0, float(exponent.max()))
-    total = float(np.exp(-shift) + np.exp(exponent - shift).sum())
-    return float(np.exp(-shift) / total)
+    numerator = float(np.exp(-shift))
+    total = float(numerator + np.exp(exponent - shift).sum())
+    return numerator / total
 
 
 def fixation_probability_mp(
@@ -341,8 +342,9 @@ def fixation_probability_mp(
             cumulative -= beta_mp * (pi_inv - pi_res)
             values.append(cumulative)
         shift = max(mp.mpf("0"), max(values, default=mp.mpf("0")))
-        total = mp.e**(-shift) + sum(mp.e**(value - shift) for value in values)
-        return mp.e**(-shift) / total
+        numerator = mp.e**(-shift)
+        total = numerator + sum(mp.e**(value - shift) for value in values)
+        return numerator / total
 
 
 def _stationary_distribution_mp(

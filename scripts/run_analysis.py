@@ -415,8 +415,10 @@ def main(outdir: Path) -> None:
         at_half.social_payoff - base.social_payoff
     ) / (strict.social_payoff - base.social_payoff)
 
-    # a floor and a hard depth cap trace the same frontier: for every cap, the floor
-    # that matches its social payoff also matches its Unsafe frequency
+    # Compare the two frontiers at the floor point nearest each cap's social
+    # payoff.  The shallowest caps lie above the welfare range attainable by a
+    # floor, so report the reachable range separately rather than claiming an
+    # exact one-to-one equivalence.
     cap_match = []
     for c in sweeps["depth_cap"]:
         k = int(np.argmin([abs(o.social_payoff - c.social_payoff) for o in floor_sweep]))
@@ -429,18 +431,26 @@ def main(outdir: Path) -> None:
                 "matched_floor": o.setting,
                 "U_floor": o.unsafe_frequency,
                 "social_floor": o.social_payoff,
+                "social_abs_gap": abs(o.social_payoff - c.social_payoff),
                 "abs_gap": abs(o.unsafe_frequency - c.unsafe_frequency),
             }
         )
     pd.DataFrame(cap_match).to_csv(tables_dir / "floor_versus_cap.csv", index=False)
     gaps = np.array([r["abs_gap"] for r in cap_match])
-    matched = np.array([abs(r["social_floor"] - r["social_cap"]) < 1e-6 for r in cap_match])
+    floor_social = np.array([o.social_payoff for o in floor_sweep])
+    reachable = np.array(
+        [
+            floor_social.min() - 1e-9 <= r["social_cap"] <= floor_social.max() + 1e-9
+            for r in cap_match
+        ]
+    )
     key["floor_versus_cap"] = {
         "max_gap": float(gaps.max()),
         "mean_gap": float(gaps.mean()),
-        "mean_gap_over_welfare_matched": float(gaps[matched].mean()) if matched.any() else None,
-        "n_welfare_matched": int(matched.sum()),
-        "caps_matched_within_001": int((gaps < 0.01).sum()),
+        "max_gap_over_reachable": float(gaps[reachable].max()),
+        "mean_gap_over_reachable": float(gaps[reachable].mean()),
+        "n_reachable_caps": int(reachable.sum()),
+        "caps_matched_within_001": int((gaps <= 0.001).sum()),
         "n_caps": int(gaps.size),
         "rows": cap_match,
     }
@@ -667,17 +677,18 @@ def _write_latex_tables(tables_dir: Path, race, fun, dec, sweeps, key, regimes) 
     lines.append(r"\begin{table}[t]")
     lines.append(r"\centering")
     lines.append(
-        r"\caption{A binding floor under attribution closely matches a depth cap "
-        r"over the welfare range it can reach. For each "
+        r"\caption{A binding floor under attribution closely traces a depth cap "
+        r"over the welfare range available to the floor. For each "
         r"ceiling $\bar{D}$, the attribution floor $a_{\min}$ whose social payoff "
         r"comes closest to that ceiling's, and the Unsafe frequency each delivers. "
-        r"Wherever a floor can match a ceiling on welfare, at $\bar{D}=2$ to $6$, it "
-        r"matches its Unsafe frequency to within $0.0011$. The two shallowest "
+        r"For $\bar{D}=2$ to $6$, the cap's social payoff lies within the floor's "
+        r"attainable range, and the nearest floor's Unsafe frequency differs by "
+        rf"at most {match['max_gap_over_reachable']:.4f}. The two shallowest "
         r"ceilings are out of a floor's reach, since even $a_{\min}=1$ leaves social "
         r"payoff at $58.3$ against $59.0$ and $60.5$; the mean gap of "
         rf"{match['mean_gap']:.3f} and the largest of {match['max_gap']:.3f} include "
         r"those two rows and so overstate the disagreement, the mean over the five "
-        r"matched ceilings being $0.0003$.}"
+        rf"reachable ceilings being {match['mean_gap_over_reachable']:.4f}.}}"
     )
     lines.append(r"\label{tab:floorcap}")
     lines.append(r"\begin{tabular}{lrrrrr}")

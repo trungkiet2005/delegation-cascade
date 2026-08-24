@@ -62,7 +62,7 @@
 \title{\bfseries Delegation cascades: why safe instructions\\ produce unsafe agents}
 
 \author[1,2]{Trung-Kiet Huynh$^{\dagger}$}
-\author[1,2]{Dao Sy Duy Minh$^{\dagger}$}
+\author[1,2]{Dao-Sy Duy-Minh$^{\dagger}$}
 \author[1,2]{Chi-Nguyen Tran$^{\dagger}$}
 \affil[1]{Faculty of Information Technology, University of Science (HCMUS), Ho Chi Minh City, Vietnam}\affil[2]{Vietnam National University -- Ho Chi Minh City (VNU-HCM), Ho Chi Minh City, Vietnam}
 \date{\normalsize $^{\dagger}$These authors contributed equally to this work. Correspondence: \texttt{23122039@student.hcmus.edu.vn}}
@@ -83,9 +83,9 @@ responsibility that fades with depth disables the market's own answer to
 degraded instructions, which is to delegate less. In the resulting equilibrium
 every principal issues the safest available instruction, the population executes
 unsafe ones anyway, and depth is an unbounded shelter from liability. A
-statutory floor under attributed responsibility closes it, tracing the same
-safety and welfare frontier as a cap on chain length without anyone counting
-hand-offs.
+statutory floor under attributed responsibility closes it and, over its
+attainable range on the reported grid, closely traces the safety and welfare
+frontier of a cap on chain length without anyone counting hand-offs.
 \end{abstract}
 
 \noindent\textbf{Keywords:} evolutionary game theory; delegation; principal-agent
@@ -173,8 +173,8 @@ that precise.
 We show, first, that depth is an unbounded liability shelter
 (Theorem~\ref{thm:shelter}). Realised harm saturates in $d$ because the specification is eventually
 forgotten, while attributed harm carries the extra factor $\phi$ per layer. For
-every $\phi<1$ there is therefore a depth beyond which each further hand-off
-strictly reduces the harm the principal is charged for while strictly increasing
+every $0<\phi<1$ there is therefore a depth beyond which each further hand-off
+strictly reduces the harm the principal is charged for while never reducing
 the harm it causes. Beyond that depth the invasion
 condition for one more layer stops depending on liability in the usual
 direction: raising the penalty makes the deeper design \emph{more} attractive,
@@ -182,10 +182,10 @@ not less (Proposition~\ref{prop:invasion}).
 
 Second, the two mechanisms do not add. We calibrate the liability so that the depth-zero race is already safe: the
 effective liability we use is $3.1$ times the level at which the single-layer
-game has long-run unsafe frequency zero. At that setting, imperfect
+game's long-run unsafe frequency falls below $10^{-3}$. At that setting, imperfect
 transmission alone yields $0.018$ and imperfect attribution alone yields
-$0.012$, while the two together yield $0.322$. The interaction,
-$+0.293$, is $91\%$ of the joint effect. A counterfactual that holds the population composition fixed shows why. Under
+$0.011$, while the two together yield $0.322$. The interaction,
+$+0.294$, is $91\%$ of the joint effect. A counterfactual that holds the population composition fixed shows why. Under
 full pass-through the population answers transmission loss by shortening its
 chains from six hand-offs to two. That answer, and not any change in behaviour
 at a given depth, is what per-layer attribution removes.
@@ -204,7 +204,7 @@ six hand-offs to two. Capping chain length is monotone and cheap, and a ceiling
 of one hand-off both removes the unsafe behaviour and raises social payoff from
 $-0.8$ to $60.5$. Improving transmission fidelity is neither monotone nor safe in the small.
 Taking the erosion probability from $0.20$ to $0.07$ reduces the unsafe
-frequency to $0.032$, but taking it to $0.04$ raises it again to $0.239$,
+frequency to $0.033$, but taking it to $0.04$ raises it again to $0.239$,
 because the improvement removes the reason principals were over-specifying. Where a single check is placed in the chain matters by a
 factor of $18$, and it should be placed at the agent that acts.
 
@@ -650,8 +650,9 @@ which is the class our update rule belongs to.
 The remaining choice is the liability level, and we fix it so that the
 delegation results cannot be an artefact of a race that was unsafe to begin
 with. Bisection on the depth-zero game puts the long-run unsafe frequency below
-$10^{-3}$ for every $L\ge 6.52$; we run at $L=20$, that is $3.1$ times the
-level at which the single-layer race is already safe. At that level the
+$10^{-3}$ for every $L\ge 6.54$; the bisection threshold is $L_c=6.537432$.
+We run at $L=20$, or $3.1$ times the level at which the single-layer race is
+already safe. At that level the
 depth-zero ecosystem has long-run unsafe frequency $0.000$ under the
 finite-population reading and $0.026$ under the replicator reading. The
 baseline erosion probability is $\varepsilon=0.20$ and the baseline attribution
@@ -736,21 +737,24 @@ structural result of the model.
 
 \begin{theorem}[Liability shelter]
 \label{thm:shelter}
-Adding a hand-off lowers the attributed harm exactly when
+Fix $\phi>0$. Adding a hand-off lowers the attributed harm exactly when
 \begin{equation}
   \phi \;<\; \phi^{*}(d) \;=\; \frac{m(d)}{m(d+1)} .
   \label{eq:phistar}
 \end{equation}
 Because $m$ is non-decreasing and bounded, $\phi^{*}(d)\to 1$. Hence for every
-$\phi<1$ there exists a depth $\bar d(\phi)$ such that every hand-off beyond
-$\bar d$ strictly reduces the harm attributed to the principal while strictly
-increasing the harm it causes, and
+$0<\phi<1$ there exists a depth $\bar d(\phi)$ such that every hand-off beyond
+$\bar d$ strictly reduces the harm attributed to the principal while never
+reducing the harm it causes, and
 \[
   \lim_{d\to\infty}\phi^{d} m(d) = 0,
   \qquad
   \lim_{d\to\infty} m(d) = m_{\max}.
 \]
 \end{theorem}
+
+The excluded boundary $\phi=0$ is degenerate: attributed harm is zero at every
+positive depth, so after the first hand-off it cannot fall strictly.
 
 Probing~\eqref{eq:phistar} to depth $40$ puts $\phi^{*}$ at $0.99993$ and, at the
 baseline $\phi=0.75$, the shelter opening at $\bar d = 6$
@@ -777,7 +781,7 @@ The critical effective liability at which depth $d+1$ loses its advantage over
 depth $d$ is $L^{*}(d)=\text{benefit}/\text{attributed gain}$. When the
 attributed gain is positive, $L>L^{*}(d)$ blocks the deeper design. When the
 attributed gain is negative -- which by Theorem~\ref{thm:shelter} happens for
-all $d$ large enough whenever $\phi<1$ -- the advantage is increasing in $L$,
+all $d$ large enough whenever $0<\phi<1$ -- the advantage is increasing in $L$,
 and no level of liability blocks the deeper design.
 \end{proposition}
 
@@ -787,11 +791,12 @@ principals liability is not a tax on delegation but a subsidy for it.
 
 \begin{corollary}[When a rule calibrated at depth zero stops binding]
 \label{cor:failure}
-A liability $L$ that clears a threshold $L_{c}$ for principals who act for
-themselves stops clearing it at depth
-$d^{\dagger}=\log(L_{c}/L)/\log\phi$, which is finite for every $\phi<1$.
-At the baseline, $L_{c}=6.52$, $L=20$ and $\phi=0.75$ give
-$d^{\dagger}=3.9$: the rule survives three hand-offs and fails at the fourth.
+Suppose $L\ge L_c>0$ and $0<\phi<1$. A liability $L$ that clears a threshold
+$L_c$ for principals who act for themselves clears it at integer depth $d$
+exactly when $d\le d^{\dagger}=\log(L_c/L)/\log\phi$; its first failing integer
+depth is $\lfloor d^{\dagger}\rfloor+1$. At the baseline, $L_c=6.537432$,
+$L=20$ and $\phi=0.75$ give $d^{\dagger}=3.887$: the rule survives three
+hand-offs and fails at the fourth.
 \end{corollary}
 
 The last panel of Figure~\ref{fig:shelter} records a fact that is easy to miss.
@@ -807,7 +812,7 @@ social dilemma at the private level before it is one at the social level.
 \includegraphics[width=\linewidth]{figures/fig03_shelter.pdf}
 \caption{\textbf{Depth as a liability shelter.}
 \textbf{(A)}~The deniability threshold $\phi^{*}(d)=m(d)/m(d{+}1)$ rises towards
-one because realised harm saturates, so any attribution retention below one is
+one because realised harm saturates, so any positive attribution retention below one is
 eventually below the threshold; at $\phi=0.75$ the shelter opens at six
 hand-offs. \textbf{(B)}~Beyond that depth, realised harm still climbs towards
 its ceiling while attributed harm falls geometrically. \textbf{(C)}~What one
@@ -828,9 +833,9 @@ $2\times2$ design whose four cells are reported in
 Table~\ref{tab:decomposition} and Figure~\ref{fig:decomposition}.
 
 Starting from a race that is already safe, erosion alone raises the long-run
-unsafe frequency to $0.018$ and attenuated attribution alone to $0.012$. An
-additive reading predicts $0.030$ when both are present. The measured value is
-$0.322$. The interaction, $+0.293$, is $91\%$ of the joint effect, and the same
+unsafe frequency to $0.018$ and attenuated attribution alone to $0.011$. An
+additive reading predicts $0.029$ when both are present. The measured value is
+$0.322$. The interaction, $+0.294$, is $91\%$ of the joint effect, and the same
 picture appears under the replicator reading, where the interaction is $+0.331$.
 
 The mechanism behind the interaction is visible in the second panel of
@@ -858,7 +863,7 @@ problem.
 \includegraphics[width=\linewidth]{figures/fig04_decomposition.pdf}
 \caption{\textbf{The two mechanisms, separately and together.}
 \textbf{(A)}~Long-run unsafe frequency in the four cells of the $2\times2$. The
-additive prediction from the two single-mechanism cells is $0.030$; the joint
+additive prediction from the two single-mechanism cells is $0.029$; the joint
 outcome is $0.322$. \textbf{(B)}~Mean delegation depth in the same four cells.
 Under pass-through the population answers erosion by shortening its chains;
 per-layer attribution removes that answer and the ceiling binds.
@@ -886,8 +891,8 @@ and the interaction share quoted alongside it is
 $I/\bigl[U(\varepsilon,\phi)-U(0,1)\bigr]$, the fraction of the total rise that
 neither mechanism produces alone. Every point of the grid therefore costs four
 stationary-regime computations, one per corner, and each is exact given the
-payoff matrices rather than sampled. The index is positive over $89\%$ of the
-interior and reaches $0.81$; the long-run unsafe frequency reaches $0.995$ and
+payoff matrices rather than sampled. The index is positive over $91\%$ of the
+interior and reaches $0.813$; the long-run unsafe frequency reaches $0.990$ and
 the declaration gap $0.95$.
 
 The second panel is the one to read for policy. Mean delegation depth splits
@@ -946,18 +951,18 @@ the remedy is an objective standard applied to whoever deployed it.
 Four instruments act at different points of the chain: raise the attribution
 retention $\phi$ towards pass-through; cap the permitted chain length at
 $\bar D$; make every hand-off more faithful, multiplying $\varepsilon$ by a
-factor $\rho$; or insert one check of strength $\alpha$ at a chosen layer.
+factor $\kappa$; or insert one check of strength $\alpha$ at a chosen layer.
 Figure~\ref{fig:instruments} applies each to the same baseline.
 
 \paragraph{Attribution is a threshold, not a dial.}
-Raising $\phi$ from $0.75$ does nothing at all until $\phi=0.86$, where mean
-depth falls from $5.92$ to $3.45$ and the unsafe frequency from $0.314$ to
-$0.103$; by $\phi=0.99$ the outcome is the pass-through outcome. The location of
+Raising $\phi$ from $0.75$ changes little through $\phi=0.85$; at $\phi=0.86$,
+mean depth falls from $5.92$ to $3.45$ and the unsafe frequency from $0.315$ to
+$0.111$; by $\phi=0.99$ the outcome is the pass-through outcome. The location of
 the jump is close to the closed form implied by Corollary~\ref{cor:failure},
 $\phi_{c}=(L_{c}/L)^{1/D}=0.830$, the residual gap being the extra harm that
 erosion contributes at depth. Partial pass-through buys very little: at
 $\phi=0.85$, which returns $85\%$ of responsibility at each of six layers and
-therefore $38\%$ overall, the ecosystem is still at $0.314$.
+therefore $38\%$ overall, the ecosystem is still at $0.315$.
 
 \paragraph{A ceiling buys safety and welfare at once.}
 The depth ceiling is the only instrument here that is monotone in its own
@@ -969,7 +974,7 @@ attribution cannot be made exact.
 
 \paragraph{Fidelity is not monotone.}
 Attestation improves matters over most of its range, from $0.322$ at
-$\rho=1$ down to $0.032$ at $\rho=0.35$, and then reverses: at $\rho=0.20$ the
+$\kappa=1$ down to $0.033$ at $\kappa=0.35$, and then reverses: at $\kappa=0.20$ the
 unsafe frequency is back up to $0.239$. The cause is the intent margin.
 Over-specification was an equilibrium response to erosion; once hand-offs are
 faithful enough, issuing \CS{} rather than \AS{} becomes the better reply, and
@@ -984,9 +989,10 @@ finds a lulling effect in which child-resistant closures left poisonings on the
 covered products unchanged and raised ingestions on an adjacent
 one~\citep{viscusi1985consumer}. Over-specification is
 the precaution our hand-off technology displaces.
-The same reversal appears in the audit-placement sweep at
-full strength, and for the same reason; at half strength, where the intent
-margin does not flip, the sweep is monotone.
+The full-strength audit-placement sweep has the same kind of non-monotone
+interior hump: unsafe frequency across layers one through six is $0.225$,
+$0.136$, $0.064$, $0.071$, $0.157$ and $0.018$. At half strength, where the
+intent margin does not flip, the sweep is monotone.
 
 The flip can be located exactly. Write the margin as
 $\pi_{P}(\CS{}@D)-\pi_{P}(\AS{}@D)$ against a resident \AS{}$@D$ population.
@@ -1136,13 +1142,14 @@ $0.087$, $0.196$, $0.323$, $0.402$, $0.440$: every layer costs more than the
 one before it.
 
 The practical consequence is the reason to report this at all. A floor is not
-a weak version of pass-through, it is a substitute for a depth cap.
-Table~\ref{tab:floorcap} matches each ceiling against the floor delivering the
-same social payoff and finds it also delivers the same unsafe frequency: the
-gap is below $0.01$ for five of the seven ceilings and at most $0.018$, with a
-mean of $0.005$. The agreement holds across variations in $\phi$, $\varepsilon$,
-the organisational benefit and the ceiling, where the mean gap ranges from
-$0.001$ to $0.016$. The floor has no effect at all while it lies under
+a weak version of pass-through; it closely approximates a depth cap over the
+welfare range it can reach. Table~\ref{tab:floorcap} matches each ceiling to
+the floor with the nearest social payoff. For ceilings two through six, whose
+social payoffs lie within the floor's attainable range, the unsafe-frequency
+gap is below $0.001$ (mean $0.0003$). Ceilings zero and one lie outside that
+range. Across variations in $\phi$, $\varepsilon$ and the ceiling, the mean gap
+ranges from $0.002$ to $0.016$; varying the organisational benefit expands the
+range to $0.0003$--$0.0268$. The floor has no effect at all while it lies under
 $\phi^{D}=0.178$, the attribution a chain already reaches at the ceiling, and
 begins to bite as soon as it binds, at $a_{\min}=0.22$; $a_{\min}=0.31$ halves
 the harm and $a_{\min}=0.5$ recovers $86\%$ of the welfare that separates the
@@ -1167,8 +1174,8 @@ private setback risk of the race, both readings of what a setback destroys, the
 organisational benefit and the coordination cost of a taller chain, the
 population size, the selection intensity, the depth ceiling, the liability
 level, and the choice between the finite-population and replicator readings.
-The interaction is positive in $88\%$ of them, with median $+0.292$ and
-interquartile range $[0.242,0.297]$; the median interaction share is $0.91$.
+The interaction is positive in $91\%$ of them, with median $+0.294$ and
+interquartile range $[0.243,0.299]$; the median interaction share is $0.91$.
 The mean delegation depth is higher under per-layer attribution than under
 pass-through in every single cell. The negative cells are all in the
 prize-and-risk sweep and are ceiling effects, where the joint outcome is already
@@ -1178,7 +1185,7 @@ The parameters of the evolutionary process deserve to be read cell by cell
 rather than in aggregate, since they are the ones a reader has least reason to
 accept on faith. Table~\ref{tab:process} gives the whole $2\times2$ at every
 population size and selection intensity we ran. The joint cell is $0.3225$ at
-all three population sizes and moves only from $0.3166$ to $0.3225$ as the
+all three population sizes and moves only from $0.3168$ to $0.3225$ as the
 selection intensity varies by a factor of twenty; the interaction stays between
 $+0.240$ and $+0.301$. What the process parameters do move is the
 attribution-only cell, from $0.0622$ at $\beta=0.01$ down to $0.0040$ at
@@ -1194,11 +1201,11 @@ The drift kernel is the one dimension along which the result genuinely changes,
 and the direction is instructive (Figure~\ref{fig:robustness}B). Replacing
 graded erosion by \emph{collapse}, in which a lost specification is replaced by
 the unconditionally unsafe design rather than by the next rung down, all but
-eliminates the effect: the joint cell falls to $3\times10^{-5}$ and mean depth
+eliminates the effect: the joint cell falls to $2\times10^{-5}$ and mean depth
 to $0.0002$. Delegation simply does not happen, because a chain that fails
 catastrophically is one whose principal will not build it. Replacing graded
 erosion by \emph{uniform} noise, which has the same spectral gap but no
-direction, makes matters worse rather than better, with a joint cell of $0.517$.
+direction, makes matters worse rather than better, with a joint cell of $0.520$.
 The dangerous property of a hand-off is therefore not that it is biased but
 that it degrades gracefully. A specification that fails loudly deters the
 delegation that would have caused the harm; one that fails quietly does not.
@@ -1213,7 +1220,7 @@ rungs per erosion event down to $0$; the second runs from the ladder to
 collapse and takes it from $0.75$ up to $1.5$.
 
 Along the first, the joint cell stays between $0.320$ and $0.327$ for four
-fifths of the range before rising to $0.517$ at pure noise, and mean depth sits
+fifths of the range before rising to $0.520$ at pure noise, and mean depth sits
 at the ceiling throughout. Removing the direction of the drift never helps and
 eventually hurts; what it changes is where the harm is booked, since the
 pass-through cell falls from $0.018$ to zero and the interaction rises from
@@ -1225,7 +1232,7 @@ $0.022$. Nothing about the spectral gap has changed, and the drift has become
 
 Two conclusions follow, and neither is available from the three named kernels.
 The spectral gap is not the driver: it is identical in all twenty-four cells
-while the joint outcome ranges from $3\times10^{-5}$ to $0.517$. Directionality
+while the joint outcome ranges from $2\times10^{-5}$ to $0.520$. Directionality
 is not the driver either, and does not even order the outcomes, since collapse
 is the most directed kernel we consider and the safest of the three. What
 orders them is how much harm a \emph{single} hand-off already causes. Under the
@@ -1376,12 +1383,13 @@ runs, is a check at every layer rather than one, and again a late one.
 
 Read the other way, the model says which of these to insist on and how far.
 Attribution machinery is close to worthless in partial form: restoring $85\%$
-of responsibility at each of six layers leaves the ecosystem at $0.314$ against
+of responsibility at each of six layers leaves the ecosystem at $0.315$ against
 an untreated $0.322$. What our floor result adds is that a protocol does not
 have to achieve near-complete tracing to be worth deploying; it has to
 \emph{guarantee a minimum}. A ledger whose worst case is that a fixed share
-always comes back to the commissioning principal is a floor, and floors buy
-what depth caps buy. The legal analogue is familiar: where an injurer's assets
+always comes back to the commissioning principal is a floor, and, over their
+attainable range on the reported grid, floors closely trace the depth-cap
+frontier. The legal analogue is familiar: where an injurer's assets
 fall short of the harm it can do, the remedy that works is not a larger penalty
 but a minimum the injurer is required to carry at all
 times~\citep{shavell1986judgment,shavell2005minimum}. The right figure of merit for an accountability protocol
@@ -1471,9 +1479,10 @@ penalties works least of all, because depth has already discounted the margin
 they act on. Restoring attribution hand-off by hand-off works only when it is
 nearly complete, but that is a fact about the geometric rule rather than about
 attribution: what the shelter needs is for the principal's share to keep
-falling, and a rule that stops falling closes it. A floor under attribution
-buys what a cap on chain length buys, and asks less of whoever has to enforce
-it. If there is a single design principle here, it is that the length of a
+falling, and a rule that stops falling closes it. Over its attainable range on
+the reported grid, a floor under attribution closely approximates the safety
+and welfare outcomes of a cap on chain length, while asking less of whoever has
+to enforce it. If there is a single design principle here, it is that the length of a
 chain should cost its principal something, and that it is easier to arrange
 this through what the principal owes than through what it is permitted to
 build.

@@ -1,8 +1,8 @@
 # Cover letter
 
-_Paste the body into the "Enter Comments" box of the Editorial Manager
-submission, or upload it as a separate "Cover Letter" item. Suggested reviewers
-go in Editorial Manager's own field; see the note near the end._
+_Paste the body into the "Enter Comments" box of Editorial Manager, or upload
+it as a separate "Cover Letter" item. Optional reviewer suggestions and the
+remaining external submission gates are recorded in `SUBMISSION_NOTES.md`._
 
 ---
 
@@ -31,27 +31,39 @@ output with 60-digit references, the fixation formula with EGTtools, and the
 rare-mutation reduction with a tractable full chain.
 
 The analysis proves that realised harm saturates with depth while attributed
-harm carries a vanishing per-layer factor. Hence every attribution retention
-below one eventually creates a liability shelter: another hand-off lowers the
-principal's charge without lowering realised harm. An eventually binding
+harm carries a vanishing per-layer factor. Hence every positive attribution
+retention below one eventually creates a liability shelter: another hand-off
+lowers the principal's charge without lowering realised harm. An eventually binding
 attribution floor closes this shelter. All nine numbered results state their
 hypotheses and include proofs.
 
 Numerically, transmission erosion and attenuated attribution separately yield
-unsafe frequencies of 0.018 and 0.012 but jointly yield 0.322; interaction
-accounts for 91% of the joint effect. A statutory attribution floor matches the
-safety-social-payoff outcome of every depth cap it can reach, while transmission
-improvement is non-monotone because selection changes the issued intent.
+unsafe frequencies of 0.018 and 0.011 but jointly yield 0.322; interaction
+accounts for 91% of the joint effect. Over its attainable range on the reported
+grid, a statutory attribution floor closely traces the depth-cap
+safety-social-payoff frontier, while transmission improvement is non-monotone
+because selection changes the issued intent.
 
-The work has not been published and is not under consideration elsewhere. All
-five authors approved the manuscript and have no competing interests. Code,
+The present manuscript has not been peer reviewed or formally published and is
+not under consideration elsewhere. A non-peer-reviewed development manuscript
+source has been publicly accessible in the cited GitHub repository since 20
+August 2026. It is a preprint, not a version of record. Two related but
+non-duplicate companion manuscripts by overlapping author teams are separate
+submissions in the same coordinated submission round: *Safe
+designs, unsafe ecosystems: deployment-layer
+selection in an evolutionary AI race* and *Forgeable greenbeards:
+multistability and hollow collapse in certified agent populations*. They share
+the reduced four-strategy interaction layer used as a common benchmark, but
+study different structural coordinates, mechanisms, state spaces, analytical
+results and policy questions. Any repeated benchmark quantities are common
+inputs rather than shared findings. We disclose the companion manuscripts so
+that the editor can assess the boundaries between the three studies, and we
+will provide copies on request.
+
+All five authors approved the manuscript and have no competing interests. Code,
 generated tables, numerical benchmarks and the figure pipeline are available
 under the MIT licence at
 <https://github.com/trungkiet2005/delegation-cascade>.
-
-<!-- TO COMPLETE BEFORE SUBMISSION: enter three or four suggested reviewers in
-     Editorial Manager, none of them a co-author, a collaborator within the
-     last three years, or a colleague at HCMUS. -->
 
 Thank you for considering the manuscript.
 

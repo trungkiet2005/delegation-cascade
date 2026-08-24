@@ -115,10 +115,10 @@ def attestation_sweep(
     method: str = "sml",
     **kwargs,
 ) -> list[InterventionOutcome]:
-    """Outcome as every hand-off is made more faithful by a factor ``rho``.
+    """Outcome as every hand-off is made more faithful by a factor ``kappa``.
 
-    ``rho = 1`` leaves the baseline erosion probability untouched and
-    ``rho = 0`` makes transmission perfect.
+    ``kappa = 1`` leaves the baseline erosion probability untouched and
+    ``kappa = 0`` makes transmission perfect.
     """
     return [
         _score(

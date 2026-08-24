@@ -1,0 +1,582 @@
+\begin{thebibliography}{63}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{#2}
+\providecommand{\path}[1]{#1}
+\providecommand{\DOIprefix}{doi:}
+\providecommand{\ArXivprefix}{arXiv:}
+\providecommand{\URLprefix}{URL: }
+\providecommand{\Pubmedprefix}{pmid:}
+\providecommand{\doi}[1]{\href{http://dx.doi.org/#1}{\path{#1}}}
+\providecommand{\Pubmed}[1]{\href{pmid:#1}{\path{#1}}}
+\providecommand{\bibinfo}[2]{#2}
+\ifx\xfnm\relax \def\xfnm[#1]{\unskip,\space#1}\fi
+%Type = Inproceedings
+\bibitem[{Wu et~al.(2024)Wu, Bansal, Zhang, Wu, Li, Zhu, Jiang, Zhang, Zhang,
+  Liu, Awadallah, White, Burger, and Wang}]{wu2023autogen}
+\bibinfo{author}{Q.~Wu}, \bibinfo{author}{G.~Bansal},
+  \bibinfo{author}{J.~Zhang}, \bibinfo{author}{Y.~Wu}, \bibinfo{author}{B.~Li},
+  \bibinfo{author}{E.~Zhu}, \bibinfo{author}{L.~Jiang},
+  \bibinfo{author}{X.~Zhang}, \bibinfo{author}{S.~Zhang},
+  \bibinfo{author}{J.~Liu}, \bibinfo{author}{A.~H. Awadallah},
+  \bibinfo{author}{R.~W. White}, \bibinfo{author}{D.~Burger},
+  \bibinfo{author}{C.~Wang},
+\newblock \bibinfo{title}{{AutoGen}: Enabling next-gen {LLM} applications via
+  multi-agent conversations},
+\newblock in: \bibinfo{booktitle}{First Conference on Language Modeling
+  (COLM)}, \bibinfo{year}{2024}. \DOIprefix\doi{10.48550/arXiv.2308.08155},
+  \bibinfo{note}{preprint version: arXiv:2308.08155}.
+%Type = Article
+\bibitem[{Fourney et~al.(2024)Fourney, Bansal, Mozannar, Tan, Salinas, Zhu,
+  Niedtner, Proebsting, Bassman, Gerrits, Alber, Chang, Loynd, West, Dibia,
+  Awadallah, Kamar, Hosn, and Amershi}]{fourney2024magentic}
+\bibinfo{author}{A.~Fourney}, \bibinfo{author}{G.~Bansal},
+  \bibinfo{author}{H.~Mozannar}, \bibinfo{author}{C.~Tan},
+  \bibinfo{author}{E.~Salinas}, \bibinfo{author}{E.~Zhu},
+  \bibinfo{author}{F.~Niedtner}, \bibinfo{author}{G.~Proebsting},
+  \bibinfo{author}{G.~Bassman}, \bibinfo{author}{J.~Gerrits},
+  \bibinfo{author}{J.~Alber}, \bibinfo{author}{P.~Chang},
+  \bibinfo{author}{R.~Loynd}, \bibinfo{author}{R.~West},
+  \bibinfo{author}{V.~Dibia}, \bibinfo{author}{A.~Awadallah},
+  \bibinfo{author}{E.~Kamar}, \bibinfo{author}{R.~Hosn},
+  \bibinfo{author}{S.~Amershi},
+\newblock \bibinfo{title}{Magentic-one: A generalist multi-agent system for
+  solving complex tasks},
+\newblock \bibinfo{journal}{arXiv preprint arXiv:2411.04468}
+  (\bibinfo{year}{2024}). \DOIprefix\doi{10.48550/arXiv.2411.04468}.
+%Type = Techreport
+\bibitem[{Shavit et~al.(2023)Shavit, Agarwal, Brundage, Adler, O'Keefe,
+  Campbell, Lee, Mishkin, Eloundou, Hickey, Slama, Ahmad, McMillan, Beutel,
+  Passos, and Robinson}]{shavit2023practices}
+\bibinfo{author}{Y.~Shavit}, \bibinfo{author}{S.~Agarwal},
+  \bibinfo{author}{M.~Brundage}, \bibinfo{author}{S.~Adler},
+  \bibinfo{author}{C.~O'Keefe}, \bibinfo{author}{R.~Campbell},
+  \bibinfo{author}{T.~Lee}, \bibinfo{author}{P.~Mishkin},
+  \bibinfo{author}{T.~Eloundou}, \bibinfo{author}{A.~Hickey},
+  \bibinfo{author}{K.~Slama}, \bibinfo{author}{L.~Ahmad},
+  \bibinfo{author}{P.~McMillan}, \bibinfo{author}{A.~Beutel},
+  \bibinfo{author}{A.~Passos}, \bibinfo{author}{D.~G. Robinson},
+  \bibinfo{title}{Practices for Governing Agentic {AI} Systems},
+  \bibinfo{type}{Technical Report}, OpenAI, \bibinfo{year}{2023}.
+%Type = Inproceedings
+\bibitem[{Chan et~al.(2024)Chan, Ezell, Kaufmann, Wei, Hammond, Bradley,
+  Bluemke, Rajkumar, Krueger, Kolt, Heim, and Anderljung}]{chan2024visibility}
+\bibinfo{author}{A.~Chan}, \bibinfo{author}{C.~Ezell},
+  \bibinfo{author}{M.~Kaufmann}, \bibinfo{author}{K.~Wei},
+  \bibinfo{author}{L.~Hammond}, \bibinfo{author}{H.~Bradley},
+  \bibinfo{author}{E.~Bluemke}, \bibinfo{author}{N.~Rajkumar},
+  \bibinfo{author}{D.~Krueger}, \bibinfo{author}{N.~Kolt},
+  \bibinfo{author}{L.~Heim}, \bibinfo{author}{M.~Anderljung},
+\newblock \bibinfo{title}{Visibility into {AI} agents},
+\newblock in: \bibinfo{booktitle}{Proceedings of the 2024 ACM Conference on
+  Fairness, Accountability, and Transparency (FAccT)}, \bibinfo{year}{2024},
+  pp. \bibinfo{pages}{958--973}. \DOIprefix\doi{10.1145/3630106.3658948}.
+%Type = Article
+\bibitem[{Bikhchandani et~al.(1992)Bikhchandani, Hirshleifer, and
+  Welch}]{bikhchandani1992theory}
+\bibinfo{author}{S.~Bikhchandani}, \bibinfo{author}{D.~Hirshleifer},
+  \bibinfo{author}{I.~Welch},
+\newblock \bibinfo{title}{A theory of fads, fashion, custom, and cultural
+  change as informational cascades},
+\newblock \bibinfo{journal}{Journal of Political Economy} \bibinfo{volume}{100}
+  (\bibinfo{year}{1992}) \bibinfo{pages}{992--1026}.
+%Type = Article
+\bibitem[{Kirby et~al.(2008)Kirby, Cornish, and Smith}]{kirby2008cumulative}
+\bibinfo{author}{S.~Kirby}, \bibinfo{author}{H.~Cornish},
+  \bibinfo{author}{K.~Smith},
+\newblock \bibinfo{title}{Cumulative cultural evolution in the laboratory: An
+  experimental approach to the origins of structure in human language},
+\newblock \bibinfo{journal}{Proceedings of the National Academy of Sciences}
+  \bibinfo{volume}{105} (\bibinfo{year}{2008}) \bibinfo{pages}{10681--10686}.
+%Type = Article
+\bibitem[{Shumailov et~al.(2024)Shumailov, Shumaylov, Zhao, Papernot, Anderson,
+  and Gal}]{shumailov2024collapse}
+\bibinfo{author}{I.~Shumailov}, \bibinfo{author}{Z.~Shumaylov},
+  \bibinfo{author}{Y.~Zhao}, \bibinfo{author}{N.~Papernot},
+  \bibinfo{author}{R.~Anderson}, \bibinfo{author}{Y.~Gal},
+\newblock \bibinfo{title}{{AI} models collapse when trained on recursively
+  generated data},
+\newblock \bibinfo{journal}{Nature} \bibinfo{volume}{631}
+  (\bibinfo{year}{2024}) \bibinfo{pages}{755--759}.
+%Type = Inproceedings
+\bibitem[{Alemohammad et~al.(2024)Alemohammad, Casco-Rodriguez, Luzi, Humayun,
+  Babaei, LeJeune, Siahkoohi, and Baraniuk}]{alemohammad2023mad}
+\bibinfo{author}{S.~Alemohammad}, \bibinfo{author}{J.~Casco-Rodriguez},
+  \bibinfo{author}{L.~Luzi}, \bibinfo{author}{A.~I. Humayun},
+  \bibinfo{author}{H.~Babaei}, \bibinfo{author}{D.~LeJeune},
+  \bibinfo{author}{A.~Siahkoohi}, \bibinfo{author}{R.~G. Baraniuk},
+\newblock \bibinfo{title}{Self-consuming generative models go {MAD}},
+\newblock in: \bibinfo{booktitle}{The Twelfth International Conference on
+  Learning Representations (ICLR)}, \bibinfo{year}{2024}.
+  \DOIprefix\doi{10.48550/arXiv.2307.01850}, \bibinfo{note}{preprint version:
+  arXiv:2307.01850}.
+%Type = Inproceedings
+\bibitem[{P{\'e}rez et~al.(2025)P{\'e}rez, Kova{\v c}, L{\'e}ger, Colas,
+  Molinaro, Derex, Oudeyer, and Moulin-Frier}]{perez2025telephone}
+\bibinfo{author}{J.~P{\'e}rez}, \bibinfo{author}{G.~Kova{\v c}},
+  \bibinfo{author}{C.~L{\'e}ger}, \bibinfo{author}{C.~Colas},
+  \bibinfo{author}{G.~Molinaro}, \bibinfo{author}{M.~Derex},
+  \bibinfo{author}{P.-Y. Oudeyer}, \bibinfo{author}{C.~Moulin-Frier},
+\newblock \bibinfo{title}{When {LLM}s play the telephone game: Cultural
+  attractors as conceptual tools to evaluate {LLM}s in multi-turn settings},
+\newblock in: \bibinfo{booktitle}{International Conference on Learning
+  Representations (ICLR)}, \bibinfo{year}{2025}.
+%Type = Article
+\bibitem[{Acerbi and Stubbersfield(2023)}]{acerbi2023transmission}
+\bibinfo{author}{A.~Acerbi}, \bibinfo{author}{J.~M. Stubbersfield},
+\newblock \bibinfo{title}{Large language models show human-like content biases
+  in transmission chain experiments},
+\newblock \bibinfo{journal}{Proceedings of the National Academy of Sciences}
+  \bibinfo{volume}{120} (\bibinfo{year}{2023}) \bibinfo{pages}{e2313790120}.
+%Type = Article
+\bibitem[{He et~al.(2024)He, Jin, Wang, Bi, Mandyam, Zhang, Zhu, Li, Xu, Lv,
+  Bhosale, Zhu, Sankararaman, Helenowski, Kambadur, Tayade, Ma, Fang, and
+  Wang}]{he2024multiif}
+\bibinfo{author}{Y.~He}, \bibinfo{author}{D.~Jin}, \bibinfo{author}{C.~Wang},
+  \bibinfo{author}{C.~Bi}, \bibinfo{author}{K.~Mandyam},
+  \bibinfo{author}{H.~Zhang}, \bibinfo{author}{C.~Zhu},
+  \bibinfo{author}{N.~Li}, \bibinfo{author}{T.~Xu}, \bibinfo{author}{H.~Lv},
+  \bibinfo{author}{S.~Bhosale}, \bibinfo{author}{C.~Zhu},
+  \bibinfo{author}{K.~A. Sankararaman}, \bibinfo{author}{E.~Helenowski},
+  \bibinfo{author}{M.~Kambadur}, \bibinfo{author}{A.~Tayade},
+  \bibinfo{author}{H.~Ma}, \bibinfo{author}{H.~Fang},
+  \bibinfo{author}{S.~Wang},
+\newblock \bibinfo{title}{Multi-{IF}: Benchmarking {LLM}s on multi-turn and
+  multilingual instructions following},
+\newblock \bibinfo{journal}{arXiv preprint arXiv:2410.15553}
+  (\bibinfo{year}{2024}). \DOIprefix\doi{10.48550/arXiv.2410.15553}.
+%Type = Inproceedings
+\bibitem[{Cemri et~al.(2025)Cemri, Pan, Yang, Agrawal, Chopra, Tiwari, Keutzer,
+  Parameswaran, Klein, Ramchandran, Zaharia, Gonzalez, and
+  Stoica}]{cemri2025mast}
+\bibinfo{author}{M.~Cemri}, \bibinfo{author}{M.~Z. Pan},
+  \bibinfo{author}{S.~Yang}, \bibinfo{author}{L.~A. Agrawal},
+  \bibinfo{author}{B.~Chopra}, \bibinfo{author}{R.~Tiwari},
+  \bibinfo{author}{K.~Keutzer}, \bibinfo{author}{A.~Parameswaran},
+  \bibinfo{author}{D.~Klein}, \bibinfo{author}{K.~Ramchandran},
+  \bibinfo{author}{M.~A. Zaharia}, \bibinfo{author}{J.~E. Gonzalez},
+  \bibinfo{author}{I.~Stoica},
+\newblock \bibinfo{title}{Why do multi-agent {LLM} systems fail?},
+\newblock in: \bibinfo{booktitle}{Advances in Neural Information Processing
+  Systems 38 (NeurIPS), Datasets and Benchmarks Track}, \bibinfo{year}{2025}.
+  \DOIprefix\doi{10.52202/085713-4082}, \bibinfo{note}{arXiv:2503.13657}.
+%Type = Inproceedings
+\bibitem[{Huang et~al.(2025)Huang, Zhou, Jin, Zhou, Chen, Wang, Yuan, Lyu, and
+  Sap}]{huang2025resilience}
+\bibinfo{author}{J.-t. Huang}, \bibinfo{author}{J.~Zhou},
+  \bibinfo{author}{T.~Jin}, \bibinfo{author}{X.~Zhou},
+  \bibinfo{author}{Z.~Chen}, \bibinfo{author}{W.~Wang},
+  \bibinfo{author}{Y.~Yuan}, \bibinfo{author}{M.~R. Lyu},
+  \bibinfo{author}{M.~Sap},
+\newblock \bibinfo{title}{On the resilience of {LLM}-based multi-agent
+  collaboration with faulty agents},
+\newblock in: \bibinfo{booktitle}{Proceedings of the 42nd International
+  Conference on Machine Learning (ICML)}, volume \bibinfo{volume}{267} of
+  \textit{\bibinfo{series}{Proceedings of Machine Learning Research}},
+  \bibinfo{publisher}{PMLR}, \bibinfo{year}{2025}, pp.
+  \bibinfo{pages}{26202--26226}. \DOIprefix\doi{10.48550/arXiv.2408.00989},
+  \bibinfo{note}{preprint version: arXiv:2408.00989}.
+%Type = Article
+\bibitem[{Matthias(2004)}]{matthias2004gap}
+\bibinfo{author}{A.~Matthias},
+\newblock \bibinfo{title}{The responsibility gap: Ascribing responsibility for
+  the actions of learning automata},
+\newblock \bibinfo{journal}{Ethics and Information Technology}
+  \bibinfo{volume}{6} (\bibinfo{year}{2004}) \bibinfo{pages}{175--183}.
+%Type = Article
+\bibitem[{McAfee and McMillan(1995)}]{mcafee1995diseconomies}
+\bibinfo{author}{R.~P. McAfee}, \bibinfo{author}{J.~McMillan},
+\newblock \bibinfo{title}{Organizational diseconomies of scale},
+\newblock \bibinfo{journal}{Journal of Economics \& Management Strategy}
+  \bibinfo{volume}{4} (\bibinfo{year}{1995}) \bibinfo{pages}{399--426}.
+%Type = Article
+\bibitem[{Fern{\'a}ndez~Domingos and Han(2026)}]{domingos2026falling}
+\bibinfo{author}{E.~Fern{\'a}ndez~Domingos}, \bibinfo{author}{T.~A. Han},
+\newblock \bibinfo{title}{Falling behind drives unsafe development in an
+  idealised {AI} race experiment},
+\newblock \bibinfo{journal}{arXiv preprint arXiv:2607.26034}
+  (\bibinfo{year}{2026}). \DOIprefix\doi{10.48550/arXiv.2607.26034}.
+%Type = Article
+\bibitem[{Taylor and Jonker(1978)}]{taylor1978ess}
+\bibinfo{author}{P.~D. Taylor}, \bibinfo{author}{L.~B. Jonker},
+\newblock \bibinfo{title}{Evolutionary stable strategies and game dynamics},
+\newblock \bibinfo{journal}{Mathematical Biosciences} \bibinfo{volume}{40}
+  (\bibinfo{year}{1978}) \bibinfo{pages}{145--156}.
+%Type = Book
+\bibitem[{Hofbauer and Sigmund(1998)}]{hofbauer1998evolutionary}
+\bibinfo{author}{J.~Hofbauer}, \bibinfo{author}{K.~Sigmund},
+  \bibinfo{title}{Evolutionary Games and Population Dynamics},
+  \bibinfo{publisher}{Cambridge University Press}, \bibinfo{year}{1998}.
+%Type = Article
+\bibitem[{Traulsen et~al.(2006)Traulsen, Nowak, and
+  Pacheco}]{traulsen2006stochastic}
+\bibinfo{author}{A.~Traulsen}, \bibinfo{author}{M.~A. Nowak},
+  \bibinfo{author}{J.~M. Pacheco},
+\newblock \bibinfo{title}{Stochastic dynamics of invasion and fixation},
+\newblock \bibinfo{journal}{Physical Review E} \bibinfo{volume}{74}
+  (\bibinfo{year}{2006}) \bibinfo{pages}{011909}.
+%Type = Article
+\bibitem[{Armstrong et~al.(2016)Armstrong, Bostrom, and
+  Shulman}]{armstrong2016racing}
+\bibinfo{author}{S.~Armstrong}, \bibinfo{author}{N.~Bostrom},
+  \bibinfo{author}{C.~Shulman},
+\newblock \bibinfo{title}{Racing to the precipice: A model of artificial
+  intelligence development},
+\newblock \bibinfo{journal}{AI \& Society} \bibinfo{volume}{31}
+  (\bibinfo{year}{2016}) \bibinfo{pages}{201--206}.
+%Type = Article
+\bibitem[{Han et~al.(2020)Han, Pereira, Santos, and Lenaerts}]{han2020regulate}
+\bibinfo{author}{T.~A. Han}, \bibinfo{author}{L.~M. Pereira},
+  \bibinfo{author}{F.~C. Santos}, \bibinfo{author}{T.~Lenaerts},
+\newblock \bibinfo{title}{To regulate or not: A social dynamics analysis of an
+  idealised {AI} race},
+\newblock \bibinfo{journal}{Journal of Artificial Intelligence Research}
+  \bibinfo{volume}{69} (\bibinfo{year}{2020}) \bibinfo{pages}{881--921}.
+%Type = Article
+\bibitem[{Han et~al.(2021)Han, Pereira, Lenaerts, and
+  Santos}]{han2021mediating}
+\bibinfo{author}{T.~A. Han}, \bibinfo{author}{L.~M. Pereira},
+  \bibinfo{author}{T.~Lenaerts}, \bibinfo{author}{F.~C. Santos},
+\newblock \bibinfo{title}{Mediating artificial intelligence developments
+  through negative and positive incentives},
+\newblock \bibinfo{journal}{PLOS ONE} \bibinfo{volume}{16}
+  (\bibinfo{year}{2021}) \bibinfo{pages}{e0244592}.
+%Type = Article
+\bibitem[{Cimpeanu et~al.(2022)Cimpeanu, Santos, Pereira, Lenaerts, and
+  Han}]{cimpeanu2022heterogeneous}
+\bibinfo{author}{T.~Cimpeanu}, \bibinfo{author}{F.~C. Santos},
+  \bibinfo{author}{L.~M. Pereira}, \bibinfo{author}{T.~Lenaerts},
+  \bibinfo{author}{T.~A. Han},
+\newblock \bibinfo{title}{Artificial intelligence development races in
+  heterogeneous settings},
+\newblock \bibinfo{journal}{Scientific Reports} \bibinfo{volume}{12}
+  (\bibinfo{year}{2022}) \bibinfo{pages}{1723}.
+%Type = Article
+\bibitem[{Han et~al.(2022)Han, Lenaerts, Santos, and
+  Pereira}]{han2022voluntary}
+\bibinfo{author}{T.~A. Han}, \bibinfo{author}{T.~Lenaerts},
+  \bibinfo{author}{F.~C. Santos}, \bibinfo{author}{L.~M. Pereira},
+\newblock \bibinfo{title}{Voluntary safety commitments provide an escape from
+  over-regulation in {AI} development},
+\newblock \bibinfo{journal}{Technology in Society} \bibinfo{volume}{68}
+  (\bibinfo{year}{2022}) \bibinfo{pages}{101843}.
+%Type = Article
+\bibitem[{Bova et~al.(2024)Bova, Di~Stefano, and Han}]{bova2024vigilant}
+\bibinfo{author}{P.~Bova}, \bibinfo{author}{A.~Di~Stefano},
+  \bibinfo{author}{T.~A. Han},
+\newblock \bibinfo{title}{Both eyes open: Vigilant incentives help auditors
+  improve {AI} safety},
+\newblock \bibinfo{journal}{Journal of Physics: Complexity} \bibinfo{volume}{5}
+  (\bibinfo{year}{2024}) \bibinfo{pages}{025009}.
+%Type = Article
+\bibitem[{Bashir et~al.(2026)Bashir, Song, Ogbo, Balabanova, Smit, Leung, Bova,
+  Chica~Serrano, Dissanayake, Duong, Fern{\'a}ndez~Domingos, Huber-Kralj,
+  Krellner, Powell, Sarkadi, Santos, Shamszaman, Tarzi, Turrini, Ufeoshi,
+  Vargas-Perez, Di~Stefano, Powers, and Han}]{bashir2026trust}
+\bibinfo{author}{A.~Bashir}, \bibinfo{author}{Z.~Song}, \bibinfo{author}{N.~B.
+  Ogbo}, \bibinfo{author}{N.~Balabanova}, \bibinfo{author}{M.~Smit},
+  \bibinfo{author}{C.-w. Leung}, \bibinfo{author}{P.~Bova},
+  \bibinfo{author}{M.~Chica~Serrano}, \bibinfo{author}{D.~Dissanayake},
+  \bibinfo{author}{M.~H. Duong}, \bibinfo{author}{E.~Fern{\'a}ndez~Domingos},
+  \bibinfo{author}{N.~Huber-Kralj}, \bibinfo{author}{M.~Krellner},
+  \bibinfo{author}{A.~Powell}, \bibinfo{author}{S.~Sarkadi},
+  \bibinfo{author}{F.~P. Santos}, \bibinfo{author}{Z.~U. Shamszaman},
+  \bibinfo{author}{C.~Tarzi}, \bibinfo{author}{P.~Turrini},
+  \bibinfo{author}{G.~I. Ufeoshi}, \bibinfo{author}{V.~A. Vargas-Perez},
+  \bibinfo{author}{A.~Di~Stefano}, \bibinfo{author}{S.~T. Powers},
+  \bibinfo{author}{T.~A. Han},
+\newblock \bibinfo{title}{Trust or check? {U}nderstanding the (evolutionary)
+  dynamics of user trust in {AI} systems},
+\newblock \bibinfo{journal}{arXiv preprint arXiv:2603.24742}
+  (\bibinfo{year}{2026}). \DOIprefix\doi{10.48550/arXiv.2603.24742}.
+%Type = Article
+\bibitem[{Fern{\'a}ndez~Domingos et~al.(2022)Fern{\'a}ndez~Domingos, Terrucha,
+  Suchon, Gruji{\'c}, Burguillo, Santos, and Lenaerts}]{domingos2022delegation}
+\bibinfo{author}{E.~Fern{\'a}ndez~Domingos}, \bibinfo{author}{I.~Terrucha},
+  \bibinfo{author}{R.~Suchon}, \bibinfo{author}{J.~Gruji{\'c}},
+  \bibinfo{author}{J.~C. Burguillo}, \bibinfo{author}{F.~C. Santos},
+  \bibinfo{author}{T.~Lenaerts},
+\newblock \bibinfo{title}{Delegation to artificial agents fosters prosocial
+  behaviors in the collective risk dilemma},
+\newblock \bibinfo{journal}{Scientific Reports} \bibinfo{volume}{12}
+  (\bibinfo{year}{2022}) \bibinfo{pages}{8492}.
+%Type = Article
+\bibitem[{Terrucha et~al.(2025)Terrucha, Fern{\'a}ndez~Domingos, Suchon,
+  Santos, Simoens, and Lenaerts}]{terrucha2025delegates}
+\bibinfo{author}{I.~Terrucha}, \bibinfo{author}{E.~Fern{\'a}ndez~Domingos},
+  \bibinfo{author}{R.~Suchon}, \bibinfo{author}{F.~C. Santos},
+  \bibinfo{author}{P.~Simoens}, \bibinfo{author}{T.~Lenaerts},
+\newblock \bibinfo{title}{Humans program artificial delegates to accurately
+  solve collective-risk dilemmas but lack precision},
+\newblock \bibinfo{journal}{Proceedings of the National Academy of Sciences}
+  \bibinfo{volume}{122} (\bibinfo{year}{2025}) \bibinfo{pages}{e2319942121}.
+%Type = Inproceedings
+\bibitem[{Cobbe et~al.(2023)Cobbe, Veale, and Singh}]{cobbe2023supply}
+\bibinfo{author}{J.~Cobbe}, \bibinfo{author}{M.~Veale},
+  \bibinfo{author}{J.~Singh},
+\newblock \bibinfo{title}{Understanding accountability in algorithmic supply
+  chains},
+\newblock in: \bibinfo{booktitle}{Proceedings of the ACM Conference on
+  Fairness, Accountability, and Transparency (FAccT)}, \bibinfo{year}{2023},
+  pp. \bibinfo{pages}{1186--1197}. \DOIprefix\doi{10.1145/3593013.3594073},
+  \bibinfo{note}{arXiv:2304.14749}.
+%Type = Article
+\bibitem[{Hammond et~al.(2025)Hammond, Chan, Clifton, Hoelscher-Obermaier,
+  Khan, McLean, Smith, Barfuss, Foerster, Gaven{\v c}iak, Han
+  et~al.}]{hammond2025multiagent}
+\bibinfo{author}{L.~Hammond}, \bibinfo{author}{A.~Chan},
+  \bibinfo{author}{J.~Clifton}, \bibinfo{author}{J.~Hoelscher-Obermaier},
+  \bibinfo{author}{A.~Khan}, \bibinfo{author}{E.~McLean},
+  \bibinfo{author}{C.~Smith}, \bibinfo{author}{W.~Barfuss},
+  \bibinfo{author}{J.~Foerster}, \bibinfo{author}{T.~Gaven{\v c}iak},
+  \bibinfo{author}{T.~A. Han}, et~al.,
+\newblock \bibinfo{title}{Multi-agent risks from advanced {AI}},
+\newblock \bibinfo{journal}{arXiv preprint arXiv:2502.14143}
+  (\bibinfo{year}{2025}). \DOIprefix\doi{10.48550/arXiv.2502.14143},
+  \bibinfo{note}{cooperative AI Foundation, Technical Report No. 1}.
+%Type = Article
+\bibitem[{Toma{\v s}ev et~al.(2026)Toma{\v s}ev, Franklin, and
+  Osindero}]{tomasev2026delegation}
+\bibinfo{author}{N.~Toma{\v s}ev}, \bibinfo{author}{M.~Franklin},
+  \bibinfo{author}{S.~Osindero},
+\newblock \bibinfo{title}{Intelligent {AI} delegation},
+\newblock \bibinfo{journal}{arXiv preprint arXiv:2602.11865}
+  (\bibinfo{year}{2026}). \DOIprefix\doi{10.48550/arXiv.2602.11865}.
+%Type = Article
+\bibitem[{Gabison and Xian(2025)}]{gabison2025liability}
+\bibinfo{author}{G.~A. Gabison}, \bibinfo{author}{R.~P. Xian},
+\newblock \bibinfo{title}{Inherent and emergent liability issues in {LLM}-based
+  agentic systems: A principal-agent perspective},
+\newblock \bibinfo{journal}{arXiv preprint arXiv:2504.03255}
+  (\bibinfo{year}{2025}). \DOIprefix\doi{10.48550/arXiv.2504.03255}.
+%Type = Article
+\bibitem[{Williamson(1967)}]{williamson1967hierarchical}
+\bibinfo{author}{O.~E. Williamson},
+\newblock \bibinfo{title}{Hierarchical control and optimum firm size},
+\newblock \bibinfo{journal}{Journal of Political Economy} \bibinfo{volume}{75}
+  (\bibinfo{year}{1967}) \bibinfo{pages}{123--138}.
+%Type = Article
+\bibitem[{Calvo and Wellisz(1978)}]{calvo1978supervision}
+\bibinfo{author}{G.~A. Calvo}, \bibinfo{author}{S.~Wellisz},
+\newblock \bibinfo{title}{Supervision, loss of control, and the optimum size of
+  the firm},
+\newblock \bibinfo{journal}{Journal of Political Economy} \bibinfo{volume}{86}
+  (\bibinfo{year}{1978}) \bibinfo{pages}{943--952}.
+%Type = Article
+\bibitem[{Radner(1993)}]{radner1993organization}
+\bibinfo{author}{R.~Radner},
+\newblock \bibinfo{title}{The organization of decentralized information
+  processing},
+\newblock \bibinfo{journal}{Econometrica} \bibinfo{volume}{61}
+  (\bibinfo{year}{1993}) \bibinfo{pages}{1109--1146}.
+%Type = Article
+\bibitem[{Garicano(2000)}]{garicano2000hierarchies}
+\bibinfo{author}{L.~Garicano},
+\newblock \bibinfo{title}{Hierarchies and the organization of knowledge in
+  production},
+\newblock \bibinfo{journal}{Journal of Political Economy} \bibinfo{volume}{108}
+  (\bibinfo{year}{2000}) \bibinfo{pages}{874--904}.
+%Type = Article
+\bibitem[{Holmstr{\"o}m(1982)}]{holmstrom1982moral}
+\bibinfo{author}{B.~Holmstr{\"o}m},
+\newblock \bibinfo{title}{Moral hazard in teams},
+\newblock \bibinfo{journal}{The Bell Journal of Economics} \bibinfo{volume}{13}
+  (\bibinfo{year}{1982}) \bibinfo{pages}{324--340}.
+%Type = Article
+\bibitem[{Bartling and Fischbacher(2012)}]{bartling2012shifting}
+\bibinfo{author}{B.~Bartling}, \bibinfo{author}{U.~Fischbacher},
+\newblock \bibinfo{title}{Shifting the blame: On delegation and
+  responsibility},
+\newblock \bibinfo{journal}{The Review of Economic Studies}
+  \bibinfo{volume}{79} (\bibinfo{year}{2012}) \bibinfo{pages}{67--87}.
+%Type = Article
+\bibitem[{Hamman et~al.(2010)Hamman, Loewenstein, and
+  Weber}]{hamman2010selfinterest}
+\bibinfo{author}{J.~R. Hamman}, \bibinfo{author}{G.~Loewenstein},
+  \bibinfo{author}{R.~A. Weber},
+\newblock \bibinfo{title}{Self-interest through delegation: An additional
+  rationale for the principal-agent relationship},
+\newblock \bibinfo{journal}{American Economic Review} \bibinfo{volume}{100}
+  (\bibinfo{year}{2010}) \bibinfo{pages}{1826--1846}.
+%Type = Article
+\bibitem[{Shavell(1986)}]{shavell1986judgment}
+\bibinfo{author}{S.~Shavell},
+\newblock \bibinfo{title}{The judgment proof problem},
+\newblock \bibinfo{journal}{International Review of Law and Economics}
+  \bibinfo{volume}{6} (\bibinfo{year}{1986}) \bibinfo{pages}{45--58}.
+%Type = Article
+\bibitem[{Che and Spier(2008)}]{che2008strategic}
+\bibinfo{author}{Y.-K. Che}, \bibinfo{author}{K.~E. Spier},
+\newblock \bibinfo{title}{Strategic judgment proofing},
+\newblock \bibinfo{journal}{The RAND Journal of Economics} \bibinfo{volume}{39}
+  (\bibinfo{year}{2008}) \bibinfo{pages}{926--948}.
+%Type = Article
+\bibitem[{Perc and Szolnoki(2010)}]{perc2010coevolutionary}
+\bibinfo{author}{M.~Perc}, \bibinfo{author}{A.~Szolnoki},
+\newblock \bibinfo{title}{Coevolutionary games: A mini review},
+\newblock \bibinfo{journal}{BioSystems} \bibinfo{volume}{99}
+  (\bibinfo{year}{2010}) \bibinfo{pages}{109--125}.
+%Type = Article
+\bibitem[{Perret et~al.(2020)Perret, Hart, and Powers}]{perret2020hierarchy}
+\bibinfo{author}{C.~Perret}, \bibinfo{author}{E.~Hart}, \bibinfo{author}{S.~T.
+  Powers},
+\newblock \bibinfo{title}{From disorganized equality to efficient hierarchy:
+  How group size drives the evolution of hierarchy in human societies},
+\newblock \bibinfo{journal}{Proceedings of the Royal Society B: Biological
+  Sciences} \bibinfo{volume}{287} (\bibinfo{year}{2020})
+  \bibinfo{pages}{20200693}.
+%Type = Book
+\bibitem[{Sandholm(2010)}]{sandholm2010population}
+\bibinfo{author}{W.~H. Sandholm}, \bibinfo{title}{Population Games and
+  Evolutionary Dynamics}, \bibinfo{publisher}{MIT Press}, \bibinfo{year}{2010}.
+%Type = Article
+\bibitem[{Fudenberg and Imhof(2006)}]{fudenberg2006imitation}
+\bibinfo{author}{D.~Fudenberg}, \bibinfo{author}{L.~A. Imhof},
+\newblock \bibinfo{title}{Imitation processes with small mutations},
+\newblock \bibinfo{journal}{Journal of Economic Theory} \bibinfo{volume}{131}
+  (\bibinfo{year}{2006}) \bibinfo{pages}{251--262}.
+%Type = Article
+\bibitem[{Fudenberg et~al.(2006)Fudenberg, Nowak, Taylor, and
+  Imhof}]{fudenberg2006strong}
+\bibinfo{author}{D.~Fudenberg}, \bibinfo{author}{M.~A. Nowak},
+  \bibinfo{author}{C.~Taylor}, \bibinfo{author}{L.~A. Imhof},
+\newblock \bibinfo{title}{Evolutionary game dynamics in finite populations with
+  strong selection and weak mutation},
+\newblock \bibinfo{journal}{Theoretical Population Biology}
+  \bibinfo{volume}{70} (\bibinfo{year}{2006}) \bibinfo{pages}{352--363}.
+%Type = Article
+\bibitem[{Nowak et~al.(2004)Nowak, Sasaki, Taylor, and
+  Fudenberg}]{nowak2004emergence}
+\bibinfo{author}{M.~A. Nowak}, \bibinfo{author}{A.~Sasaki},
+  \bibinfo{author}{C.~Taylor}, \bibinfo{author}{D.~Fudenberg},
+\newblock \bibinfo{title}{Emergence of cooperation and evolutionary stability
+  in finite populations},
+\newblock \bibinfo{journal}{Nature} \bibinfo{volume}{428}
+  (\bibinfo{year}{2004}) \bibinfo{pages}{646--650}.
+%Type = Article
+\bibitem[{Wu et~al.(2012)Wu, Gokhale, Wang, and Traulsen}]{wu2012howsmall}
+\bibinfo{author}{B.~Wu}, \bibinfo{author}{C.~S. Gokhale},
+  \bibinfo{author}{L.~Wang}, \bibinfo{author}{A.~Traulsen},
+\newblock \bibinfo{title}{How small are small mutation rates?},
+\newblock \bibinfo{journal}{Journal of Mathematical Biology}
+  \bibinfo{volume}{64} (\bibinfo{year}{2012}) \bibinfo{pages}{803--827}.
+%Type = Article
+\bibitem[{Fern{\'a}ndez~Domingos et~al.(2023)Fern{\'a}ndez~Domingos, Santos,
+  and Lenaerts}]{domingos2023egttools}
+\bibinfo{author}{E.~Fern{\'a}ndez~Domingos}, \bibinfo{author}{F.~C. Santos},
+  \bibinfo{author}{T.~Lenaerts},
+\newblock \bibinfo{title}{{EGTtools}: Evolutionary game dynamics in {Python}},
+\newblock \bibinfo{journal}{iScience} \bibinfo{volume}{26}
+  (\bibinfo{year}{2023}) \bibinfo{pages}{106419}.
+%Type = Book
+\bibitem[{Levin and Peres(2017)}]{levin2017markov}
+\bibinfo{author}{D.~A. Levin}, \bibinfo{author}{Y.~Peres},
+  \bibinfo{title}{Markov Chains and Mixing Times}, \bibinfo{edition}{2nd} ed.,
+  \bibinfo{publisher}{American Mathematical Society}, \bibinfo{year}{2017}.
+%Type = Article
+\bibitem[{Han et~al.(2026)Han, Song, Cimpeanu, Duong, Krellner, Capraro, and
+  Perc}]{han2026welfare}
+\bibinfo{author}{T.~A. Han}, \bibinfo{author}{Z.~Song},
+  \bibinfo{author}{T.~Cimpeanu}, \bibinfo{author}{M.~H. Duong},
+  \bibinfo{author}{M.~Krellner}, \bibinfo{author}{V.~Capraro},
+  \bibinfo{author}{M.~Perc},
+\newblock \bibinfo{title}{Cooperation versus social welfare},
+\newblock \bibinfo{journal}{Physics of Life Reviews} \bibinfo{volume}{56}
+  (\bibinfo{year}{2026}) \bibinfo{pages}{33--60}.
+%Type = Inproceedings
+\bibitem[{Kara et~al.(2022)Kara, Martins, and Arcak}]{kara2022erlang}
+\bibinfo{author}{S.~Kara}, \bibinfo{author}{N.~C. Martins},
+  \bibinfo{author}{M.~Arcak},
+\newblock \bibinfo{title}{Population games with {E}rlang clocks: Convergence to
+  {N}ash equilibria for pairwise comparison dynamics},
+\newblock in: \bibinfo{booktitle}{2022 IEEE 61st Conference on Decision and
+  Control (CDC)}, \bibinfo{year}{2022}, pp. \bibinfo{pages}{7688--7695}.
+  \DOIprefix\doi{10.1109/CDC51059.2022.9993228},
+  \bibinfo{note}{arXiv:2204.00593}.
+%Type = Article
+\bibitem[{Blanchard et~al.(2021)Blanchard, Higham, and
+  Higham}]{blanchard2021logsumexp}
+\bibinfo{author}{P.~Blanchard}, \bibinfo{author}{D.~J. Higham},
+  \bibinfo{author}{N.~J. Higham},
+\newblock \bibinfo{title}{Accurately computing the log-sum-exp and softmax
+  functions},
+\newblock \bibinfo{journal}{IMA Journal of Numerical Analysis}
+  \bibinfo{volume}{41} (\bibinfo{year}{2021}) \bibinfo{pages}{2311--2330}.
+  \DOIprefix\doi{10.1093/imanum/draa038}.
+%Type = Article
+\bibitem[{Grassmann et~al.(1985)Grassmann, Taksar, and
+  Heyman}]{grassmann1985gth}
+\bibinfo{author}{W.~K. Grassmann}, \bibinfo{author}{M.~I. Taksar},
+  \bibinfo{author}{D.~P. Heyman},
+\newblock \bibinfo{title}{Regenerative analysis and steady state distributions
+  for {Markov} chains},
+\newblock \bibinfo{journal}{Operations Research} \bibinfo{volume}{33}
+  (\bibinfo{year}{1985}) \bibinfo{pages}{1107--1116}.
+%Type = Article
+\bibitem[{Crawford and Sobel(1982)}]{crawford1982strategic}
+\bibinfo{author}{V.~P. Crawford}, \bibinfo{author}{J.~Sobel},
+\newblock \bibinfo{title}{Strategic information transmission},
+\newblock \bibinfo{journal}{Econometrica} \bibinfo{volume}{50}
+  (\bibinfo{year}{1982}) \bibinfo{pages}{1431--1451}.
+%Type = Article
+\bibitem[{Peltzman(1975)}]{peltzman1975automobile}
+\bibinfo{author}{S.~Peltzman},
+\newblock \bibinfo{title}{The effects of automobile safety regulation},
+\newblock \bibinfo{journal}{Journal of Political Economy} \bibinfo{volume}{83}
+  (\bibinfo{year}{1975}) \bibinfo{pages}{677--725}.
+%Type = Article
+\bibitem[{Viscusi(1985)}]{viscusi1985consumer}
+\bibinfo{author}{W.~K. Viscusi},
+\newblock \bibinfo{title}{Consumer behavior and the safety effects of product
+  safety regulation},
+\newblock \bibinfo{journal}{The Journal of Law and Economics}
+  \bibinfo{volume}{28} (\bibinfo{year}{1985}) \bibinfo{pages}{527--553}.
+%Type = Article
+\bibitem[{Duong and Han(2021)}]{duong2021cost}
+\bibinfo{author}{M.~H. Duong}, \bibinfo{author}{T.~A. Han},
+\newblock \bibinfo{title}{Cost efficiency of institutional incentives for
+  promoting cooperation in finite populations},
+\newblock \bibinfo{journal}{Proceedings of the Royal Society A: Mathematical,
+  Physical and Engineering Sciences} \bibinfo{volume}{477}
+  (\bibinfo{year}{2021}) \bibinfo{pages}{20210568}.
+%Type = Misc
+\bibitem[{{European Parliament and Council of the European
+  Union}(2024)}]{euaiact2024}
+\bibinfo{author}{{European Parliament and Council of the European Union}},
+  \bibinfo{title}{Regulation ({EU}) 2024/1689 laying down harmonised rules on
+  artificial intelligence (artificial intelligence act)},
+  \bibinfo{howpublished}{Official Journal of the European Union, L series, 12
+  July}, \bibinfo{year}{2024}.
+%Type = Article
+\bibitem[{Shavell(2005)}]{shavell2005minimum}
+\bibinfo{author}{S.~Shavell},
+\newblock \bibinfo{title}{Minimum asset requirements and compulsory liability
+  insurance as solutions to the judgment-proof problem},
+\newblock \bibinfo{journal}{The RAND Journal of Economics} \bibinfo{volume}{36}
+  (\bibinfo{year}{2005}) \bibinfo{pages}{63--77}.
+%Type = Article
+\bibitem[{Meyer and Rowan(1977)}]{meyer1977myth}
+\bibinfo{author}{J.~W. Meyer}, \bibinfo{author}{B.~Rowan},
+\newblock \bibinfo{title}{Institutionalized organizations: Formal structure as
+  myth and ceremony},
+\newblock \bibinfo{journal}{American Journal of Sociology} \bibinfo{volume}{83}
+  (\bibinfo{year}{1977}) \bibinfo{pages}{340--363}.
+%Type = Article
+\bibitem[{Lipsey and Lancaster(1956)}]{lipsey1956secondbest}
+\bibinfo{author}{R.~G. Lipsey}, \bibinfo{author}{K.~Lancaster},
+\newblock \bibinfo{title}{The general theory of second best},
+\newblock \bibinfo{journal}{The Review of Economic Studies}
+  \bibinfo{volume}{24} (\bibinfo{year}{1956}) \bibinfo{pages}{11--32}.
+%Type = Misc
+\bibitem[{Huynh et~al.(2026)Huynh, Dao-Sy, Tran, Nguyen-Lam, and
+  Pham}]{huynh2026delegationsoftware}
+\bibinfo{author}{T.-K. Huynh}, \bibinfo{author}{D.-M. Dao-Sy},
+  \bibinfo{author}{C.-N. Tran}, \bibinfo{author}{P.-Q. Nguyen-Lam},
+  \bibinfo{author}{P.-H. Pham}, \bibinfo{title}{Delegation cascades in
+  evolutionary games: Reproduction code and generated research materials},
+  \bibinfo{howpublished}{Version-controlled software repository},
+  \bibinfo{year}{2026}. \URLprefix
+  \url{https://github.com/trungkiet2005/delegation-cascade},
+  \bibinfo{note}{accessed 24 August 2026}.
+
+\end{thebibliography}

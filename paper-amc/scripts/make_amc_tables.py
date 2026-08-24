@@ -1,4 +1,4 @@
-"""Split the study's generated table files into one CAS-ready file per table.
+"""Stage generated figures and split tables into CAS-ready submission files.
 
 The analysis scripts of the repository emit ``paper/tables_generated.tex``,
 ``paper/regimes_generated.tex`` and ``paper/robustness_generated.tex``, each
@@ -13,12 +13,16 @@ column is touched:
   optional argument rather than a float specifier;
 * a provenance header is prepended.
 
+The seven publication figures are copied directly from ``results/figures`` so
+the AMC package cannot retain an older figure after the analysis is rerun.
+
     python paper-amc/scripts/make_amc_tables.py
 """
 
 from __future__ import annotations
 
 import re
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -42,6 +46,16 @@ HEADER = (
     "%% paper-amc/scripts/make_amc_tables.py -- do not edit\n"
 )
 
+FIGURES = (
+    "fig02_transmission.pdf",
+    "fig03_shelter.pdf",
+    "fig04_decomposition.pdf",
+    "fig05_plane.pdf",
+    "fig06_instruments.pdf",
+    "fig07_frontier.pdf",
+    "fig08_robustness.pdf",
+)
+
 
 def _split(text: str, header: str) -> None:
     for block in re.findall(r"\\begin\{table\}.*?\\end\{table\}", text, flags=re.S):
@@ -63,6 +77,14 @@ def main() -> None:
             (DST / source).read_text(encoding="utf-8"),
             HEADER.format(where="paper-amc", source=source),
         )
+    figure_dir = DST / "figures"
+    figure_dir.mkdir(parents=True, exist_ok=True)
+    for name in FIGURES:
+        source = ROOT / "results" / "figures" / name
+        if not source.is_file():
+            raise SystemExit(f"missing {source.relative_to(ROOT)}; run scripts/make_figures.py")
+        shutil.copy2(source, figure_dir / name)
+        print((figure_dir / name).relative_to(ROOT))
 
 
 if __name__ == "__main__":

@@ -335,10 +335,10 @@
   "timing": {
     "n_designs": 28,
     "Z": 100,
-    "seconds_per_stationary_regime": 0.026514039997709914,
-    "seconds_per_functional_build": 0.00040264500421471894,
+    "seconds_per_stationary_regime": 0.028181099996436386,
+    "seconds_per_functional_build": 0.0004379150050226599,
     "grid_points": 441,
-    "measured_grid_seconds": 12.94419760000892,
+    "measured_grid_seconds": 12.221003900049254,
     "exponentials_per_regime": 75600,
     "machine": {
       "processor": "AMD64 Family 23 Model 104 Stepping 1, AuthenticAMD",

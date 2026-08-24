@@ -67,6 +67,15 @@ def test_full_attribution_never_opens_a_shelter() -> None:
     assert th.shelter_depth(profile, 1.0) is None
 
 
+def test_zero_attribution_is_not_a_strict_shelter() -> None:
+    """At phi=0 the first hand-off zeros the charge; later charges cannot fall."""
+    deep = build_functionals(RACE, replace(CHAIN, max_depth=40), cfg.LAM, cfg.HARM)
+    profile = th.self_profile(deep, "AS")
+    assert th.shelter_depth(profile, 0.0) is None
+    with pytest.raises(ValueError, match="non-negative"):
+        th.shelter_depth(profile, -0.1)
+
+
 def test_depth_invasion_is_affine_in_the_liability() -> None:
     """Every invasion condition is a line in L, which is what gives L*(d)."""
     for intent in ("AS", "CS"):
@@ -129,6 +138,8 @@ def test_attribution_failure_depth_follows_its_formula() -> None:
     )
     assert th.attribution_failure_depth(20.0, 5.0, 1.0) == float("inf")
     assert th.attribution_failure_depth(3.0, 5.0, 0.5) == 0.0
+    with pytest.raises(ValueError, match="phi > 0"):
+        th.attribution_failure_depth(20.0, 5.0, 0.0)
 
 
 def test_the_two_mechanisms_are_super_additive_at_the_baseline() -> None:

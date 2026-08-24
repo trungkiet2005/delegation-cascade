@@ -435,7 +435,7 @@ def figure_instruments(race, chain, outdir: Path, quick: bool = False) -> None:
                     xytext=(x[peak] + 0.055, y[peak] + 0.035), ha="left", va="bottom",
                     fontsize=FS["annot"], color=PALETTE["neutral"],
                     arrowprops=dict(arrowstyle="->", lw=0.7, color=PALETTE["neutral"]))
-    ax.set_xlabel(r"erosion probability after the improvement, $\rho\varepsilon$")
+    ax.set_xlabel(r"erosion probability after the improvement, $\kappa\varepsilon$")
     ax.set_ylabel("Unsafe frequency $U$")
     panel_title(ax, "B", "fidelity is not monotone")
 

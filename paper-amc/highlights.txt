@@ -5,4 +5,4 @@ Delegation cascades in evolutionary games: stable computation with strategic dep
 - Strategic depth creates a liability shelter in evolutionary games
 - Maximum-shifted O(Z) fixation sums stabilise the reduced Markov chain
 - Joint erosion and attribution loss raise unsafe frequency from 0 to 0.322
-- An attribution floor matches reachable depth-cap safety-payoff outcomes
+- A floor closely traces the depth-cap frontier over its attainable range

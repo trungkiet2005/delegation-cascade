@@ -10,7 +10,7 @@ The values are chosen as follows.
 
 ``HARM = 20``
     about three times the effective liability at which the *depth-zero* race is
-    already safe (``dcascade.theory.critical_liability`` returns 6.52 for this
+    already safe (``dcascade.theory.critical_liability`` returns 6.537432 for this
     game).  The delegation results are therefore not about a race that was
     unsafe to begin with: at depth zero this liability level leaves a long-run
     Unsafe frequency of zero.

@@ -1,8 +1,9 @@
 # Submission package: Applied Mathematics and Computation
 
-Elsevier CAS bundle, **single-column** layout (`cas-sc.cls`). This folder is
-self-contained: the class, the style file and the icon set are vendored here, so
-the manuscript compiles without the template archive.
+Elsevier CAS bundle, **single-column** layout (`cas-sc.cls`). The class, style,
+bibliography style and icon set are vendored here, so the generated source
+archive compiles without the template archive or a system copy of Elsevier's
+BibTeX files.
 
 ## Build
 
@@ -11,10 +12,11 @@ cd paper-amc
 pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```
 
-Output: `main.pdf`, **24 numbered manuscript pages** plus one unnumbered
-Highlights page that `cas-sc.cls` typesets automatically from the `highlights`
-environment (25 PDF pages in total). This stays within the journal's 25-page
-scrutiny threshold without removing the proofs or numerical error bounds.
+Output: `main.pdf`, **24 manuscript pages**. Highlights are intentionally kept
+only in the required separate editable `highlights.docx` rather than duplicated
+inside `main.tex`; modest 8 pt / 9.2 pt bibliography leading keeps the PDF below
+the journal's 25-page scrutiny
+threshold without removing proofs or numerical error bounds.
 
 The build has no undefined citations or references. BibTeX reports `empty
 pages` for four arXiv/technical-report entries with no page range. The CAS class
@@ -26,18 +28,30 @@ to `lmss` avoids Type 3 strategy-label fonts.
 
 ## What to upload to Editorial Manager
 
-Upload the **whole `paper-amc` folder as one archive** under the item type
-"LaTeX source files". Every graphic is referenced through a subdirectory
-(`figures/`) and `cas-common.sty` hard-codes `thumbnails/cas-email.jpeg` for
-`\ead`, so uploading the files individually flattens those paths and the build
-dies inside `\maketitle`. The archive must contain:
+Run `python paper-amc/scripts/build_submission_archives.py` from the repository
+root for a QA build. The reproducibility ZIP records the base Git commit and a
+`git_worktree_dirty` flag in `ENVIRONMENT.json`, while its SHA-256 manifest
+identifies the exact included bytes. After committing the exact tested state,
+run `python paper-amc/scripts/build_submission_archives.py --require-clean` for
+the final release; that command refuses to build from an uncommitted or unknown
+Git state. The generated `submission-artifacts/` directory is intentionally
+ignored by Git: its ZIPs and outer checksum files are release outputs, and
+committing a checksum would change the commit embedded in the reproducibility
+ZIP and hence change the checksum again. Upload
+`submission-artifacts/delegation-cascade-amc-source.zip` under
+the item type "LaTeX source files". Do not zip the whole working folder: it
+contains build intermediates and internal submission notes. Every graphic is
+referenced through a subdirectory (`figures/`) and `cas-common.sty` hard-codes
+`thumbnails/cas-email.jpeg` for `\ead`, so uploading the source files
+individually can flatten those paths and break `\maketitle`. The deterministic
+source archive contains:
 
 | Item | File |
 |---|---|
 | Manuscript source | `main.tex` |
 | Bibliography | `refs.bib` and `main.bbl` |
 | Table sources | `tab_*.tex` (all seven, `\input` by `main.tex`) |
-| Class and style | `cas-sc.cls`, `cas-common.sty`, `thumbnails/` |
+| Class and style | `cas-sc.cls`, `cas-common.sty`, `elsarticle-num-names.bst`, `thumbnails/` |
 | Figures 2 to 8 | `figures/fig02_transmission.pdf` … `figures/fig08_robustness.pdf` |
 
 and these go up as separate items:
@@ -46,12 +60,12 @@ and these go up as separate items:
 |---|---|
 | Highlights | `highlights.docx` (the word "highlights" is in the file name, as required) |
 | Declaration of competing interest | `declaration_of_interest.docx` |
-| Cover letter | `cover_letter.md`, after filling in the bracketed fields |
+| Cover letter | `cover_letter.md`, after a final author/date check |
 | Compiled PDF (reference only) | `main.pdf` |
 
-`elsarticle-num-names.bst` is *not* vendored here, so the folder is
-self-contained for the class but not for the bibliography style; `main.bbl` is
-in the list for that reason.
+Both `refs.bib` and the resolved `main.bbl` are included. The latter protects
+the submission against publisher-side BibTeX differences, while the vendored
+`elsarticle-num-names.bst` keeps a clean rebuild possible.
 
 Figure 1 is a TikZ schematic embedded in `main.tex`; the journal allows text
 graphics to be embedded in the LaTeX source. The file names of Figures 2 to 8
@@ -62,26 +76,36 @@ Elsevier's 500 dpi minimum for combination art.
 
 ## Before submitting
 
-- [x] **Author block** in `main.tex` and in
+- [x] **Author block** in `main.tex`, `CITATION.cff` and
       `scripts/make_submission_files.py`: five authors, one shared full-address
-      affiliation, real ORCIDs, Trung-Kiet Huynh corresponding. The first three
+      affiliation, four validated ORCIDs, Trung-Kiet Huynh corresponding. The
+      incorrect ORCID previously attached to Dao-Sy Duy-Minh has been removed;
+      exact portal name segments are in `SUBMISSION_NOTES.md`. The first three
       contributed equally, carried by the `\fnmark[1]`/`\fntext[1]` note. The
       journal does not allow authorship changes after acceptance, and does not
       allow additions, deletions or reordering after submission without an
       Authorship Change Request form.
-- [ ] The corresponding-author e-mail is the institutional student address
-      `23122039@student.hcmus.edu.vn`. Confirm it will still be readable when
-      the article appears, or swap in a durable address.
+- [x] All five authors confirmed the displayed names and order, CRediT roles,
+      equal-contribution note, corresponding-author e-mail, declarations and
+      companion disclosure on 24 August 2026.
 - [x] The **generative AI declaration** names Anthropic Claude and OpenAI Codex,
-      describes prose editing and code-refactoring assistance, and states that
-      generated numerical data and figures were not used. All authors must
-      confirm this wording is factually complete before submission.
-- [ ] Fill in the suggested reviewers in `cover_letter.md`, or delete that
-      sentence.
-- [x] The **data availability** URL
-      <https://github.com/trungkiet2005/delegation-cascade> is public and the
-      repository contains `paper-amc/scripts/` for reproducing the numerical
-      benchmarks of Section 5 (verified 24 August 2026).
+      covers prose, LaTeX, bibliography, analysis, validation, testing,
+      visualization, build, archive and reproducibility assistance, and states
+      how the numerical data and submitted figures were generated. All authors
+      confirmed this wording on 24 August 2026.
+- [x] Four optional reviewer suggestions, institutional addresses and a
+      preliminary conflict screen are recorded in `SUBMISSION_NOTES.md`, not in
+      the manuscript or cover-letter body. Authors must perform the final
+      relationship check before using them.
+- [x] The exact tested snapshot is identified by the `v1.0.0` tag and GitHub
+      release. Its deterministic reproducibility ZIP records the tagged commit
+      and a clean worktree. The release provides an immutable versioned record;
+      no DOI is claimed.
+- [x] The cover letter discloses the two related companion manuscripts as
+      separate submissions in the same coordinated submission round and
+      explains the common benchmark layer. It also
+      discloses the public non-peer-reviewed development preprint and identifies
+      it as not being a version of record.
 
 ## Provenance of the numbers
 
@@ -96,27 +120,41 @@ submission.
 | `tab_kernelshape.tex` | `scripts/make_amc_tables.py` from `paper/robustness_generated.tex` |
 | `tab_cost.tex`, `tab_verification.tex` | `scripts/make_amc_tables.py` from `numerics_generated.tex` |
 | `numerics_generated.tex`, `numerics_key_numbers.json` | `scripts/run_numerics.py` |
-| `figures/*.pdf` | copied from `paper/figures/`, unchanged |
+| `figures/*.pdf` | copied directly from `results/figures/` by `make_amc_tables.py` |
 
 `tab_cost.tex` and `tab_verification.tex` were once split from
 `numerics_generated.tex` by hand, and went stale against their own generator as
 a result; `make_amc_tables.py` now splits that file too, so the only correct
 way to change them is to change `run_numerics.py` and re-run both scripts.
 
-`make_amc_tables.py` applies exactly two mechanical changes and touches no
-number: it splits the multi-table generated files into one table per file, and
-it rewrites `\begin{table}[t]` as `\begin{table}[pos=t]`, because the CAS
+For tables, `make_amc_tables.py` applies exactly two mechanical changes and
+touches no number: it splits the multi-table generated files into one table per
+file, and it rewrites `\begin{table}[t]` as `\begin{table}[pos=t]`, because the CAS
 classes give `table` and `figure` a key-value optional argument rather than a
 float specifier. Passing a bare `[t]` there silently produces an *empty* float
-specifier, which is worth knowing if further floats are added.
+specifier, which is worth knowing if further floats are added. It also stages
+the seven current figures directly from `results/figures/`.
 
 Regenerate everything with:
 
 ```bash
-python paper-amc/scripts/make_amc_tables.py        # from repository root
-python paper-amc/scripts/run_numerics.py           # ~4 min, needs egttools + mpmath
+python scripts/run_analysis.py
+python scripts/run_robustness.py
+python scripts/make_figures.py
+python scripts/build_paper.py --no-compile
+python paper-amc/scripts/run_numerics.py            # ~4 min, needs egttools + mpmath
+python paper-amc/scripts/make_amc_tables.py
 python paper-amc/scripts/make_submission_files.py  # needs python-docx
+
+cd paper-amc
+pdflatex main && bibtex main && pdflatex main && pdflatex main
+cd ..
+python paper-amc/scripts/build_submission_archives.py --require-clean
 ```
+
+Run the analysis and robustness stages before the figure and table stages; the
+later scripts intentionally consume those generated results. Re-run the
+archive builder only after `main.bbl` is current.
 
 ## How this differs from `paper/`
 
@@ -131,7 +169,8 @@ rewritten for the journal's computational emphasis and its length guideline:
   placement and attribution floor propositions moved next to the shelter
   theorem they qualify;
 - Related work is cut from seven paragraphs to three, and the citation list
-  from the parent's 95 references to the 62 that carry an argument here.
+  from the parent's 95 references to the 63 that carry an argument here,
+  including the reproducibility-software record.
   `refs.bib` holds the union of both variants; a numeric style prints only what
   is cited;
 - the depth-ceiling and evolutionary-process tables are folded into the text,

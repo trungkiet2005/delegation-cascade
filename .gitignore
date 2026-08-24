@@ -37,11 +37,22 @@ paper-amc/b[0-9].log
 paper-amc/build[0-9].log
 paper-amc/bib.log
 
+# The submission source archive carries the resolved bibliography, so retain
+# this one generated file even though other LaTeX intermediates stay ignored.
+!paper-amc/main.bbl
+
+# Deterministic upload archives and their checksum manifests are local release
+# outputs, not inputs. Ignoring the whole directory avoids a circular release
+# workflow: committing a checksum changes the commit recorded inside the
+# reproducibility archive and therefore changes that checksum again.
+paper-amc/submission-artifacts/
+
 results/figure_log*.txt
 
 # Internal working notes, not published
 paper/citation_audit_*.md
 paper/refs_suggested_additions.bib
+paper-amc/SUBMISSION_NOTES.md
 
 # Publisher template packages, downloaded not authored
 els-cas-templates.zip

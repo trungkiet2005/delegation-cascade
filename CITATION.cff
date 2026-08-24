@@ -1,9 +1,11 @@
 cff-version: 1.2.0
 title: >-
-  Delegation Cascades in an Evolutionary AI Race
+  Delegation cascades in evolutionary games: stable computation with strategic depth
 message: >-
   If you use this software, please cite it using the metadata from this file.
 type: software
+version: "1.0.0"
+date-released: 2026-08-24
 authors:
   - family-names: "Huynh"
     given-names: "Trung-Kiet"
@@ -11,9 +13,8 @@ authors:
     email: "23122039@student.hcmus.edu.vn"
     affiliation: >-
       Faculty of Information Technology, University of Science (HCMUS), Ho Chi Minh City, Vietnam; Vietnam National University - Ho Chi Minh City (VNU-HCM), Ho Chi Minh City, Vietnam
-  - family-names: "Dao Sy Duy"
-    given-names: "Minh"
-    orcid: "https://orcid.org/0009-0002-4501-2788"
+  - family-names: "Dao-Sy"
+    given-names: "Duy-Minh"
     email: "23122041@student.hcmus.edu.vn"
     affiliation: >-
       Faculty of Information Technology, University of Science (HCMUS), Ho Chi Minh City, Vietnam; Vietnam National University - Ho Chi Minh City (VNU-HCM), Ho Chi Minh City, Vietnam
@@ -21,6 +22,18 @@ authors:
     given-names: "Chi-Nguyen"
     orcid: "https://orcid.org/0009-0007-6716-7269"
     email: "23122044@student.hcmus.edu.vn"
+    affiliation: >-
+      Faculty of Information Technology, University of Science (HCMUS), Ho Chi Minh City, Vietnam; Vietnam National University - Ho Chi Minh City (VNU-HCM), Ho Chi Minh City, Vietnam
+  - family-names: "Nguyen-Lam"
+    given-names: "Phu-Quy"
+    orcid: "https://orcid.org/0009-0002-9694-8105"
+    email: "23122048@student.hcmus.edu.vn"
+    affiliation: >-
+      Faculty of Information Technology, University of Science (HCMUS), Ho Chi Minh City, Vietnam; Vietnam National University - Ho Chi Minh City (VNU-HCM), Ho Chi Minh City, Vietnam
+  - family-names: "Pham"
+    given-names: "Phu-Hoa"
+    orcid: "https://orcid.org/0009-0001-5471-2578"
+    email: "23122030@student.hcmus.edu.vn"
     affiliation: >-
       Faculty of Information Technology, University of Science (HCMUS), Ho Chi Minh City, Vietnam; Vietnam National University - Ho Chi Minh City (VNU-HCM), Ho Chi Minh City, Vietnam
 license: MIT

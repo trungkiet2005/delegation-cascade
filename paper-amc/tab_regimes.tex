@@ -2,7 +2,7 @@
 %% paper-amc/scripts/make_amc_tables.py -- do not edit
 \begin{table}[pos=t]
 \centering
-\caption{Attribution regimes. Long-run Unsafe frequency, mean delegation depth and social payoff when the law mapping depth to the principal's share of the harm is changed, with everything else at the baseline. The shelter survives every rule whose attribution vanishes in the depth, including the equal split. A rule bounded below by $a_{\min}$ closes it only above the depth $d_{0}$ at which the bound binds, $\phi^{d_{0}}=a_{\min}$, which is why $a_{\min}=0.25$ ($d_{0}=4.8$) still leaves mean depth at $5.07$ while $a_{\min}=0.5$ ($d_{0}=2.4$) brings it to $2.99$.}
+\caption{Attribution regimes. Long-run Unsafe frequency, mean delegation depth and social payoff when the law mapping depth to the principal's share of the harm is changed, with everything else at the baseline. The shelter survives rules whose attribution vanishes in the depth, including the equal split. An eventually constant floor $a_{\min}$ closes it above the depth $d_{0}$ at which the bound binds, $\phi^{d_{0}}=a_{\min}$, which is why $a_{\min}=0.25$ ($d_{0}=4.8$) still leaves mean depth at $5.07$ while $a_{\min}=0.5$ ($d_{0}=2.4$) brings it to $2.99$.}
 \label{tab:regimes}
 \begin{tabular}{llrrrr}
 \toprule
@@ -11,10 +11,10 @@ rule & setting & $r(\bar{D})$ & $U$ & $\bar{d}$ & $\pi_S$ \\
 geometric, $\phi^{d}$ & $\phi=0.75$ & 0.178 & 0.3225 & 6.00 & -0.8 \\
 strict, $1$ & -- & 1.000 & 0.0176 & 1.99 & 58.3 \\
 equal split, $1/(1+d)$ & -- & 0.143 & 0.3224 & 6.00 & -0.8 \\
-floored, $\max(\phi^{d}, a_{\min})$ & $a_{\min}=0.25$ & 0.250 & 0.2317 & 5.07 & 17.1 \\
-floored, $\max(\phi^{d}, a_{\min})$ & $a_{\min}=0.5$ & 0.500 & 0.0633 & 2.99 & 50.0 \\
-super-attribution, $\phi^{d}$ & $\phi=1.1$ & 1.772 & 0.0159 & 1.92 & 58.5 \\
-super-attribution, $\phi^{d}$ & $\phi=1.25$ & 3.815 & 0.0030 & 1.21 & 60.2 \\
+floored, $\max(\phi^{d}, a_{\min})$ & $a_{\min}=0.25$ & 0.250 & 0.2318 & 5.07 & 17.1 \\
+floored, $\max(\phi^{d}, a_{\min})$ & $a_{\min}=0.5$ & 0.500 & 0.0634 & 2.99 & 50.0 \\
+super-attribution, $\phi^{d}$ & $\phi=1.1$ & 1.772 & 0.0163 & 1.92 & 58.5 \\
+super-attribution, $\phi^{d}$ & $\phi=1.25$ & 3.815 & 0.0039 & 1.21 & 60.2 \\
 \bottomrule
 \end{tabular}
 \end{table}

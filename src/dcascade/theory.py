@@ -176,10 +176,10 @@ def deniability_threshold(profile: DepthProfile, depth: int) -> float | None:
     .. math:: \\phi < \\phi^{*}(d) = m(d) / m(d+1).
 
     Because the realised harm saturates as the specification is forgotten,
-    ``phi*(d)`` rises towards one with depth: any attribution retention below
-    one is eventually below the threshold, and from that depth on every extra
-    hand-off is a strict reduction in attributed harm.  Returns ``None`` when
-    the chain causes no harm at ``d + 1`` and the comparison is vacuous.
+    ``phi*(d)`` rises towards one with depth: any positive attribution retention
+    below one is eventually below the threshold, and from that depth on every
+    extra hand-off is a strict reduction in attributed harm.  Returns ``None``
+    when the chain causes no harm at ``d + 1`` and the comparison is vacuous.
     """
     m_d = float(profile.harm[depth])
     m_next = float(profile.harm[depth + 1])
@@ -191,8 +191,14 @@ def deniability_threshold(profile: DepthProfile, depth: int) -> float | None:
 def shelter_depth(profile: DepthProfile, phi: float) -> int | None:
     """First depth from which every further hand-off lowers the attributed harm.
 
-    ``None`` if no such depth exists within the available range.
+    ``None`` if no such depth exists within the available range.  At the
+    degenerate boundary ``phi == 0``, attributed harm is already zero at every
+    positive depth, so no later hand-off lowers it strictly.
     """
+    if phi < 0.0:
+        raise ValueError("phi must be non-negative")
+    if phi == 0.0:
+        return None
     for d in range(len(profile.depths) - 1):
         thresholds = [
             deniability_threshold(profile, k) for k in range(d, len(profile.depths) - 1)
@@ -643,9 +649,13 @@ def attribution_failure_depth(
 
     .. math:: d^{\dagger} = \log(L_c / L) / \log \phi ,
 
-    which is finite for every ``phi < 1``: no level of liability set at the top
-    of a chain survives an unbounded number of hand-offs.
+    which is finite for every ``0 < phi < 1``: no level of liability set at the
+    top of a chain survives an unbounded number of hand-offs.  The formula is
+    not a continuous-depth representation of the degenerate ``phi == 0``
+    boundary and therefore rejects it explicitly.
     """
+    if phi <= 0.0:
+        raise ValueError("attribution failure depth requires phi > 0")
     if phi >= 1.0:
         return float("inf")
     if effective_liability <= critical:
