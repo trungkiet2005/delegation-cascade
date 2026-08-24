@@ -28,6 +28,8 @@ FIXED_TIME = (1980, 1, 1, 0, 0, 0)
 SOURCE_FILES = (
     "main.tex",
     "main.bbl",
+    "supplement.tex",
+    "supplement.bbl",
     "refs.bib",
     "cas-sc.cls",
     "cas-common.sty",
@@ -54,6 +56,8 @@ REPRO_FILES = (
     "paper-amc/README.md",
     "paper-amc/main.tex",
     "paper-amc/main.bbl",
+    "paper-amc/supplement.tex",
+    "paper-amc/supplement.bbl",
     "paper-amc/refs.bib",
     "paper-amc/cas-sc.cls",
     "paper-amc/cas-common.sty",

@@ -1,4 +1,4 @@
-\begin{thebibliography}{63}
+\begin{thebibliography}{62}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\href}[2]{#2}
@@ -567,16 +567,5 @@
 \newblock \bibinfo{title}{The general theory of second best},
 \newblock \bibinfo{journal}{The Review of Economic Studies}
   \bibinfo{volume}{24} (\bibinfo{year}{1956}) \bibinfo{pages}{11--32}.
-%Type = Misc
-\bibitem[{Huynh et~al.(2026)Huynh, Dao-Sy, Tran, Nguyen-Lam, and
-  Pham}]{huynh2026delegationsoftware}
-\bibinfo{author}{T.-K. Huynh}, \bibinfo{author}{D.-M. Dao-Sy},
-  \bibinfo{author}{C.-N. Tran}, \bibinfo{author}{P.-Q. Nguyen-Lam},
-  \bibinfo{author}{P.-H. Pham}, \bibinfo{title}{Delegation cascades in
-  evolutionary games: Reproduction code and generated research materials},
-  \bibinfo{howpublished}{Version-controlled software repository},
-  \bibinfo{year}{2026}. \URLprefix
-  \url{https://github.com/trungkiet2005/delegation-cascade},
-  \bibinfo{note}{accessed 24 August 2026}.
 
 \end{thebibliography}

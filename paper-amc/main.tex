@@ -80,7 +80,7 @@ computation with strategic depth}
 Investigation, Validation, Visualization, Writing -- original draft,
 Writing -- review \& editing}
 
-\author[1]{Dao-Sy Duy-Minh}
+\author[1]{Dao-Sy Duy-Minh}[orcid=0009-0002-4501-2788]
 \fnmark[1]
 \ead{23122041@student.hcmus.edu.vn}
 \credit{Conceptualization, Methodology, Software, Formal analysis,
@@ -166,8 +166,8 @@ Delegation \sep Liability \sep Multi-agent systems
 Software increasingly acts through chains: a principal instructs an agent,
 which delegates to further agents or tools, leaving the action several
 hand-offs from the originating party~\citep{wu2023autogen,fourney2024magentic}.
-Governance is concentrated at the two ends---model training and evaluation, and
-principal-side liability, procurement and disclosure---while the hand-offs are
+Governance is concentrated at the two ends-model training and evaluation, and
+principal-side liability, procurement and disclosure-while the hand-offs are
 treated as plumbing~\citep{shavit2023practices,chan2024visibility}. We call the
 result a \emph{delegation cascade}: compounding loss along one chain, distinct
 from an informational cascade in which decision makers discard private signals
@@ -244,8 +244,9 @@ Sections~\ref{sec:model}--\ref{sec:analysis} define the model and establish its
 structural results. Sections~\ref{sec:numerics}--\ref{sec:results} give the
 scheme, verification and numerical findings;
 Sections~\ref{sec:discussion} and~\ref{sec:conclusion} discuss their scope.
-Appendix~\ref{app:fixation} derives
-the fixation formula.
+Supplementary Sections S1--S5 provide an auxiliary proof, full numerical
+validation and robustness results, exact supporting tables, and the standard
+derivation of the fixation formula.
 
 % ===========================================================================
 \section{Related work}
@@ -387,41 +388,7 @@ separately along the erosion order, for every horizon law and every setting of
 the stage payoffs, the step sizes, the prize, $p_{\max}$ and the setback scope.
 \end{lemma}
 
-\begin{pf}
-Write a design as a pair $(f,c)$: a first action $f$ and a flag $c$ for whether
-it copies its opponent's previous action. Solving the two coupled recursions
-gives the focal path in closed form in each of three cases. If the opponent
-does not copy, it plays $f_{j}$ in every round whatever the focal seat does, so
-a focal seat that does not copy plays $f_{i}$ throughout, and one that copies
-plays $f_{i}$ in round $1$ and $f_{j}$ afterwards. If both copy then
-$a_{t}=a_{t-2}$ for $t\ge3$, so the focal seat plays $f_{i}$ in odd rounds and
-$f_{j}$ in even ones. In every case the path is either constant at $f_{i}$, or
-equal to $f_{i}$ on a set of rounds that does not itself depend on $f_{i}$ and
-to $f_{j}$ on the complement.
-
-\AS{} plays Safe in every round and \AU{} plays Unsafe in every round, against
-every opponent, so they are the pointwise smallest and largest paths in the
-design set and the outer two inequalities of~\eqref{eq:pathwise} hold. \CS{}
-and \CAS{} carry the same flag $c=1$ and differ only in $f_{i}$, which enters
-each closed form monotonically, so raising $f_{i}$ from Safe to Unsafe raises
-the path in some rounds and lowers it in none, which gives the middle
-inequality.
-
-For the opponent argument, fix $i$. If $i$ does not copy its path is constant
-at $f_{i}$ whatever $j$ is, and the ordering holds with equality. If $i$ copies,
-the four opponents give the paths $(f_{i},f_{j},f_{j},\dots)$ when $j$ does not
-copy and $f_{i}$ on odd rounds with $f_{j}$ on even rounds when it does, so
-along \AS{}, \CS{}, \CAS{}, \AU{} the focal path is, after round $1$, Safe
-throughout, Safe on the even rounds and $f_{i}$ on the odd ones, $f_{i}$ on the
-odd rounds and Unsafe on the even ones, and Unsafe throughout. Each of these
-dominates the one before it pointwise, whichever value $f_{i}$ takes.
-
-At a fixed horizon, $m$ counts the Unsafe entries of the path and $u$ divides
-that count by $n$, so both are non-decreasing functions of the path and both
-inherit the two orderings. Neither depends on any other parameter of the
-race, so taking the expectation over any law for $T$ preserves them.
-\qed
-\end{pf}
+The elementary pathwise proof is given in Supplementary Section S1.
 
 The same case analysis evaluates $m$ exactly rather than only ordering it. With
 $\bar T=\mathbb{E}[T]$ and $\pi=\Pr[T\text{ odd}]$, the rows of $m$ in the
@@ -1001,7 +968,7 @@ $a_t\le2.4t+100$. Reassigning the tail therefore changes any entry by less than
 $10^{-34}$; recomputation at $T_{\max}=2000$ is bitwise identical.
 
 By contrast, Monte Carlo retains payoff-matrix root-mean-square error $0.034$
-after $10^6$ episodes per matchup (Table~\ref{tab:verification}).
+after $10^6$ episodes per matchup (Supplementary Table S1).
 
 \subsection{Why the full mutation--selection chain is out of reach}
 \label{sec:reduction}
@@ -1052,7 +1019,7 @@ $\beta$, an individual switches from $R$ to $I$ with probability
 $[1+e^{-\beta(\pi_{I}-\pi_{R})}]^{-1}$, so the birth-death chain on $k$ has
 $T^{-}(k)/T^{+}(k)=e^{-\beta(\pi_{I}(k)-\pi_{R}(k))}$ and the standard formula
 for a one-dimensional birth-death chain with absorbing ends gives, as
-Appendix~\ref{app:fixation} derives,
+Supplementary Section S5 derives,
 \begin{equation}
   \rho_{R\to I} = \left[\,1+\sum_{m=1}^{Z-1}
     \exp\!\Bigl(-\beta\sum_{k=1}^{m}\bigl(\pi_{I}(k)-\pi_{R}(k)\bigr)\Bigr)
@@ -1188,69 +1155,25 @@ Wall-clock figures are single-core on a Windows 11 laptop with an AMD Ryzen 5
 5500U, Python 3.12, NumPy 1.26 and SciPy 1.17. In one benchmark run, a
 stationary regime including payoff assembly costs 28 milliseconds, and the
 $21\times21$ grid of Section~\ref{sec:plane} costs 12.2 seconds. At the
-baseline, rows of $P$ sum
-to one within $2.2\times10^{-16}$ and the stationary residual is
-$4.2\times10^{-17}$. Table~\ref{tab:verification} checks the stationary vector
-and unsafe observables against 60-digit arithmetic rather than treating
+baseline, rows of $P$ sum to one within $2.2\times10^{-16}$ and the stationary
+residual is $4.2\times10^{-17}$. Supplementary Table S1 checks the stationary
+vector and unsafe observables against 60-digit arithmetic rather than treating
 positivity as an accuracy proxy.
 
 \subsection{Verification}
 \label{sec:verification}
 
-Table~\ref{tab:verification} reports five complementary checks: the interaction
-tensor, shifted-sum arithmetic, complete stationary output, the closed form,
-and the rare-mutation reduction.
-
-\input{tab_verification}
-
-\emph{Against sampling.} A Monte-Carlo estimate of the same payoff matrix
-converges at the expected $N^{-1/2}$ and is still two decimal places short of
-the exact value at $10^{6}$ episodes per matchup. The exact route removes that
-error and the sweeps below are correspondingly free of it, which matters
-because the interaction index of Section~\ref{sec:plane} is a difference of
-four stationary regimes and would otherwise be a difference of four noisy ones.
-
-\emph{Against a high-precision reference.} This block checks the arithmetic,
-not the formula: it evaluates the sum in~\eqref{eq:fixation} in $60$-digit
-arithmetic and compares with the shifted double-precision
-evaluation~\eqref{eq:shift}. Over the pairs whose fixation probability is
-representable as a normal double, $738$ of $756$ at $\beta=0.05$ and $589$ at
-$\beta=0.2$, the worst relative error is $4.4\times10^{-16}$ and
-$2.8\times10^{-16}$ respectively. On the excluded pairs the shifted evaluation
-is either zero or subnormal, and Section~\ref{sec:fixation} reports the error
-there.
-
-\emph{End-to-end stationary output.} Against a 60-digit construction of the
-embedded chain, total variation error is $8.3\times10^{-15}$ at $\beta=0.05$
-and $4.3\times10^{-16}$ at $\beta=0.2$; the corresponding unsafe-frequency
-errors are below $3.5\times10^{-15}$.
-
-\emph{Against an independent implementation.} This block checks the closed form
-itself, against an independent implementation of the same birth-death formula
-in EGTtools~\citep{domingos2023egttools} on the depth-zero design space; the
-two agree to at most $5.6\times10^{-16}$ at every population size and selection
-intensity tried. The one systematic difference is in the other direction: the
-unshifted evaluation returns exactly zero for strongly disadvantaged mutants
-that~\eqref{eq:shift} still resolves.
-
-\emph{Against the full chain.} On a design space of three designs, the intent
-\AS{} at depths $0$, $3$ and $6$, the full mutation--selection chain has $861$
-population states at $Z=40$ and can be solved directly. The error of the
-reduction is first order in the mutation rate: for the joint cell the absolute
-difference in long-run unsafe frequency is $0.0116$ at $\mu=5\times10^{-3}$ and
-$0.0024$ at $\mu=10^{-3}$, an error-to-rate ratio of $2.32$ and $2.38$, and one
-Richardson step $2U(\mu/2)-U(\mu)$ on the finest pair reproduces the
-small-mutation value to $2.8\times10^{-5}$.
-
-On this reduced space the two single-mechanism cells are smaller than the
-affordable finite-$\mu$ error, so we do not claim that they are individually
-resolved. The interaction index is more stable because errors are largely
-common-mode: it is $+0.274$ at $\mu=5\times10^{-3}$ and $+0.273$ at
-$\mu=10^{-3}$, against $+0.268$ in the limit.
-
-Finally, Section~\ref{sec:decomposition} recomputes the headline decomposition
-under the basin-averaged replicator attractor, a different limit of the same
-game.
+Five checks separate approximation error from floating-point error; the full
+results are in Supplementary Section S2 and Table S1. Exact horizon sums remove
+the Monte Carlo error, while shifted fixation probabilities agree with a
+60-digit reference to $4.4\times10^{-16}$ over normal doubles. End-to-end
+stationary vectors have total-variation error at most $8.3\times10^{-15}$, and
+an independent EGTtools implementation~\citep{domingos2023egttools} agrees on
+the depth-zero space to $5.6\times10^{-16}$. On a tractable three-design space,
+the finite-mutation error is first order in $\mu$ and Richardson extrapolation
+at the finest pair recovers the small-mutation unsafe frequency to
+$2.8\times10^{-5}$. Section~\ref{sec:decomposition} additionally reproduces the
+headline interaction under basin-averaged replicator dynamics.
 
 % ===========================================================================
 \section{Numerical results}
@@ -1261,10 +1184,8 @@ game.
 
 The two mechanisms can be switched off independently: $\varepsilon=0$ removes
 erosion and $\phi=1$ removes attenuated attribution. Crossing them gives a
-$2\times2$ design whose four cells are reported in
-Table~\ref{tab:decomposition} and Figure~\ref{fig:decomposition}.
-
-\input{tab_decomposition}
+$2\times2$ design whose four cells are shown in
+Figure~\ref{fig:decomposition}; exact values are in Supplementary Table S2.
 
 Starting from a race that is already safe, erosion alone raises the long-run
 unsafe frequency to $0.018$ and attenuated attribution alone to $0.011$. An
@@ -1448,9 +1369,8 @@ discounted the margins they act on.}
 \label{sec:floor}
 
 To separate the rate of attribution loss from whether attribution vanishes,
-Table~\ref{tab:regimes} replaces $\phi^d$ by four alternative rules.
-
-\input{tab_regimes}
+we replace $\phi^d$ by four alternative rules; the complete comparison is in
+Supplementary Table S3.
 
 Equal division, $r(d)=1/(1+d)$, decays more slowly than $\phi^d$ but reproduces
 the baseline unsafe frequency ($0.3224$ versus $0.3225$) and mean depth. Strict
@@ -1481,57 +1401,19 @@ define the number of hand-offs.
 
 Across 43 parameter cells, interaction is positive in $91\%$, with median
 $0.294$ and interquartile range $[0.243,0.299]$; per-layer attribution selects
-greater depth than pass-through in every cell. Three non-positive cells are
-saturated at unsafe frequency one, and the fourth uses the collapse kernel,
-which suppresses delegation.
+greater depth than pass-through in every cell. The joint unsafe frequency is
+sensitive to liability and the depth ceiling, but remains $0.3225$ for
+$Z\in\{50,100,200\}$ and ranges only from $0.3168$ to $0.3225$ over
+$\beta\in[0.01,0.2]$.
 
-The headline level is sensitive to liability and the depth ceiling but stable
-to the evolutionary-process parameters. Across $L\in\{5,10,20,40,80\}$, the
-joint unsafe frequency is $0.949$, $0.323$, $0.322$, $0.322$ and
-$5\times10^{-5}$; among positive-interaction cells, the interaction share ranges
-from $0.001$ to $1.12$. At $\bar D\in\{4,6,8\}$, the joint values are $0.136$,
-$0.322$ and $0.513$, with mean depth equal to the ceiling, whereas pass-through
-remains at unsafe frequency $0.018$ and mean depth two. The joint value is
-$0.3225$ for $Z\in\{50,100,200\}$ and ranges only from $0.3168$ to $0.3225$
-over $\beta\in[0.01,0.2]$.
-
-Kernel shape changes the result (Figure~\ref{fig:robustness}B). Collapse noise
-reduces mean depth to $0.0002$ and unsafe frequency to $2\times10^{-5}$, whereas
-uniform noise raises the latter to $0.520$. Two interpolating families hold the
-second eigenvalue of $M$ at $1-\varepsilon$ while varying drift direction and
-severity (Table~\ref{tab:kernelshape}). Their outcomes range from
-$2\times10^{-5}$ to $0.520$, so neither the spectral gap nor directionality
-orders the result. Within these families, delegation collapses when the harm
-caused by one hand-off crosses approximately $[0.51,0.61]$; the ladder instead
-has $m(1)=0$, allowing depth to accumulate before its private cost appears.
-
-\input{tab_kernelshape}
-
-The cascade is not created by a free organisational benefit. Setting $g=0$
-leaves unsafe frequency at $0.321$ and mean depth at $5.98$, because erosion
-raises the focal race payoff from $41.3$ to $48.1$ across the depth range.
-Adding coordination cost leaves the ceiling binding through $c=0.16$ and mean
-depth at $5.95$ for $c=0.20$; depth falls materially only when the deepest
-chain's net organisational benefit approaches zero.
-
-\begin{figure}[pos=tb]
-\centering
-\includegraphics[width=\linewidth]{figures/fig08_robustness.pdf}
-\caption{Robustness.
-\textbf{(A)}~The interaction index across every sweep; each dot is one
-parameter cell. \textbf{(B)}~The three named drift kernels. The \emph{ladder}
-produces the cascade; \emph{collapse} deters delegation altogether;
-\emph{uniform} noise is worse than the graded ladder, so the effect is not
-about the direction of the slippage. \textbf{(C)}~The small-mutation limit
-against the full mutation-selection chain on the three-design sub-space, over
-$\mu\in[0.005,0.05]$ at $Z=60$; Table~\ref{tab:verification} reports the same
-check at $Z=40$ and down to $\mu=0.001$. \textbf{(D)}~Long-run unsafe frequency
-against the effective liability at four attribution retentions; a lower $\phi$
-shifts the whole curve rather than tilting it, which is the population-level
-counterpart of Corollary~\ref{cor:failure}, whose failure depth enters through
-$\log\phi$.}
-\label{fig:robustness}
-\end{figure}
+Kernel shape matters beyond its spectral gap. Holding the second eigenvalue at
+$1-\varepsilon$ while changing the direction or severity of an erosion event
+moves unsafe frequency from below $2\times10^{-5}$ to $0.520$; delegation
+collapses once the harm caused by the first hand-off crosses approximately
+$[0.51,0.61]$. The cascade also survives removal of the free organisational
+benefit ($U=0.321$, $\bar d=5.98$). Supplementary Section S4, Table S4 and
+Figure S1 report these sweeps, the full mutation--selection comparison and the
+liability curves.
 
 % ===========================================================================
 \section{Discussion}
@@ -1617,102 +1499,25 @@ social-payoff range without measuring hand-off count. These are
 model properties rather than policy estimates; empirical calibration of
 transmission and attribution is the necessary next step.
 
-% ===========================================================================
+%% ===========================================================================
+%%  Elsevier / Applied Mathematics and Computation required declarations.
+%%  The CRediT statement is not duplicated here: cas-sc builds it from the
+%%  \credit{} commands in the front matter and \printcredits emits it below.
+%% ===========================================================================
 \section*{Declaration of competing interest}
-
 The authors declare that they have no known competing financial interests or
 personal relationships that could have appeared to influence the work reported
 in this paper.
 
-\section*{Funding}
-
-This research did not receive any specific grant from funding agencies in the
-public, commercial, or not-for-profit sectors.
-
-\section*{Data availability}
-
-All results are deterministic given the seed used for the replicator start
-measure. The code, generated tables, numerical benchmarks of
-Section~\ref{sec:numerics} and figure pipeline are available under the MIT
-licence in the project repository~\citep{huynh2026delegationsoftware}. The exact
-submission snapshot is identified by a deterministic archive and SHA-256
-manifest supplied with the submission materials. Parts of the analysis code
-were refactored with the assistance of a large language model; every refactor
-is covered by the archived test suite, and no numerical result was accepted
-without reproduction from that snapshot.
-
-\section*{Declaration of generative AI and AI-assisted technologies in the
-manuscript preparation process}
-
-During the preparation of this work the authors used Anthropic Claude and
-OpenAI Codex to assist with drafting and copy-editing prose; reviewing and
-revising LaTeX and bibliography files; reviewing and revising analysis,
-validation, testing, visualization and figure-pipeline code; and developing
-build, archive and reproducibility tooling. All numerical data and submitted
-figures were generated by deterministic, version-controlled scientific code;
-no submitted figure was created with a generative image model. The authors
-reviewed and edited all tool-assisted output, reran the analysis and test
-suites, reproduced the reported results from the version-controlled code, and
-take full responsibility for the content of the published article.
+\section*{Data and code availability}
+The source code and machine-readable results supporting this study are publicly
+available at
+\url{https://github.com/trungkiet2005/delegation-cascade}.
+No external dataset was used in this study.
 
 \printcredits
 
 % ===========================================================================
-\appendix
-\numberwithin{equation}{section}
-
-\section{The stationary regime in closed form}
-\label{app:fixation}
-
-The derivation of~\eqref{eq:fixation} is standard and is repeated here so that
-the constants in Algorithm~\ref{alg:main} can be read off. In a population of
-$Z$ individuals holding $k$ copies of the invader $I$ and $Z-k$ of the resident
-$R$, an update picks an ordered pair of distinct individuals uniformly, so the
-probability that an $R$ individual is picked to revise and an $I$ individual to
-imitate is $\frac{Z-k}{Z}\cdot\frac{k}{Z-1}$, and symmetrically in the other
-direction. With the Fermi rule the two transition probabilities are
-\begin{equation}
-  T^{+}(k) = \frac{k(Z-k)}{Z(Z-1)}\,
-    \frac{1}{1+e^{-\beta(\pi_{I}(k)-\pi_{R}(k))}},
-  \qquad
-  T^{-}(k) = \frac{k(Z-k)}{Z(Z-1)}\,
-    \frac{1}{1+e^{\beta(\pi_{I}(k)-\pi_{R}(k))}},
-  \label{eq:rates}
-\end{equation}
-with $\pi_{I}$ and $\pi_{R}$ as in~\eqref{eq:sampling}. Their ratio is
-$T^{-}(k)/T^{+}(k)=e^{-\beta(\pi_{I}(k)-\pi_{R}(k))}$, in which the common
-sampling factor cancels, and the classical absorption formula for a
-one-dimensional birth-death chain with absorbing boundaries at $k=0$ and $k=Z$,
-\[
-  \rho_{R\to I}
-  = \Bigl[1+\sum_{m=1}^{Z-1}\prod_{k=1}^{m}\frac{T^{-}(k)}{T^{+}(k)}\Bigr]^{-1},
-\]
-gives~\eqref{eq:fixation} directly. Because $\pi_{I}-\pi_{R}$ is affine in $k$,
-the exponent $\theta_{m}=-\beta\sum_{k\le m}(\pi_{I}(k)-\pi_{R}(k))$ is a
-quadratic polynomial in $m$ and the whole vector $(\theta_{1},\dots,\theta_{Z-1})$
-is one cumulative sum, which is the $O(Z)$ claim of
-Section~\ref{sec:fixation}. Two limits are useful as unit tests of an
-implementation: at $\beta=0$ every ratio is one and $\rho=1/Z$, and for a
-neutral game the same holds at every $\beta$.
-
-In exact arithmetic every $\rho_{i\to j}$ is strictly positive at finite
-$\beta$, so the embedded chain~\eqref{eq:embedded} is irreducible and its
-stationary distribution is unique. What Section~\ref{sec:observables} adds is
-that irreducibility is more than is needed and more than double precision
-delivers. Uniqueness requires only one closed communicating class, so a routine
-that returns exactly zero for a strongly disadvantaged mutant does not by
-itself make $x$ ambiguous; what it does is move designs into transient classes,
-which then receive stationary mass exactly zero rather than their true
-subnormal mass. At $\beta=0.2$ that happens for $\{\CAS{}@0,\AU{}@0\}$, which
-is transient in double precision while the remaining $26$ designs form the
-unique closed class. It is when the closed class shrinks to a single absorbing
-design, as it does under the unshifted evaluation, that the stationary regime
-stops carrying information.
-
-% Keep the class's 8 pt reference type while tightening its default 10 pt
-% leading slightly, avoiding a nearly empty final page caused by one software
-% citation. The source remains at the template's bibliography type size.
-\renewcommand{\bibfont}{\fontsize{8pt}{9.2pt}\selectfont}
 \bibliographystyle{elsarticle-num-names}
 \bibliography{refs}
 

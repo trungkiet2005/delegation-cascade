@@ -38,8 +38,9 @@ paper-amc/build[0-9].log
 paper-amc/bib.log
 
 # The submission source archive carries the resolved bibliography, so retain
-# this one generated file even though other LaTeX intermediates stay ignored.
+# these generated files even though other LaTeX intermediates stay ignored.
 !paper-amc/main.bbl
+!paper-amc/supplement.bbl
 
 # Deterministic upload archives and their checksum manifests are local release
 # outputs, not inputs. Ignoring the whole directory avoids a circular release
@@ -64,3 +65,4 @@ els-cas-templates.zip
 # stay public.  Remove these lines once the paper is accepted.
 paper/main.pdf
 paper-*/main.pdf
+paper-*/supplement.pdf

@@ -10,13 +10,16 @@ BibTeX files.
 ```bash
 cd paper-amc
 pdflatex main && bibtex main && pdflatex main && pdflatex main
+pdflatex supplement && bibtex supplement && pdflatex supplement && pdflatex supplement
 ```
 
-Output: `main.pdf`, **24 manuscript pages**. Highlights are intentionally kept
-only in the required separate editable `highlights.docx` rather than duplicated
-inside `main.tex`; modest 8 pt / 9.2 pt bibliography leading keeps the PDF below
-the journal's 25-page scrutiny
-threshold without removing proofs or numerical error bounds.
+Outputs: `main.pdf`, **21 manuscript pages**, and `supplement.pdf`, **6 pages**.
+The main paper keeps the central theorem, numerical scheme and headline results;
+the supplement carries an auxiliary proof, complete validation and robustness,
+exact tables that duplicate graphical displays, and the standard fixation
+derivation. The bibliography uses the CAS class defaults rather than tightened
+leading. Highlights remain only in the required separate editable
+`highlights.docx` rather than being duplicated in `main.tex`.
 
 The build has no undefined citations or references. BibTeX reports `empty
 pages` for four arXiv/technical-report entries with no page range. The CAS class
@@ -49,8 +52,9 @@ source archive contains:
 | Item | File |
 |---|---|
 | Manuscript source | `main.tex` |
-| Bibliography | `refs.bib` and `main.bbl` |
-| Table sources | `tab_*.tex` (all seven, `\input` by `main.tex`) |
+| Supplement source | `supplement.tex` |
+| Bibliography | `refs.bib`, `main.bbl` and `supplement.bbl` |
+| Table sources | `tab_*.tex` (three used by `main.tex`, four by `supplement.tex`) |
 | Class and style | `cas-sc.cls`, `cas-common.sty`, `elsarticle-num-names.bst`, `thumbnails/` |
 | Figures 2 to 8 | `figures/fig02_transmission.pdf` … `figures/fig08_robustness.pdf` |
 
@@ -61,15 +65,16 @@ and these go up as separate items:
 | Highlights | `highlights.docx` (the word "highlights" is in the file name, as required) |
 | Declaration of competing interest | `declaration_of_interest.docx` |
 | Cover letter | `cover_letter.md`, after a final author/date check |
-| Compiled PDF (reference only) | `main.pdf` |
+| Main compiled PDF (reference only) | `main.pdf` |
+| Supplementary material | `supplement.pdf` |
 
-Both `refs.bib` and the resolved `main.bbl` are included. The latter protects
-the submission against publisher-side BibTeX differences, while the vendored
-`elsarticle-num-names.bst` keeps a clean rebuild possible.
+Both `refs.bib` and the two resolved `.bbl` files are included. The latter
+protect the submission against publisher-side BibTeX differences, while the
+vendored `elsarticle-num-names.bst` keeps a clean rebuild possible.
 
 Figure 1 is a TikZ schematic embedded in `main.tex`; the journal allows text
-graphics to be embedded in the LaTeX source. The file names of Figures 2 to 8
-carry their figure numbers, so `fig05_plane.pdf` is Figure 5. All figures are
+graphics to be embedded in the LaTeX source. The main paper uses Figures 2 to
+7, while `fig08_robustness.pdf` is Figure S1 in the supplement. All figures are
 PDF; Figures 2 and 5 embed a raster layer, because matplotlib emits `imshow`
 panels as raster XObjects, and `savefig.dpi` is set so that they print above
 Elsevier's 500 dpi minimum for combination art.
@@ -78,9 +83,9 @@ Elsevier's 500 dpi minimum for combination art.
 
 - [x] **Author block** in `main.tex`, `CITATION.cff` and
       `scripts/make_submission_files.py`: five authors, one shared full-address
-      affiliation, four validated ORCIDs, Trung-Kiet Huynh corresponding. The
-      incorrect ORCID previously attached to Dao-Sy Duy-Minh has been removed;
-      exact portal name segments are in `SUBMISSION_NOTES.md`. The first three
+      affiliation, five validated ORCIDs, Trung-Kiet Huynh corresponding.
+      Dao-Sy Duy-Minh's confirmed ORCID is `0009-0002-4501-2788`; exact portal
+      name segments are in `SUBMISSION_NOTES.md`. The first three
       contributed equally, carried by the `\fnmark[1]`/`\fntext[1]` note. The
       journal does not allow authorship changes after acceptance, and does not
       allow additions, deletions or reordering after submission without an
@@ -148,13 +153,14 @@ python paper-amc/scripts/make_submission_files.py  # needs python-docx
 
 cd paper-amc
 pdflatex main && bibtex main && pdflatex main && pdflatex main
+pdflatex supplement && bibtex supplement && pdflatex supplement && pdflatex supplement
 cd ..
 python paper-amc/scripts/build_submission_archives.py --require-clean
 ```
 
 Run the analysis and robustness stages before the figure and table stages; the
 later scripts intentionally consume those generated results. Re-run the
-archive builder only after `main.bbl` is current.
+archive builder only after both `main.bbl` and `supplement.bbl` are current.
 
 ## How this differs from `paper/`
 
@@ -163,8 +169,9 @@ rewritten for the journal's computational emphasis and its length guideline:
 
 - a new Section 5, **Numerical method**, states the cost of the route the paper
   avoids (Table 2), gives the scheme as Algorithm 1 with its complexity, bounds
-  the horizon truncation a priori, and checks five different things in Table 3.
-  None of this exists in the parent manuscript;
+  the horizon truncation a priori, and summarises five validation checks whose
+  complete results are Supplementary Table S1. None of this exists in the
+  parent manuscript;
 - the analytical results are consolidated into one section, with the check
   placement and attribution floor propositions moved next to the shelter
   theorem they qualify;
@@ -173,9 +180,10 @@ rewritten for the journal's computational emphasis and its length guideline:
   including the reproducibility-software record.
   `refs.bib` holds the union of both variants; a numeric style prints only what
   is cited;
-- the depth-ceiling and evolutionary-process tables are folded into the text,
-  leaving seven tables;
-- **every numbered result is proved.** Lemma 1, Propositions 2 and 3,
+- the main paper keeps three non-duplicative tables. Four exact validation and
+  result tables, plus the full robustness figure, are in the supplement;
+- **every numbered result is proved in the main paper or supplement.** Lemma 1,
+  whose elementary proof is Supplementary Section S1, Propositions 2 and 3,
   Theorem 4, Proposition 5, Corollary 6 and Propositions 7 and 8 keep the
   numbering of `paper/main.tex`, so the two manuscripts can be read side by
   side, and Proposition 9 is added at the end of Section 5.4. The parent
