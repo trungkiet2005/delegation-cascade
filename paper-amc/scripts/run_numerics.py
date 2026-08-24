@@ -580,14 +580,10 @@ def emit_tex() -> None:
     lines += [
         r"\begin{table}[pos=t]",
         r"\centering",
-        r"\caption{Cost of the two routes to the stationary regime. The full "
-        r"mutation--selection process is a Markov chain on population states, of "
-        r"which there are $\binom{Z+n-1}{n-1}$; the reduction of "
-        r"Section~\ref{sec:reduction} needs $n(n-1)$ fixation probabilities, each "
-        r"evaluated with $Z-1$ exponentials, one further exponential for the "
-        r"shift, and $O(Z)$ accompanying arithmetic. The depth ceiling $\bar{D}$ "
-        r"fixes the number of designs at $n=4(\bar{D}+1)$; the manuscript runs "
-        r"at $\bar{D}=6$, $Z=100$.}",
+        r"\caption{Cost of direct and reduced stationary analysis. The full "
+        r"chain has $\binom{Z+n-1}{n-1}$ population states; the reduction uses "
+        r"$n(n-1)Z$ exponentials, where $n=4(\bar D+1)$. The baseline is "
+        r"$\bar D=6$, $Z=100$.}",
         r"\label{tab:cost}",
         r"\begin{tabular*}{\tblwidth}{@{}LLLRR@{}}",
         r"\toprule",
@@ -608,35 +604,11 @@ def emit_tex() -> None:
     lines += [
         r"\begin{table}[pos=t]",
         r"\centering",
-        r"\caption{Verification, in five checks of five different things. "
-        r"Block~1 compares the exact horizon expectation of "
-        r"Section~\ref{sec:interaction} with a Monte-Carlo estimate of the same "
-        r"payoff matrix: root-mean-square error over the sixteen ordered pairs "
-        r"and eight independent replicates, which decays at the Monte-Carlo "
-        r"rate $N^{-1/2}$ and which the exact route removes. Block~2 checks the "
-        r"arithmetic, not the formula: it compares the stabilised "
-        r"evaluation of~\eqref{eq:fixation} in double precision with the same "
-        r"sum evaluated in $60$-digit arithmetic, worst relative error over "
-        r"those of the $n(n-1)=%d$ ordered pairs whose fixation probability is "
-        r"representable as a normal double, $%d$ at $\beta=0.05$ and $%d$ at "
-        r"$\beta=0.2$. Block~3 checks the closed form itself against an "
-        r"independent implementation of the same birth-death formula in "
-        r"EGTtools, on the depth-zero design space, worst absolute difference "
-        r"over all ordered pairs. Block~4 compares the small-mutation "
-        r"reduction with the full mutation--selection chain on a design space "
-        r"small enough for it ($n=%d$, $Z=%d$, $%s$ population states); both "
-        r"sides use the process average $\sum_{i}x_{i}u(i,i)$ of "
-        r"Section~\ref{sec:observables}. Block~5 compares the complete "
-        r"stationary vector and both unsafe observables with a $60$-digit "
-        r"reference at the baseline and hardest selection settings.}"
-        % (
-            RESULTS["stability"]["n_ordered_pairs"],
-            RESULTS["stability"]["by_beta"]["beta=0.05"]["n_pairs_representable"],
-            RESULTS["stability"]["by_beta"]["beta=0.2"]["n_pairs_representable"],
-            sv["n_designs"],
-            sv["Z"],
-            _sci(sv["n_states"]),
-        ),
+        r"\caption{Five numerical checks. Discrepancy is payoff-matrix RMSE for "
+        r"Monte Carlo, worst relative error for normal fixation probabilities, "
+        r"total variation (TV) and unsafe-frequency error for stationary output, "
+        r"worst absolute error for EGTtools, and unsafe-frequency error for the "
+        r"finite-mutation chain.}",
         r"\label{tab:verification}",
         r"\begin{tabular*}{\tblwidth}{@{}LLR@{}}",
         r"\toprule",
@@ -663,7 +635,7 @@ def emit_tex() -> None:
     for r in RESULTS["stationary_end_to_end"]:
         lines.append(
             "stationary vector vs.\\ $60$-digit reference & $n=28$, $Z=100$, "
-            "$\\beta=%g$ & TV $%s$; $U$ gap $%s$ \\\\\\\\" 
+            "$\\beta=%g$ & TV $%s$; $U$ gap $%s$ \\\\"
             % (r["beta"], _sci(r["total_variation"]), _sci(abs(r["unsafe_fast"] - r["unsafe_reference"])))
         )
     lines.append(r"\midrule")

@@ -11,21 +11,18 @@ cd paper-amc
 pdflatex main && bibtex main && pdflatex main && pdflatex main
 ```
 
-Output: `main.pdf`, **29 numbered manuscript pages** plus one unnumbered
+Output: `main.pdf`, **24 numbered manuscript pages** plus one unnumbered
 Highlights page that `cas-sc.cls` typesets automatically from the `highlights`
-environment. The journal asks that submissions longer than 25 manuscript pages
-be justified by their content; the justification is in the cover letter, and it
-is that four of the extra pages are proofs and error bounds and three are the
-reference list.
+environment (25 PDF pages in total). This stays within the journal's 25-page
+scrutiny threshold without removing the proofs or numerical error bounds.
 
-The build is clean apart from the BibTeX `empty pages` warnings, which are
-arXiv preprints and technical reports with no page range. Two class artefacts
-that used to appear are now suppressed in the preamble: `\RequirePackage{float}`
-before `\documentclass` stops `algorithm` from re-registering the float
-counters and emitting one `destination with the same identifier` warning per
-float, and resetting `\sfdefault` to `lmss` removes the Type 3 PK bitmaps that
-`\textsf` otherwise embeds, which also clears the `Overfull \hbox (117.08pt)`
-at `\maketitle`.
+The build has no undefined citations or references. BibTeX reports `empty
+pages` for four arXiv/technical-report entries with no page range. The CAS class
+also emits a title-block `Overfull \hbox (117.08pt)` and empty-anchor warnings at
+`\maketitle`; visual inspection confirms that the title, five-author block,
+affiliation, e-mails and ORCIDs remain inside the page. Loading `float` before
+the class prevents duplicate float destinations, while resetting `\sfdefault`
+to `lmss` avoids Type 3 strategy-label fonts.
 
 ## What to upload to Editorial Manager
 
@@ -66,8 +63,8 @@ Elsevier's 500 dpi minimum for combination art.
 ## Before submitting
 
 - [x] **Author block** in `main.tex` and in
-      `scripts/make_submission_files.py`: three authors, one shared
-      affiliation, real ORCIDs, Trung-Kiet Huynh corresponding. All three
+      `scripts/make_submission_files.py`: five authors, one shared full-address
+      affiliation, real ORCIDs, Trung-Kiet Huynh corresponding. The first three
       contributed equally, carried by the `\fnmark[1]`/`\fntext[1]` note. The
       journal does not allow authorship changes after acceptance, and does not
       allow additions, deletions or reordering after submission without an
@@ -75,16 +72,16 @@ Elsevier's 500 dpi minimum for combination art.
 - [ ] The corresponding-author e-mail is the institutional student address
       `23122039@student.hcmus.edu.vn`. Confirm it will still be readable when
       the article appears, or swap in a durable address.
-- [ ] Check the **generative AI declaration** near the end of `main.tex`
-      against what was actually used, and edit it. It is a required statement
-      when AI tools were used in manuscript preparation and it is published
-      with the article.
+- [x] The **generative AI declaration** names Anthropic Claude and OpenAI Codex,
+      describes prose editing and code-refactoring assistance, and states that
+      generated numerical data and figures were not used. All authors must
+      confirm this wording is factually complete before submission.
 - [ ] Fill in the suggested reviewers in `cover_letter.md`, or delete that
       sentence.
-- [ ] Confirm the **data availability** statement: it points at
-      <https://github.com/trungkiet2005/delegation-cascade>, which must be
-      public and must contain `paper-amc/scripts/` for the numerical benchmarks
-      of Section 5 to be reproducible.
+- [x] The **data availability** URL
+      <https://github.com/trungkiet2005/delegation-cascade> is public and the
+      repository contains `paper-amc/scripts/` for reproducing the numerical
+      benchmarks of Section 5 (verified 24 August 2026).
 
 ## Provenance of the numbers
 
@@ -128,7 +125,7 @@ rewritten for the journal's computational emphasis and its length guideline:
 
 - a new Section 5, **Numerical method**, states the cost of the route the paper
   avoids (Table 2), gives the scheme as Algorithm 1 with its complexity, bounds
-  the horizon truncation a priori, and checks four different things in Table 3.
+  the horizon truncation a priori, and checks five different things in Table 3.
   None of this exists in the parent manuscript;
 - the analytical results are consolidated into one section, with the check
   placement and attribution floor propositions moved next to the shelter

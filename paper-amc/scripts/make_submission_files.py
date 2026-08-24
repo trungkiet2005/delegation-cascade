@@ -20,17 +20,21 @@ from docx.shared import Pt
 OUT = Path(__file__).resolve().parents[1]
 
 TITLE = (
-    "Delegation cascades: stable stationary computation in an evolutionary "
-    "game with strategic chain depth"
+    "Delegation cascades in evolutionary games: stable computation with "
+    "strategic depth"
 )
 
 HIGHLIGHTS = [
-    "Delegation depth becomes a strategic variable in an evolutionary race game",
-    "Realised harm saturates in depth while attributed harm decays geometrically",
-    "A stable O(Z) scheme replaces a chain with 3x10^27 population states",
-    "Transmission and attribution losses interact: together they reach 0.32 unsafe",
-    "A binding attribution floor closely matches a depth-cap frontier",
+    "Strategic depth creates a liability shelter in evolutionary games",
+    "Maximum-shifted O(Z) fixation sums stabilise the reduced Markov chain",
+    "Joint erosion and attribution loss raise unsafe frequency from 0 to 0.322",
+    "An attribution floor matches reachable depth-cap safety-payoff outcomes",
 ]
+
+AUTHORS = (
+    "Trung-Kiet Huynh, Dao Sy Duy Minh, Chi-Nguyen Tran, "
+    "Nguyen Lam Phu Quy, Pham Phu Hoa"
+)
 
 COMPETING_INTERESTS = (
     "The authors declare that they have no known competing financial interests "
@@ -44,11 +48,12 @@ FUNDING = (
 )
 
 AI_DECLARATION = (
-    "During the preparation of this work the authors used a large language "
-    "model assistant to draft and copy-edit prose and refactor analysis code. "
-    "After using this "
-    "tool the authors reviewed and edited the content as needed and take full "
-    "responsibility for the content of the published article."
+    "During the preparation of this work the authors used Anthropic Claude "
+    "and OpenAI Codex to draft and copy-edit prose and to assist with refactoring "
+    "analysis code. The authors reviewed and edited all outputs, reproduced the "
+    "reported results from the released code, and take full responsibility for "
+    "the content of the published article. No generative AI tool was used to "
+    "create numerical data or figures."
 )
 
 
@@ -64,7 +69,7 @@ def write_highlights() -> None:
     doc = _document()
     doc.add_heading("Highlights", level=1)
     doc.add_paragraph(TITLE).runs[0].bold = True
-    doc.add_paragraph("Trung-Kiet Huynh, Dao Sy Duy Minh, Chi-Nguyen Tran")
+    doc.add_paragraph(AUTHORS)
     for item in HIGHLIGHTS:
         assert len(item) <= 85, "highlight over 85 characters: %r" % item
         doc.add_paragraph(item, style="List Bullet")

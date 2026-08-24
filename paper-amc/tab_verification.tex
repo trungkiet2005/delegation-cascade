@@ -2,7 +2,7 @@
 %% paper-amc/scripts/make_amc_tables.py -- do not edit
 \begin{table}[pos=t]
 \centering
-\caption{Verification, in five checks of five different things. Block~1 compares the exact horizon expectation of Section~\ref{sec:interaction} with a Monte-Carlo estimate of the same payoff matrix: root-mean-square error over the sixteen ordered pairs and eight independent replicates, which decays at the Monte-Carlo rate $N^{-1/2}$ and which the exact route removes. Block~2 checks the arithmetic, not the formula: it compares the stabilised evaluation of~\eqref{eq:fixation} in double precision with the same sum evaluated in $60$-digit arithmetic, worst relative error over those of the $n(n-1)=756$ ordered pairs whose fixation probability is representable as a normal double, $738$ at $\beta=0.05$ and $589$ at $\beta=0.2$. Block~3 checks the closed form itself against an independent implementation of the same birth-death formula in EGTtools, on the depth-zero design space, worst absolute difference over all ordered pairs. Block~4 compares the small-mutation reduction with the full mutation--selection chain on a design space small enough for it ($n=3$, $Z=40$, $861$ population states); both sides use the process average $\sum_{i}x_{i}u(i,i)$ of Section~\ref{sec:observables}. Block~5 compares the complete stationary vector and both unsafe observables with a $60$-digit reference at the baseline and hardest selection settings.}
+\caption{Five numerical checks. Discrepancy is payoff-matrix RMSE for Monte Carlo, worst relative error for normal fixation probabilities, total variation (TV) and unsafe-frequency error for stationary output, worst absolute error for EGTtools, and unsafe-frequency error for the finite-mutation chain.}
 \label{tab:verification}
 \begin{tabular*}{\tblwidth}{@{}LLR@{}}
 \toprule
@@ -16,8 +16,8 @@ Monte Carlo vs.\ exact & $N=10^{6}$ episodes & $0.034$ \\
 stabilised vs.\ $60$-digit sum & $n=28$, $Z=100$, $\beta=0.05$ & $4.4\times 10^{-16}$ \\
 stabilised vs.\ $60$-digit sum & $n=28$, $Z=100$, $\beta=0.2$ & $2.8\times 10^{-16}$ \\
 \midrule
-stationary vector vs.\ $60$-digit reference & $n=28$, $Z=100$, $\beta=0.05$ & TV $8.3\times 10^{-15}$; $U$ gap $3.5\times 10^{-15}$ \\\\
-stationary vector vs.\ $60$-digit reference & $n=28$, $Z=100$, $\beta=0.2$ & TV $4.3\times 10^{-16}$; $U$ gap $5.6\times 10^{-17}$ \\\\
+stationary vector vs.\ $60$-digit reference & $n=28$, $Z=100$, $\beta=0.05$ & TV $8.3\times 10^{-15}$; $U$ gap $3.5\times 10^{-15}$ \\
+stationary vector vs.\ $60$-digit reference & $n=28$, $Z=100$, $\beta=0.2$ & TV $4.3\times 10^{-16}$; $U$ gap $5.6\times 10^{-17}$ \\
 \midrule
 closed form vs.\ EGTtools & $n=4$, $Z=50$, $\beta=0.05$ & $1.1\times 10^{-16}$ \\
 closed form vs.\ EGTtools & $n=4$, $Z=50$, $\beta=0.2$ & $1.1\times 10^{-16}$ \\

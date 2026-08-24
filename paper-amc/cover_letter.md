@@ -6,89 +6,48 @@ go in Editorial Manager's own field; see the note near the end._
 
 ---
 
-21 August 2026
+24 August 2026
 
 To the Editors
 _Applied Mathematics and Computation_
 
 Dear Editors,
 
-We are submitting the manuscript **"Delegation cascades: exact stationary
-analysis of an evolutionary game with strategic chain depth"** for
-consideration as a research article in _Applied Mathematics and Computation_.
+We submit **"Delegation cascades in evolutionary games: stable computation with
+strategic depth"** for consideration as a research article in _Applied
+Mathematics and Computation_. The manuscript studies a finite-population
+evolutionary game in which delegation depth is a strategic coordinate. It fits
+the journal's computational scope by combining an analysed numerical method,
+Markov-chain dynamics and a systems-oriented application.
 
-The paper studies an evolutionary game in which the number of intermediaries
-between a decision maker and the action it produces is itself a strategic
-variable, and it is a computational paper about that game as much as a
-structural one. Its content falls squarely in the journal's scope: it applies
-systems-oriented ideas, Markov chains and evolutionary dynamics, to a
-behavioural and social science question, and its emphasis is on the algorithm
-that makes the model tractable, on the analysis of that algorithm, and on the
-numerical results it produces.
+The direct mutation-selection chain has about 3.0 x 10^27 population states
+at the reported parameters. We avoid constructing it by summing the interaction
+tensor over the horizon law, reducing the rare-mutation process to an embedded
+chain on 28 designs, and evaluating each fixation probability in O(Z)
+operations with maximum-shifted exponentials. A closed-class condition handles
+underflow in extreme transitions. Five complementary checks compare the
+interaction tensor with Monte Carlo, shifted arithmetic and complete stationary
+output with 60-digit references, the fixation formula with EGTtools, and the
+rare-mutation reduction with a tractable full chain.
 
-The specific contributions are the following.
+The analysis proves that realised harm saturates with depth while attributed
+harm carries a vanishing per-layer factor. Hence every attribution retention
+below one eventually creates a liability shelter: another hand-off lowers the
+principal's charge without lowering realised harm. An eventually binding
+attribution floor closes this shelter. All nine numbered results state their
+hypotheses and include proofs.
 
-1. **Structure.** We prove that realised harm saturates in the delegation depth
-   while attributed harm decays geometrically, so that for every attribution
-   retention below one there is a depth beyond which each further hand-off
-   strictly lowers the liability charged to the principal and never lowers the
-   harm it causes (Theorem 4). We prove the converse condition: an attribution
-   eventually constant attribution floor removes the shelter beyond its binding depth
-   (Proposition 8). Four further exact statements order the erosion sequence as
-   a harm order in each argument, give the erosion law and its spectral rate,
-   establish monotonicity of harm in depth, and order the placement of a
-   verification step along the chain. All eight numbered results carry
-   hypotheses and proofs.
+Numerically, transmission erosion and attenuated attribution separately yield
+unsafe frequencies of 0.018 and 0.012 but jointly yield 0.322; interaction
+accounts for 91% of the joint effect. A statutory attribution floor matches the
+safety-social-payoff outcome of every depth cap it can reach, while transmission
+improvement is non-monotone because selection changes the issued intent.
 
-2. **Computation.** The joint space of depths and specifications makes the
-   mutation-selection chain over population states a Markov chain on
-   3.0 x 10^27 states at the parameters used, so it cannot be formed. We give a
-   scheme that avoids it: the interaction tensor is summed exactly over the
-   horizon law rather than sampled, the process is reduced to an embedded chain
-   on the pure designs, and the fixation probabilities that chain requires are
-   evaluated from a closed form in O(Z) operations with the largest exponent
-   factored out of a sum whose terms overflow double precision by three orders
-   of magnitude in the exponent. The analysis that the size of this design space
-   forces is not of the relative error but of the exponent range: what the
-   embedded chain needs of its fixation probabilities is positivity, not
-   accuracy, and Proposition 9 states the condition under which double precision
-   still determines the stationary regime, which we then certify on all 462
-   regimes the paper reports. We also give an a priori bound on the horizon
-   truncation. One stationary regime costs 39 ms and the full 21 x 21 parameter
-   plane 17.6 s, on hardware named in the paper. Section 5.6 sets out four
-   checks of four different things: the interaction tensor against Monte Carlo,
-   the arithmetic of the stabilised sum against a 60-digit reference, the closed
-   form against an independent implementation, and the small-mutation reduction
-   against the full chain.
-
-3. **Numerical results.** From a calibration whose depth-zero unsafe frequency
-   is 0.000, each per-hand-off loss acting alone leaves that frequency at or
-   below 0.018 while the two together raise it to 0.322, so 91% of the effect is
-   interaction rather than either mechanism. We report how that share moves with
-   the two calibration constants, the liability level and the depth ceiling,
-   rather than the median alone. A statutory floor under attributed
-   responsibility reproduces the frontier of a depth cap wherever a floor can
-   reach it, matching the unsafe frequency of each reachable ceiling to 0.0011.
-   Improving transmission fidelity is not monotone in its own strength.
-
-The manuscript is 29 numbered pages in the Elsevier CAS single-column layout,
-including figures, tables and the reference list, and we should say plainly why
-it is over the 25 pages beyond which the journal scrutinises length. Four of
-those pages are the proofs and the two error bounds: every one of the nine
-numbered results is stated with its hypotheses and proved, the horizon
-truncation carries an a priori bound, and the floating-point condition the
-stationary regime depends on is stated as a proposition and certified rather
-than asserted. Three further pages are the reference list. We would rather
-submit the proofs than the assertions, but we will cut Section 7 and the
-related-work section further if the editors prefer a shorter paper.
-
-The work has not been published previously and is not under consideration
-elsewhere. All authors have approved the submission. The code, the generated
-tables, the numerical benchmarks and the figure pipeline are openly available
-under the MIT licence at <https://github.com/trungkiet2005/delegation-cascade>,
-so every number in the paper can be regenerated from the repository.
-
-We have no competing interests to declare.
+The work has not been published and is not under consideration elsewhere. All
+five authors approved the manuscript and have no competing interests. Code,
+generated tables, numerical benchmarks and the figure pipeline are available
+under the MIT licence at
+<https://github.com/trungkiet2005/delegation-cascade>.
 
 <!-- TO COMPLETE BEFORE SUBMISSION: enter three or four suggested reviewers in
      Editorial Manager, none of them a co-author, a collaborator within the
@@ -98,8 +57,8 @@ Thank you for considering the manuscript.
 
 Yours sincerely,
 
-Trung-Kiet Huynh, on behalf of all three authors
-Faculty of Information Technology, University of Science (HCMUS)
-Vietnam National University -- Ho Chi Minh City (VNU-HCM)
-Ho Chi Minh City, Vietnam
+Trung-Kiet Huynh, on behalf of all five authors
+Faculty of Information Technology, University of Science,
+Vietnam National University Ho Chi Minh City
+227 Nguyen Van Cu Street, Cho Quan Ward, Ho Chi Minh City, Vietnam
 23122039@student.hcmus.edu.vn

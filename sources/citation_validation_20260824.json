@@ -1,0 +1,860 @@
+{
+  "filepath": "paper-amc\\refs.bib",
+  "total_entries": 97,
+  "valid_entries": 94,
+  "errors": [
+    {
+      "type": "invalid_doi",
+      "entry": "chan2024visibility",
+      "doi": "10.1145/3630106.3658948",
+      "severity": "high",
+      "message": "Entry chan2024visibility: DOI does not resolve: 10.1145/3630106.3658948"
+    },
+    {
+      "type": "invalid_doi",
+      "entry": "blanchard2021logsumexp",
+      "doi": "10.1093/imanum/draa038",
+      "severity": "high",
+      "message": "Entry blanchard2021logsumexp: DOI does not resolve: 10.1093/imanum/draa038"
+    },
+    {
+      "type": "invalid_doi",
+      "entry": "cobbe2023supply",
+      "doi": "10.1145/3593013.3594073",
+      "severity": "high",
+      "message": "Entry cobbe2023supply: DOI does not resolve: 10.1145/3593013.3594073"
+    }
+  ],
+  "warnings": [
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry domingos2026falling: Missing recommended field \"volume\"",
+      "entry": "domingos2026falling"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry domingos2026falling: Missing recommended field \"pages\"",
+      "entry": "domingos2026falling"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry domingos2026falling: Missing recommended field \"doi\"",
+      "entry": "domingos2026falling"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry han2020regulate: Missing recommended field \"doi\"",
+      "entry": "han2020regulate"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry armstrong2016racing: Missing recommended field \"doi\"",
+      "entry": "armstrong2016racing"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry han2022voluntary: Missing recommended field \"doi\"",
+      "entry": "han2022voluntary"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry cimpeanu2022heterogeneous: Missing recommended field \"doi\"",
+      "entry": "cimpeanu2022heterogeneous"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry bova2024vigilant: Missing recommended field \"doi\"",
+      "entry": "bova2024vigilant"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry bashir2026trust: Missing recommended field \"volume\"",
+      "entry": "bashir2026trust"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry bashir2026trust: Missing recommended field \"pages\"",
+      "entry": "bashir2026trust"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry bashir2026trust: Missing recommended field \"doi\"",
+      "entry": "bashir2026trust"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry domingos2023egttools: Missing recommended field \"doi\"",
+      "entry": "domingos2023egttools"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry domingos2022delegation: Missing recommended field \"doi\"",
+      "entry": "domingos2022delegation"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry hammond2025multiagent: Missing recommended field \"volume\"",
+      "entry": "hammond2025multiagent"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry hammond2025multiagent: Missing recommended field \"pages\"",
+      "entry": "hammond2025multiagent"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry hammond2025multiagent: Missing recommended field \"doi\"",
+      "entry": "hammond2025multiagent"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry raji2026governance: Missing recommended field \"volume\"",
+      "entry": "raji2026governance"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry raji2026governance: Missing recommended field \"pages\"",
+      "entry": "raji2026governance"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry raji2026governance: Missing recommended field \"doi\"",
+      "entry": "raji2026governance"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry tomasev2026delegation: Missing recommended field \"volume\"",
+      "entry": "tomasev2026delegation"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry tomasev2026delegation: Missing recommended field \"pages\"",
+      "entry": "tomasev2026delegation"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry tomasev2026delegation: Missing recommended field \"doi\"",
+      "entry": "tomasev2026delegation"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry kolt2025governing: Missing recommended field \"pages\"",
+      "entry": "kolt2025governing"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry kolt2025governing: Missing recommended field \"doi\"",
+      "entry": "kolt2025governing"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry chan2025infrastructure: Missing recommended field \"volume\"",
+      "entry": "chan2025infrastructure"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry chan2025infrastructure: Missing recommended field \"pages\"",
+      "entry": "chan2025infrastructure"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry chan2025infrastructure: Missing recommended field \"doi\"",
+      "entry": "chan2025infrastructure"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry williamson1967hierarchical: Missing recommended field \"doi\"",
+      "entry": "williamson1967hierarchical"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry radner1993organization: Missing recommended field \"doi\"",
+      "entry": "radner1993organization"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry tirole1986hierarchies: Missing recommended field \"doi\"",
+      "entry": "tirole1986hierarchies"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry aghion1997authority: Missing recommended field \"doi\"",
+      "entry": "aghion1997authority"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry melumad1995hierarchical: Missing recommended field \"doi\"",
+      "entry": "melumad1995hierarchical"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry holmstrom1982moral: Missing recommended field \"doi\"",
+      "entry": "holmstrom1982moral"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry shavell1980strict: Missing recommended field \"doi\"",
+      "entry": "shavell1980strict"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry shavell1986judgment: Missing recommended field \"doi\"",
+      "entry": "shavell1986judgment"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry sykes1984vicarious: Missing recommended field \"doi\"",
+      "entry": "sykes1984vicarious"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry kraakman1986gatekeepers: Missing recommended field \"doi\"",
+      "entry": "kraakman1986gatekeepers"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry lior2020respondeat: Missing recommended field \"doi\"",
+      "entry": "lior2020respondeat"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry kirby2008cumulative: Missing recommended field \"doi\"",
+      "entry": "kirby2008cumulative"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry perez2025telephone: Missing recommended field \"pages\"",
+      "entry": "perez2025telephone"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry shumailov2024collapse: Missing recommended field \"doi\"",
+      "entry": "shumailov2024collapse"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry alemohammad2023mad: Missing recommended field \"pages\"",
+      "entry": "alemohammad2023mad"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry traulsen2006stochastic: Missing recommended field \"doi\"",
+      "entry": "traulsen2006stochastic"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry nowak2004emergence: Missing recommended field \"doi\"",
+      "entry": "nowak2004emergence"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry fudenberg2006imitation: Missing recommended field \"doi\"",
+      "entry": "fudenberg2006imitation"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry taylor1978ess: Missing recommended field \"doi\"",
+      "entry": "taylor1978ess"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "isbn",
+      "severity": "medium",
+      "message": "Entry hofbauer1998evolutionary: Missing recommended field \"isbn\"",
+      "entry": "hofbauer1998evolutionary"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "isbn",
+      "severity": "medium",
+      "message": "Entry sandholm2010population: Missing recommended field \"isbn\"",
+      "entry": "sandholm2010population"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "isbn",
+      "severity": "medium",
+      "message": "Entry levin2017markov: Missing recommended field \"isbn\"",
+      "entry": "levin2017markov"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry amodei2016concrete: Missing recommended field \"volume\"",
+      "entry": "amodei2016concrete"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry amodei2016concrete: Missing recommended field \"pages\"",
+      "entry": "amodei2016concrete"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry amodei2016concrete: Missing recommended field \"doi\"",
+      "entry": "amodei2016concrete"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry wu2023autogen: Missing recommended field \"pages\"",
+      "entry": "wu2023autogen"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry fernandez2026acp: Missing recommended field \"volume\"",
+      "entry": "fernandez2026acp"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry fernandez2026acp: Missing recommended field \"pages\"",
+      "entry": "fernandez2026acp"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry fernandez2026acp: Missing recommended field \"doi\"",
+      "entry": "fernandez2026acp"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry he2025sentinelagent: Missing recommended field \"volume\"",
+      "entry": "he2025sentinelagent"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry he2025sentinelagent: Missing recommended field \"pages\"",
+      "entry": "he2025sentinelagent"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry he2025sentinelagent: Missing recommended field \"doi\"",
+      "entry": "he2025sentinelagent"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry calvo1978supervision: Missing recommended field \"doi\"",
+      "entry": "calvo1978supervision"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry qian1994incentives: Missing recommended field \"doi\"",
+      "entry": "qian1994incentives"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry garicano2000hierarchies: Missing recommended field \"doi\"",
+      "entry": "garicano2000hierarchies"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry bartling2012shifting: Missing recommended field \"doi\"",
+      "entry": "bartling2012shifting"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry hamman2010selfinterest: Missing recommended field \"doi\"",
+      "entry": "hamman2010selfinterest"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry che2008strategic: Missing recommended field \"doi\"",
+      "entry": "che2008strategic"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry shavell2005minimum: Missing recommended field \"doi\"",
+      "entry": "shavell2005minimum"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry boyd1997search: Missing recommended field \"doi\"",
+      "entry": "boyd1997search"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry buiten2023law: Missing recommended field \"doi\"",
+      "entry": "buiten2023law"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry hacker2023liability: Missing recommended field \"doi\"",
+      "entry": "hacker2023liability"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry okeefe2025lawfollowing: Missing recommended field \"doi\"",
+      "entry": "okeefe2025lawfollowing"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry gabison2025liability: Missing recommended field \"volume\"",
+      "entry": "gabison2025liability"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry gabison2025liability: Missing recommended field \"pages\"",
+      "entry": "gabison2025liability"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry gabison2025liability: Missing recommended field \"doi\"",
+      "entry": "gabison2025liability"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry han2021mediating: Missing recommended field \"doi\"",
+      "entry": "han2021mediating"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry alalawi2026trust: Missing recommended field \"doi\"",
+      "entry": "alalawi2026trust"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry han2021trustmachines: Missing recommended field \"doi\"",
+      "entry": "han2021trustmachines"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry terrucha2025delegates: Missing recommended field \"doi\"",
+      "entry": "terrucha2025delegates"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry lacroix2022tragedy: Missing recommended field \"doi\"",
+      "entry": "lacroix2022tragedy"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry perret2020hierarchy: Missing recommended field \"doi\"",
+      "entry": "perret2020hierarchy"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry acerbi2023transmission: Missing recommended field \"doi\"",
+      "entry": "acerbi2023transmission"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry cemri2025mast: Missing recommended field \"pages\"",
+      "entry": "cemri2025mast"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry chan2024ids: Missing recommended field \"volume\"",
+      "entry": "chan2024ids"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry chan2024ids: Missing recommended field \"pages\"",
+      "entry": "chan2024ids"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry chan2024ids: Missing recommended field \"doi\"",
+      "entry": "chan2024ids"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry fourney2024magentic: Missing recommended field \"volume\"",
+      "entry": "fourney2024magentic"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry fourney2024magentic: Missing recommended field \"pages\"",
+      "entry": "fourney2024magentic"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry fourney2024magentic: Missing recommended field \"doi\"",
+      "entry": "fourney2024magentic"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry nissenbaum1996accountability: Missing recommended field \"doi\"",
+      "entry": "nissenbaum1996accountability"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry matthias2004gap: Missing recommended field \"doi\"",
+      "entry": "matthias2004gap"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry crawford1982strategic: Missing recommended field \"doi\"",
+      "entry": "crawford1982strategic"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry meyer1977myth: Missing recommended field \"doi\"",
+      "entry": "meyer1977myth"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry lipsey1956secondbest: Missing recommended field \"doi\"",
+      "entry": "lipsey1956secondbest"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry peltzman1975automobile: Missing recommended field \"doi\"",
+      "entry": "peltzman1975automobile"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry viscusi1985consumer: Missing recommended field \"doi\"",
+      "entry": "viscusi1985consumer"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry mcafee1995diseconomies: Missing recommended field \"doi\"",
+      "entry": "mcafee1995diseconomies"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry ringleb1990liability: Missing recommended field \"doi\"",
+      "entry": "ringleb1990liability"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry wu2012howsmall: Missing recommended field \"doi\"",
+      "entry": "wu2012howsmall"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry han2026welfare: Missing recommended field \"doi\"",
+      "entry": "han2026welfare"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry mookherjee2004supplier: Missing recommended field \"doi\"",
+      "entry": "mookherjee2004supplier"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry mookherjee2006decentralization: Missing recommended field \"doi\"",
+      "entry": "mookherjee2006decentralization"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry sykes1988boundaries: Missing recommended field \"doi\"",
+      "entry": "sykes1988boundaries"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry ayres2024risky: Missing recommended field \"volume\"",
+      "entry": "ayres2024risky"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry ayres2024risky: Missing recommended field \"pages\"",
+      "entry": "ayres2024risky"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry ayres2024risky: Missing recommended field \"doi\"",
+      "entry": "ayres2024risky"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry triedman2025malicious: Missing recommended field \"volume\"",
+      "entry": "triedman2025malicious"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry triedman2025malicious: Missing recommended field \"pages\"",
+      "entry": "triedman2025malicious"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry triedman2025malicious: Missing recommended field \"doi\"",
+      "entry": "triedman2025malicious"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry perc2010coevolutionary: Missing recommended field \"doi\"",
+      "entry": "perc2010coevolutionary"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry duong2021cost: Missing recommended field \"doi\"",
+      "entry": "duong2021cost"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry ren2024safetywashing: Missing recommended field \"pages\"",
+      "entry": "ren2024safetywashing"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "volume",
+      "severity": "medium",
+      "message": "Entry he2024multiif: Missing recommended field \"volume\"",
+      "entry": "he2024multiif"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "pages",
+      "severity": "medium",
+      "message": "Entry he2024multiif: Missing recommended field \"pages\"",
+      "entry": "he2024multiif"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry he2024multiif: Missing recommended field \"doi\"",
+      "entry": "he2024multiif"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry thompson1980hands: Missing recommended field \"doi\"",
+      "entry": "thompson1980hands"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry fudenberg2006strong: Missing recommended field \"doi\"",
+      "entry": "fudenberg2006strong"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry bikhchandani1992theory: Missing recommended field \"doi\"",
+      "entry": "bikhchandani1992theory"
+    },
+    {
+      "type": "missing_recommended_field",
+      "field": "doi",
+      "severity": "medium",
+      "message": "Entry grassmann1985gth: Missing recommended field \"doi\"",
+      "entry": "grassmann1985gth"
+    }
+  ],
+  "duplicates": [
+    {
+      "type": "similar_title",
+      "entries": [
+        "lior2020respondeat",
+        "shumailov2024collapse"
+      ],
+      "severity": "medium",
+      "message": "Possible duplicate: \"lior2020respondeat\" and \"shumailov2024collapse\" have identical titles"
+    }
+  ]
+}
