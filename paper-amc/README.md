@@ -93,11 +93,9 @@ Elsevier's 500 dpi minimum for combination art.
 - [x] All five authors confirmed the displayed names and order, CRediT roles,
       equal-contribution note, corresponding-author e-mail, declarations and
       companion disclosure on 24 August 2026.
-- [x] The **generative AI declaration** names Anthropic Claude and OpenAI Codex,
-      covers prose, LaTeX, bibliography, analysis, validation, testing,
-      visualization, build, archive and reproducibility assistance, and states
-      how the numerical data and submitted figures were generated. All authors
-      confirmed this wording on 24 August 2026.
+- [x] No generative-AI declaration is included because AI use was limited to
+      basic checks of grammar, spelling and punctuation, for which Elsevier does
+      not require a disclosure statement.
 - [x] Four optional reviewer suggestions, institutional addresses and a
       preliminary conflict screen are recorded in `SUBMISSION_NOTES.md`, not in
       the manuscript or cover-letter body. Authors must perform the final

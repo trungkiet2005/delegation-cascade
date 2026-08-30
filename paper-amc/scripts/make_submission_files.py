@@ -1,11 +1,9 @@
 """Build the separate submission files Applied Mathematics and Computation asks for.
 
-The journal wants three items uploaded alongside the manuscript source:
+The journal wants separate items uploaded alongside the manuscript:
 
 * highlights, as a separate editable file whose name contains "highlights";
-* the declaration of competing interests, as a .doc/.docx file;
-* the declaration of generative AI use (also carried inside the manuscript,
-  in its own section before the reference list).
+* the declaration of competing interests, as a .doc/.docx file.
 
     python paper-amc/scripts/make_submission_files.py
 """
@@ -43,28 +41,6 @@ COMPETING_INTERESTS = (
     "or personal relationships that could have appeared to influence the work "
     "reported in this paper."
 )
-
-FUNDING = (
-    "This research did not receive any specific grant from funding agencies in "
-    "the public, commercial, or not-for-profit sectors."
-)
-
-AI_DECLARATION = (
-    "During the preparation of this work the authors used Anthropic's Claude "
-    "through the Claude Code command-line interface and OpenAI Codex to assist "
-    "with drafting and editing prose; inspecting and revising LaTeX and "
-    "bibliography files; reviewing and revising analysis and theory code, "
-    "validation checks and tests; and developing deterministic plotting, build, "
-    "packaging and reproducibility tooling. All numerical values reported in the "
-    "manuscript were checked against or regenerated from deterministic, "
-    "version-controlled scientific code, and all submitted figures were rendered "
-    "deterministically from model outputs and data by that code. No generative "
-    "image is included in the submission. The authors reviewed and edited all "
-    "tool-assisted output, reran the analysis and test suites, reproduced the "
-    "reported results, and take full responsibility for the content of the "
-    "published article."
-)
-
 
 def _document() -> Document:
     doc = Document()
@@ -104,14 +80,6 @@ def write_declarations() -> None:
     doc.add_heading("Declaration of competing interest", level=1)
     doc.add_paragraph(TITLE).runs[0].italic = True
     doc.add_paragraph(COMPETING_INTERESTS)
-    doc.add_heading("Funding", level=1)
-    doc.add_paragraph(FUNDING)
-    doc.add_heading(
-        "Declaration of generative AI and AI-assisted technologies in the "
-        "manuscript preparation process",
-        level=1,
-    )
-    doc.add_paragraph(AI_DECLARATION)
     doc.save(OUT / "declaration_of_interest.docx")
 
 

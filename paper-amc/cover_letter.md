@@ -1,14 +1,6 @@
-# Cover letter
+25 August 2026
 
-_Paste the body into the "Enter Comments" box of Editorial Manager, or upload
-it as a separate "Cover Letter" item. Optional reviewer suggestions and the
-remaining external submission gates are recorded in `SUBMISSION_NOTES.md`._
-
----
-
-24 August 2026
-
-To the Editors
+To the Editors  
 _Applied Mathematics and Computation_
 
 Dear Editors,
@@ -69,8 +61,8 @@ Thank you for considering the manuscript.
 
 Yours sincerely,
 
-Trung-Kiet Huynh, on behalf of all five authors
-Faculty of Information Technology, University of Science,
-Vietnam National University Ho Chi Minh City
-227 Nguyen Van Cu Street, Cho Quan Ward, Ho Chi Minh City, Vietnam
+Trung-Kiet Huynh, on behalf of all five authors  
+Faculty of Information Technology, University of Science,  
+Vietnam National University Ho Chi Minh City  
+227 Nguyen Van Cu Street, Cho Quan Ward, Ho Chi Minh City, Vietnam  
 23122039@student.hcmus.edu.vn
